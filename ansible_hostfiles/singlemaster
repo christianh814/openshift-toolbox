@@ -1,0 +1,64 @@
+# Create an OSEv3 group that contains the masters and nodes groups
+[OSEv3:children]
+masters
+nodes
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+# SSH user, this user should allow ssh based auth without requiring a password
+ansible_ssh_user=root
+
+# If ansible_ssh_user is not root, ansible_sudo must be set to true
+#ansible_sudo=true
+#ansible_become=yes
+
+# Install Enterprise or Origin; set up ntp
+deployment_type=openshift-enterprise
+openshift_clock_enabled=true
+
+# Network/DNS Related
+openshift_master_default_subdomain=apps.osecloud.com
+osm_cluster_network_cidr=10.1.0.0/16
+osm_host_subnet_length=8
+openshift_portal_net=172.30.0.0/16
+osm_default_node_selector="region=primary"
+openshift_docker_insecure_registries=172.30.0.0/16
+
+
+# Automatically Deploy the router and registry
+openshift_hosted_manage_router=true
+openshift_hosted_manage_registry=true
+openshift_hosted_router_selector='region=infra'
+openshift_hosted_registry_selector='region=infra'
+
+## Uncomment for multitenant functionality (i.e. each project gets it's own "private" network)
+#os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+
+# Metrics
+openshift_hosted_metrics_public_url=https://hawkular.apps.osecloud.com/hawkular/metrics 
+openshift_hosted_metrics_deploy=true
+#openshift_hosted_metrics_deployer_version=v3.5
+
+# Logging
+openshift_master_logging_public_url=https://kibana.apps.osecloud.com
+openshift_hosted_logging_deploy=true
+#openshift_hosted_logging_deployer_version=v3.5
+
+# If using Route53 or you're pointed to the master with a "vanity" name
+openshift_master_public_api_url=https://console.osecloud.com:8443
+openshift_master_public_console_url=https://console.osecloud.com:8443/console
+
+# The following enabled htpasswd authentication
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
+
+# host group for masters
+[masters]
+master.osecloud.com openshift_ip=10.128.0.1 openshift_public_ip=104.155.137.51 openshift_schedulable=true
+
+# host group for nodes, includes region info
+[nodes]
+master.osecloud.com openshift_ip=10.128.0.1 openshift_public_ip=104.155.137.51 openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+node1.osecloud.com  openshift_ip=10.128.0.2 openshift_public_ip=104.155.137.52 openshift_node_labels="{'region': 'primary', 'zone': 'z1'}"
+node2.osecloud.com  openshift_ip=10.128.0.3 openshift_public_ip=104.155.137.53 openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
+##
+##
