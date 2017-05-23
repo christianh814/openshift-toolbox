@@ -48,6 +48,11 @@ openshift_hosted_logging_deploy=true
 openshift_master_public_api_url=https://console.osecloud.com:8443
 openshift_master_public_console_url=https://console.osecloud.com:8443/console
 
+# Custom SSL Certs
+openshift_master_cluster_public_hostname=ocp.52.14.195.108.nip.io
+openshift_master_named_certificates=[{"certfile": "/etc/letsencrypt/live/ocp.52.14.195.108.nip.io/fullchain.pem", "keyfile": "/etc/letsencrypt/live/ocp.52.14.195.108.nip.io/privkey.pem", "names":["ocp.52.14.195.108.nip.io"]}]
+openshift_master_overwrite_named_certificates=true
+
 # The following enabled htpasswd authentication
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
 
