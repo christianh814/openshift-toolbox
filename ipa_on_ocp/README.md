@@ -21,7 +21,7 @@ Next, import the image as the developer user
 
 ```
 oc login -u developer
-oc import-image freeipa-server:latest --from=adelton/freeipa-server:centos-7 --confirm
+oc import-image freeipa-server:latest --from=freeipa/freeipa-server:centos-7 --confirm
 ```
 
 ## Deploy FreeIPA
