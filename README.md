@@ -1,5 +1,5 @@
 # OpenShift Toolbox
-OpenShift Setup Tools And Whatnot
+OpenShift Setup Tools And Howto's
 
 * [Sample Ansible Host Files](ansible_hostfiles)
 * [Sample HAProxy Config File](haproxy_config)
