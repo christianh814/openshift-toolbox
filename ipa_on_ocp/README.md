@@ -194,3 +194,4 @@ Things to do:
 * Test DNS functionality (nodePort?)
 * Create Replicas
 * Test cross domain trusts
+* Create "bind user"
