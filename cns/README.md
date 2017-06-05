@@ -236,7 +236,7 @@ Things to note
 * `restuser` : The user to hit the API with (by default it's `admin` so stick with that)
 * `secretNamespace` : Namespace where your secret is (more on that below)
 * `secretName` : The name of that secret
-* `volumetype` : It specifies the volume type that is being used. Distributed-Three-way replication is the only supported volume type. 
+* `volumetype` : It specifies the volume type that is being used. Distributed-Three-way replication is the only supported volume type. You can also put `volumetype: none` for testing purposes
 
 Now, create a secret; by default heketi uses "My Secret" as the password so run...
 
