@@ -98,7 +98,7 @@ A sample, formatted topology file (topology-sample.json) is installed with the `
 
 This is the config I used on my AWS instance (I'm using my master as a node) saved as `cns.json`:
 
-```
+```json
 {
     "clusters": [
         {
@@ -211,7 +211,7 @@ heketi-cli topology info
 
 You need to first create a `storageClass` (it might be different now - look [here](https://docs.openshift.com/container-platform/latest/install_config/storage_examples/gluster_dynamic_example.html#create-a-storage-class-for-your-glusterfs-dynamic-provisioner) )
 
-```
+```yaml
 apiVersion: storage.k8s.io/v1beta1
 kind: StorageClass
 metadata:
@@ -232,6 +232,7 @@ Things to note
 * `secretNamespace` : Namespace where your secret is (more on that below)
 * `secretName` : The name of that secret
 * `volumetype` : It specifies the volume type that is being used. Distributed-Three-way replication is the only supported volume type. You can also put `volumetype: none` for testing purposes
+* If you'd like to make this a default storage class; add an annotation. Here's an [example](gluster-default-storageclass.yaml)
 
 Now, create a secret; by default heketi uses "My Secret" as the password so run...
 
@@ -242,7 +243,7 @@ TXkgw2VjcmV0
 
 Now use that output to create the secret
 
-```
+```yaml
 apiVersion: v1
 kind: Secret
 metadata:
