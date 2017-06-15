@@ -48,19 +48,12 @@ Check your work
 iptables -L
 ```
 
-__Poweruser Note:__
+## Poweruser
 
-If you have ansible set up; do it with ansible
+If you have ansible set up; do it with ansible. I've included a playbook to do most of the above.
 ```
 ansible all -m shell -a "subscription-manager repos --enable=rh-gluster-3-for-rhel-7-server-rpms"
-ansible all -m shell -a "yum -y install cns-deploy heketi-client"
-ansible all -m shell -a "systemctl reload iptables"
-ansible all -m shell -a "iptables --list"
-```
-If  `dm_thin_pool` *isn't* loaded run
-
-```
-ansible all -m shell -a  "modprobe dm_thin_pool"
+ansible-playbook ./host-prepare.yaml
 ```
 
 ## Create OpenShift Project
