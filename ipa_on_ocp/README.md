@@ -195,3 +195,37 @@ Things to do:
 * Create Replicas
 * Test cross domain trusts
 * Create "bind user"
+
+## Apendix
+
+I created this `nodePort` config so I can run `ldapsearch` against the master.
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: freeipa-server
+    template: freeipa-server
+  name: freeipa-server-np
+spec:
+  ports:
+  - name: ldap-np
+    nodePort: 32389
+    port: 389
+    protocol: TCP
+    targetPort: 389
+  selector:
+    deploymentconfig: freeipa-server
+  sessionAffinity: None
+  type: LoadBalancer
+```
+
+Now run `oc create -f freeipa-nodeport.yaml` to create the service.
+
+Next you can run `ldapsearch` to any node in the cluster. I use the master for consistency.
+
+```
+ldapsearch -x -h ocp.chx.cloud -p 32389 -b uid=homer,cn=users,cn=accounts,dc=example,dc=test
+```
