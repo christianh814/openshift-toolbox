@@ -196,7 +196,7 @@ Things to do:
 * Test cross domain trusts
 * Create "bind user"
 
-## Apendix
+# Apendix
 
 I created this `nodePort` config so I can run `ldapsearch` against the master.
 
