@@ -46,12 +46,14 @@ openshift_disable_check=disk_availability,docker_storage,memory_availability
 openshift_hosted_metrics_public_url=https://hawkular.apps.172.16.1.10.nip.io/hawkular/metrics 
 openshift_hosted_metrics_deploy=true
 openshift_hosted_metrics_storage_kind=dynamic
+openshift_metrics_hawkular_nodeselector={'region':'infra'}
 #openshift_hosted_metrics_deployer_version=v3.5
 
 # Logging
 openshift_master_logging_public_url=https://kibana.apps.172.16.1.10.nip.io
 openshift_hosted_logging_deploy=true
 openshift_hosted_logging_storage_kind=dynamic
+openshift_metrics_cassandra_nodeselector={'region':'infra'}
 #openshift_hosted_logging_deployer_version=v3.5
 
 # If using Route53 or you're pointed to the master with a "vanity" name
