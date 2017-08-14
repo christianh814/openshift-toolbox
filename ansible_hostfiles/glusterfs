@@ -33,6 +33,7 @@ openshift_storage_glusterfs_name=storage
 openshift_hosted_manage_router=true
 openshift_hosted_manage_registry=true
 openshift_hosted_registry_storage_kind=glusterfs
+openshift_hosted_registry_storage_volume_size=25Gi
 openshift_hosted_router_selector='region=infra'
 openshift_hosted_registry_selector='region=infra'
 
