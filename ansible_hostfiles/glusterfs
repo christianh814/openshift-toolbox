@@ -43,8 +43,8 @@ openshift_disable_check=disk_availability,docker_storage,memory_availability
 ## Uncomment for multitenant functionality (i.e. each project gets it's own "private" network)
 #os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
-# Metrics and Logging doesn't install well with CNS. Do it
-# As a POST install setp.
+# Metrics and Logging doesn't install well with CNS. Do it as a POST install step. See [POST INSTALL] for 
+# notes on what to do after OCP and CNS are deployed with the ansible installer
 
 # If using Route53 or you're pointed to the master with a "vanity" name
 openshift_master_public_api_url=https://ocp.172.16.1.10.nip.io:8443
@@ -72,3 +72,24 @@ node2.172.16.1.12.nip.io glusterfs_ip=172.16.1.12 glusterfs_devices='[ "/dev/vdb
 node3.172.16.1.13.nip.io glusterfs_ip=172.16.1.13 glusterfs_devices='[ "/dev/vdb" ]'
 ##
 ##
+### [POST INSTALL]
+### Run the following comand to set gluster as the default storage provider
+###           oc annotate storageclass glusterfs storageclass.beta.kubernetes.io/is-default-class="true"
+###
+### Check to see if the storageClass is set to default
+###          oc get storageClass
+###
+### Next, run the metrics and logging installers
+###
+###          ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-metrics.yml \
+###          -e openshift_metrics_install_metrics=True \
+###          -e openshift_metrics_hawkular_hostname=hawkular.apps.172.16.1.10.nip.io \
+###          -e openshift_metrics_cassandra_storage_type=dynamic \
+###          -e openshift_metrics_cassandra_pvc_size=20Gi
+###
+###          ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-logging.yml \
+###          -e openshift_logging_kibana_hostname=kibana.apps.172.16.1.10.nip.io \
+###          -e openshift_logging_install_logging=true \
+###          -e openshift_logging_es_pvc_dynamic=true \
+###          -e openshift_logging_es_pvc_size=20Gi
+
