@@ -43,25 +43,12 @@ openshift_disable_check=disk_availability,docker_storage,memory_availability
 ## Uncomment for multitenant functionality (i.e. each project gets it's own "private" network)
 #os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
-# Metrics
-openshift_hosted_metrics_public_url=https://hawkular.apps.172.16.1.10.nip.io/hawkular/metrics 
-openshift_hosted_metrics_deploy=true
-openshift_hosted_metrics_storage_kind=dynamic
-openshift_metrics_hawkular_nodeselector={'region':'infra'}
-#openshift_hosted_metrics_deployer_version=v3.5
-
-# Logging
-openshift_master_logging_public_url=https://kibana.apps.172.16.1.10.nip.io
-openshift_hosted_logging_deploy=true
-openshift_hosted_logging_storage_kind=dynamic
-openshift_metrics_cassandra_nodeselector={'region':'infra'}
-#openshift_hosted_logging_deployer_version=v3.5
+# Metrics and Logging doesn't install well with CNS. Do it
+# As a POST install setp.
 
 # If using Route53 or you're pointed to the master with a "vanity" name
 openshift_master_public_api_url=https://ocp.172.16.1.10.nip.io:8443
 openshift_master_public_console_url=https://ocp.172.16.1.10.nip.io:8443/console
-
-# Custom SSL Certs
 openshift_master_cluster_public_hostname=ocp.172.16.1.10.nip.io
 
 # The following enabled htpasswd authentication
@@ -77,10 +64,11 @@ master.172.16.1.10.nip.io openshift_schedulable=true
 master.172.16.1.10.nip.io openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
 node1.172.16.1.11.nip.io openshift_node_labels="{'region': 'primary', 'zone': 'z1'}"
 node2.172.16.1.12.nip.io openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
+node3.172.16.1.13.nip.io openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
 
 [glusterfs]
-master.172.16.1.10.nip.io glusterfs_ip=172.16.1.10 glusterfs_devices='[ "/dev/vdb" ]'
 node1.172.16.1.11.nip.io glusterfs_ip=172.16.1.11 glusterfs_devices='[ "/dev/vdb" ]'
 node2.172.16.1.12.nip.io glusterfs_ip=172.16.1.12 glusterfs_devices='[ "/dev/vdb" ]'
+node3.172.16.1.13.nip.io glusterfs_ip=172.16.1.13 glusterfs_devices='[ "/dev/vdb" ]'
 ##
 ##
