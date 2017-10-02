@@ -14,7 +14,7 @@ ansible_ssh_user=root
 #ansible_become=yes
 
 # Install Enterprise or Origin; set up ntp
-deployment_type=openshift-enterprise
+openshift_deployment_type=openshift-enterprise
 openshift_clock_enabled=true
 
 # Network/DNS Related
