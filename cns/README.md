@@ -275,7 +275,6 @@ Next, initiate the build of the `/etc/multipath.conf` file
 
 ```
 ansible all -m shell -a "mpathconf --enable"
-
 ```
 
 Now create the `multipath.conf` file locally under `/tmp`
