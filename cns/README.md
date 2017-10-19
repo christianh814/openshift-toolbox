@@ -261,6 +261,20 @@ oc create -f glusterfs-secret.yaml
 oc create -f glusterfs-storageclass.yaml
 ```
 
+## Block Storage
+
+The block provisioner can be used for block storage. iSCSi is used for this purpose. First you need to install the required packages on all nodes
+
+```
+ansible all -m shell -a "yum -y install iscsi-initiator-utils device-mapper-multipath"
+```
+
+Next, initiate the build of the `/etc/multipath.conf ` file
+
+``ansible all -m shell -a "`
+
+```
+
 ## Profit!
 
 Now you should be able to create a pvc and have that bound on the WebUI
