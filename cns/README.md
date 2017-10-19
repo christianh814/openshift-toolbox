@@ -263,16 +263,53 @@ oc create -f glusterfs-storageclass.yaml
 
 ## Block Storage
 
+*WIP*
+
 The block provisioner can be used for block storage. iSCSi is used for this purpose. First you need to install the required packages on all nodes
 
 ```
 ansible all -m shell -a "yum -y install iscsi-initiator-utils device-mapper-multipath"
 ```
 
-Next, initiate the build of the `/etc/multipath.conf ` file
+Next, initiate the build of the `/etc/multipath.conf` file
 
-``ansible all -m shell -a "`
+```
+ansible all -m shell -a "mpathconf --enable"
 
+```
+
+Now create the `multipath.conf` file locally under `/tmp`
+
+```
+# LIO iSCSI
+devices {
+        device {
+                vendor "LIO-ORG"
+                user_friendly_names "yes" # names like mpatha
+                path_grouping_policy "failover" # one path per group
+                path_selector "round-robin 0"
+                failback immediate
+                path_checker "tur"
+                prio "const"
+                no_path_retry 120
+                rr_weight "uniform"
+        }
+}
+```
+
+Copy this file over to all the nodes with the proper permissions
+```
+ansible all -m copy -a "src=/tmp/multipath.conf dest=/etc/multipath.conf owner=root group=root mode=0600"
+```
+
+Make sure SELinux labels are correct
+```
+ansible all -m shell -a "restorecon -vR /etc/multipath.conf"
+```
+
+Pull the block provisioner
+```
+ansible all -m shell -a "docker pull rhgs3/rhgs-gluster-block-prov-rhel7"
 ```
 
 ## Profit!
