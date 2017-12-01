@@ -2,6 +2,7 @@
 [OSEv3:children]
 masters
 nodes
+etcd
 
 # Set variables common for all OSEv3 hosts
 [OSEv3:vars]
@@ -34,6 +35,9 @@ openshift_hosted_registry_selector='region=infra'
 ## Uncomment for multitenant functionality (i.e. each project gets it's own "private" network)
 #os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
+# Disable Checks
+openshift_disable_check=disk_availability,docker_storage,memory_availability
+
 # Metrics
 openshift_hosted_metrics_public_url=https://hawkular.apps.osecloud.com/hawkular/metrics 
 openshift_hosted_metrics_deploy=true
@@ -55,7 +59,11 @@ openshift_master_overwrite_named_certificates=true
 
 # The following enabled htpasswd authentication
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
-openshift_master_htpasswd_users={'demo': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+
+# host group for etcd
+[etcd]
+master.osecloud.com
 
 # host group for masters
 [masters]

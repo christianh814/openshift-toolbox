@@ -60,10 +60,12 @@ openshift_master_cluster_method=native
 openshift_master_cluster_hostname=ocp.osecloud.com
 openshift_master_cluster_public_hostname=ocp.osecloud.com
 
+# Disable Checks
+openshift_disable_check=disk_availability,docker_storage,memory_availability
 
 # The following enabled htpasswd authentication
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
-openshift_master_htpasswd_users={'demo': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
 
 # host group for masters
 [masters]

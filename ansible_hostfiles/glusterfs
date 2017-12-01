@@ -2,6 +2,7 @@
 [OSEv3:children]
 masters
 nodes
+etcd
 glusterfs
 
 # Set variables common for all OSEv3 hosts
@@ -54,7 +55,14 @@ openshift_master_cluster_public_hostname=ocp.172.16.1.10.nip.io
 
 # The following enabled htpasswd authentication
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
-openshift_master_htpasswd_users={'demo': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+
+# Disable Checks
+openshift_disable_check=disk_availability,docker_storage,memory_availability
+
+# host group for etcd
+[etcd]
+master.172.16.1.10.nip.io
 
 # host group for masters
 [masters]

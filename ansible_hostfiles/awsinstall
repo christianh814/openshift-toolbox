@@ -2,6 +2,7 @@
 [OSEv3:children]
 masters
 nodes
+etcd
 
 # Set variables common for all OSEv3 hosts
 [OSEv3:vars]
@@ -74,9 +75,16 @@ openshift_master_public_console_url=https://mmchx.osecloud.com:8443/console
 #openshift_master_cluster_hostname=master.52.14.59.23.xip.io
 #openshift_master_cluster_public_hostname=master.52.14.59.23.xip.io
 
+# Disable Checks
+openshift_disable_check=disk_availability,docker_storage,memory_availability
+
 # The following enabled htpasswd authentication
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
-openshift_master_htpasswd_users={'demo': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+
+# host group for etcd
+[etcd]
+master.osecloud.com
 
 # host group for masters
 [masters]
