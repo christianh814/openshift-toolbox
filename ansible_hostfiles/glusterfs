@@ -58,7 +58,8 @@ openshift_master_cluster_public_hostname=ocp.172.16.1.10.nip.io
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
 openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
 
-# Disable Checks
+# Disable Checks and Broker
+# ansible_service_broker_install=false 
 openshift_disable_check=disk_availability,docker_storage,memory_availability
 
 # host group for etcd
