@@ -76,7 +76,8 @@ openshift_master_public_console_url=https://mmchx.osecloud.com:8443/console
 #openshift_master_cluster_public_hostname=master.52.14.59.23.xip.io
 
 # Disable Checks and Broker
-# ansible_service_broker_install=false 
+# ansible_service_broker_install=false
+# template_service_broker_install=false
 openshift_disable_check=disk_availability,docker_storage,memory_availability
 
 # The following enabled htpasswd authentication
