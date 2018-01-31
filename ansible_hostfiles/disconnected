@@ -34,6 +34,7 @@ openshift_service_catalog_image_version=v3.7
 openshift_cockpit_deployer_prefix=10.30.100.218:5000/openshift3/
 template_service_broker_prefix=10.30.100.218:5000/openshift3/
 template_service_broker_version=v3.7
+#template_service_broker_image_name=ose-template-service-broker
 openshift_web_console_prefix=10.30.100.218:5000/openshift3/
 openshift_web_console_version=v3.7
 
