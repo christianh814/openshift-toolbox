@@ -6,3 +6,4 @@ OpenShift Setup Tools And Howto's
 * [Run FreeIPA on OpenShift](ipa_on_ocp)
 * [Container Native Storage](cns)
 * [Let's Encrypt Crons](certbot)
+* [AWS Reference Architecture Deployer](aws_refarch)
