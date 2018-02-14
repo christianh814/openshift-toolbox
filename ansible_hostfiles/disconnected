@@ -43,6 +43,8 @@ template_service_broker_version=v3.7
 #template_service_broker_image_name=ose-template-service-broker
 openshift_web_console_prefix=10.30.100.218:5000/openshift3/
 openshift_web_console_version=v3.7
+openshift_cockpit_deployer_prefix=192.168.254.100:5000/openshift3/
+openshift_cockpit_deployer_version=v3.7_2018-02-08
 
 # Automatically Deploy the router and registry
 openshift_hosted_manage_router=true
