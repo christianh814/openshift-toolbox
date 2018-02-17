@@ -131,7 +131,7 @@ Things to note
   * If you want another github org just pass multiple `--github-organization`
   * The `--keypair` is the NAME you want it in AWS
   * And `--create-key` means that you're going to upload this to AWS
-  * The option `--rhsm-pool` cloud be //"60 Day Supported OpenShift Enterprise, 2 Cores Evaluation"//
+  * The option `--rhsm-pool` cloud be `"60 Day Supported OpenShift Enterprise, 2 Cores Evaluation"`
   * You probably want to pass `--node-instance-type` and/or `--app-instance-type` and chose either `m4.xlarge` for 10-20 users or `m4.2xlarge` for 20-40 users (more expensive but enough resources)
 
 ## Add A Node
