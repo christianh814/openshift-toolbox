@@ -30,6 +30,7 @@ openshift_docker_insecure_registries=172.30.0.0/16
 openshift_storage_glusterfs_namespace=glusterfs
 openshift_storage_glusterfs_name=storage
 openshift_storage_glusterfs_heketi_wipe=True
+openshift_storage_glusterfs_storageclass_default=True
 
 # Automatically Deploy the router and registry
 openshift_hosted_manage_router=true
