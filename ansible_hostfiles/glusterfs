@@ -83,9 +83,9 @@ node2.172.16.1.12.nip.io openshift_node_labels="{'region': 'primary', 'zone': 'z
 node3.172.16.1.13.nip.io openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
 
 [glusterfs]
-node1.172.16.1.11.nip.io glusterfs_ip=172.16.1.11 glusterfs_devices='[ "/dev/vdb" ]'
-node2.172.16.1.12.nip.io glusterfs_ip=172.16.1.12 glusterfs_devices='[ "/dev/vdb" ]'
-node3.172.16.1.13.nip.io glusterfs_ip=172.16.1.13 glusterfs_devices='[ "/dev/vdb" ]'
+node1.172.16.1.11.nip.io glusterfs_ip=172.16.1.11 glusterfs_zone=1 glusterfs_devices='[ "/dev/vdb" ]'
+node2.172.16.1.12.nip.io glusterfs_ip=172.16.1.12 glusterfs_zone=2 glusterfs_devices='[ "/dev/vdb" ]'
+node3.172.16.1.13.nip.io glusterfs_ip=172.16.1.13 glusterfs_zone=3 glusterfs_devices='[ "/dev/vdb" ]'
 ##
 ##
 ### [POST INSTALL]
