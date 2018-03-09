@@ -30,21 +30,12 @@ openshift_docker_insecure_registries=172.30.0.0/16
 # Automatically Deploy the router and registry
 openshift_hosted_manage_router=true
 openshift_hosted_manage_registry=true
+openshift_hosted_registry_replicas=3
 openshift_hosted_router_selector='region=infra'
 openshift_hosted_registry_selector='region=infra'
 
 ## Uncomment for multitenant functionality (i.e. each project gets it's own "private" network)
 #os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
-
-# Metrics
-openshift_hosted_metrics_public_url=https://hawkular.apps.osecloud.com/hawkular/metrics 
-openshift_hosted_metrics_deploy=true
-#openshift_hosted_metrics_deployer_version=v3.5
-
-# Logging
-openshift_master_logging_public_url=https://kibana.apps.osecloud.com
-openshift_hosted_logging_deploy=true
-#openshift_hosted_logging_deployer_version=v3.5
 
 # If using Route53 or you're pointed to the master with a "vanity" name
 openshift_master_public_api_url=https://ocp.osecloud.com:8443
