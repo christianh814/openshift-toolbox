@@ -1,3 +1,4 @@
+# This is a W.I.P and is preparing for 3.9...stay tuned
 # Create an OSEv3 group that contains the masters and nodes groups
 [OSEv3:children]
 masters
@@ -19,7 +20,7 @@ openshift_deployment_type=openshift-enterprise
 openshift_clock_enabled=true
 
 # Network/DNS Related
-openshift_master_default_subdomain=apps.172.16.1.10.nip.io
+openshift_master_default_subdomain=app.example.com
 osm_cluster_network_cidr=10.1.0.0/16
 osm_host_subnet_length=8
 openshift_portal_net=172.30.0.0/16
@@ -29,16 +30,17 @@ openshift_docker_insecure_registries=172.30.0.0/16
 # CNS Storage
 openshift_storage_glusterfs_namespace=glusterfs
 openshift_storage_glusterfs_name=storage
-openshift_storage_glusterfs_heketi_wipe=True
-# openshift_storage_glusterfs_wipe=true
-openshift_storage_glusterfs_storageclass_default=True
-# openshift_storage_glusterfs_block_host_vol_size=100
+openshift_storage_glusterfs_heketi_wipe=true
+openshift_storage_glusterfs_wipe=true
+openshift_storage_glusterfs_storageclass_default=true
+openshift_storage_glusterfs_block_storageclass=true
+openshift_storage_glusterfs_block_host_vol_size=30
 
-# Automatically Deploy the router and registry
+# Automatically Deploy the router and registry (registry using glusterfs)
 openshift_hosted_manage_router=true
 openshift_hosted_manage_registry=true
 openshift_hosted_registry_storage_kind=glusterfs
-openshift_hosted_registry_storage_volume_size=25Gi
+openshift_hosted_registry_storage_volume_size=50Gi
 openshift_hosted_router_selector='region=infra'
 openshift_hosted_registry_selector='region=infra'
 
@@ -46,66 +48,79 @@ openshift_hosted_registry_selector='region=infra'
 # ansible_service_broker_install=false
 # template_service_broker_install=false
 # openshift_enable_service_catalog=false
-openshift_disable_check=disk_availability,docker_storage,memory_availability
+# You might not need "package_version" after 3.9
+openshift_disable_check=disk_availability,docker_storage,memory_availability,package_version
 
 ## Uncomment for multitenant functionality (i.e. each project gets it's own "private" network)
 #os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
-# Metrics and Logging doesn't install well with CNS. Do it as a POST install step. See [POST INSTALL] for 
-# notes on what to do after OCP and CNS are deployed with the ansible installer
+# Uncomment when setting up logging/metrics
+#openshift_master_dynamic_provisioning_enabled=true
+
+# Metrics and Logging leave commented out; run as post deployment
+### THIS IS HERE FOR NOTES for 3.9 ~> openshift_logging_storage_kind=dynamic
+#openshift_logging_install_logging=true
+#openshift_logging_es_pvc_dynamic=true
+#openshift_logging_es_pvc_size=28Gi
+#openshift_logging_es_pvc_storage_class_name=gluster-block
+#openshift_logging_curator_nodeselector={'region':'infra'}
+#openshift_logging_es_nodeselector={'region':'infra'}
+#openshift_logging_kibana_nodeselector={'region':'infra'}
+##
+### THIS IS HERE FOR NOTES for 3.9 ~> openshift_metrics_storage_kind=dymanic
+#openshift_metrics_install_metrics=true
+#openshift_metrics_cassandra_storage_type=dynamic
+#openshift_metrics_cassandra_pvc_size=28Gi
+#openshift_metrics_hawkular_nodeselector={'region':'infra'}
+#openshift_metrics_heapster_nodeselector={'region':'infra'}
+#openshift_metrics_cassandra_nodeselector={'region':'infra'}
+
 
 # If using Route53 or you're pointed to the master with a "vanity" name
-openshift_master_public_api_url=https://ocp.172.16.1.10.nip.io:8443
-openshift_master_public_console_url=https://ocp.172.16.1.10.nip.io:8443/console
-openshift_master_cluster_public_hostname=ocp.172.16.1.10.nip.io
+openshift_master_public_api_url=https://ocp.example.com:8443
+openshift_master_public_console_url=https://ocp.example.com:8443/console
+openshift_master_cluster_public_hostname=ocp.example.com
 
 # The following enabled htpasswd authentication
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
 openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
 
-# Disable Checks and Broker
-# ansible_service_broker_install=false 
-openshift_disable_check=disk_availability,docker_storage,memory_availability
-
 # host group for etcd
 [etcd]
-master.172.16.1.10.nip.io
+master.example.com
 
 # host group for masters
 [masters]
-master.172.16.1.10.nip.io openshift_schedulable=true
+master.example.com openshift_schedulable=true
 
 # host group for nodes, includes region info
 [nodes]
-master.172.16.1.10.nip.io openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-node1.172.16.1.11.nip.io openshift_node_labels="{'region': 'primary', 'zone': 'z1'}"
-node2.172.16.1.12.nip.io openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
-node3.172.16.1.13.nip.io openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
+master.example.com openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+node01.example.com openshift_node_labels="{'region': 'primary', 'zone': 'z1'}"
+node02.example.com openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
+node03.example.com openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
 
 [glusterfs]
-node1.172.16.1.11.nip.io glusterfs_ip=172.16.1.11 glusterfs_zone=1 glusterfs_devices='[ "/dev/vdb" ]'
-node2.172.16.1.12.nip.io glusterfs_ip=172.16.1.12 glusterfs_zone=2 glusterfs_devices='[ "/dev/vdb" ]'
-node3.172.16.1.13.nip.io glusterfs_ip=172.16.1.13 glusterfs_zone=3 glusterfs_devices='[ "/dev/vdb" ]'
+node01.example.com glusterfs_ip=192.168.1.101 glusterfs_zone=1 glusterfs_devices='[ "/dev/xvdc" ]'
+node02.example.com glusterfs_ip=192.168.1.102 glusterfs_zone=2 glusterfs_devices='[ "/dev/xvdc" ]'
+node02.example.com glusterfs_ip=192.168.1.103  glusterfs_zone=3 glusterfs_devices='[ "/dev/xvdc" ]'
 ##
 ##
-### [POST INSTALL]
-### Run the following comand to set gluster as the default storage provider
-###           oc annotate storageclass glusterfs storageclass.beta.kubernetes.io/is-default-class="true"
+#[POST DEPLOYMENT]
 ###
-### Check to see if the storageClass is set to default
-###          oc get storageClass
+#		YOU NEED TO DO THE FOLLOWING - https://goo.gl/sifBFz
+#			1) Set up the block SC w/ secret (it's 2 yaml files - get the secret from the existing heketi pod)
+#			2) Set the file sc default to false
+#			3) Set the block sc default to true
+#			4) Uncomment the logging/metrics section above
+#     5) Note the above steps 1-4 doesn't work yet (3.7)
+#
+#		LOGGING:
+#			3.7) ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-logging.yml
+#			3.9) ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/openshift-logging/config.yml
+#
+#		METRICS:
+#			3.7) ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-metrics.yml
+#			3.9) ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/openshift-metrics/config.yml
 ###
-### Next, run the metrics and logging installers
 ###
-###          ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-metrics.yml \
-###          -e openshift_metrics_install_metrics=True \
-###          -e openshift_metrics_hawkular_hostname=hawkular.apps.172.16.1.10.nip.io \
-###          -e openshift_metrics_cassandra_storage_type=dynamic \
-###          -e openshift_metrics_cassandra_pvc_size=20Gi
-###
-###          ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/byo/openshift-cluster/openshift-logging.yml \
-###          -e openshift_logging_kibana_hostname=kibana.apps.172.16.1.10.nip.io \
-###          -e openshift_logging_install_logging=true \
-###          -e openshift_logging_es_pvc_dynamic=true \
-###          -e openshift_logging_es_pvc_size=20Gi
-
