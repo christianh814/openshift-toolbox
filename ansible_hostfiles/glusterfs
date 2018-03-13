@@ -57,6 +57,10 @@ openshift_disable_check=disk_availability,docker_storage,memory_availability,pac
 # Uncomment when setting up logging/metrics
 #openshift_master_dynamic_provisioning_enabled=true
 
+# This is required otherwise it will fail openshift_sanitize_inventory
+## cloud provider is not configured but dynamic is set
+# dynamic_volumes_check=False
+
 # Metrics and Logging leave commented out; run as post deployment
 ### THIS IS HERE FOR NOTES for 3.9 ~> openshift_logging_storage_kind=dynamic
 #openshift_logging_install_logging=true
