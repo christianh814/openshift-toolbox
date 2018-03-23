@@ -70,6 +70,7 @@ openshift_disable_check=disk_availability,docker_storage,memory_availability,pac
 #openshift_logging_curator_nodeselector={'region':'infra'}
 #openshift_logging_es_nodeselector={'region':'infra'}
 #openshift_logging_kibana_nodeselector={'region':'infra'}
+#openshift_logging_es_memory_limit=4G
 ##
 ### THIS IS HERE FOR NOTES for 3.9 ~> openshift_metrics_storage_kind=dymanic
 #openshift_metrics_install_metrics=true
