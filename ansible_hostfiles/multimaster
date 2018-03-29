@@ -104,7 +104,7 @@ openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPB
 
 # host group for etcd
 [etcd]
-master[01:03]
+master[01:03].cloud.chx
 
 # host group for loadbalancers
 [lb]
@@ -112,22 +112,22 @@ ocp.cloud.chx
 
 # host group for masters - set scedulable to "true" for the web-console pod
 [masters]
-master[01:03] openshift_schedulable=true
+master[01:03].cloud.chx openshift_schedulable=true
 
 # host group for nodes, includes region info
 [nodes]
-master01 openshift_node_labels="{'region': 'master', 'zone': 'm1'}"
-master02 openshift_node_labels="{'region': 'master', 'zone': 'm2'}"
-master03 openshift_node_labels="{'region': 'master', 'zone': 'm3'}"
-infra01 openshift_node_labels="{'region': 'infra', 'zone': 'i1'}"
-infra02 openshift_node_labels="{'region': 'infra', 'zone': 'i2'}"
-app01 openshift_node_labels="{'region': 'primary', 'zone': 'a1'}"
-app02 openshift_node_labels="{'region': 'primary', 'zone': 'a2'}"
-app03 openshift_node_labels="{'region': 'primary', 'zone': 'a3'}"
+master01.cloud.chx openshift_node_labels="{'region': 'master', 'zone': 'm1'}"
+master02.cloud.chx openshift_node_labels="{'region': 'master', 'zone': 'm2'}"
+master03.cloud.chx openshift_node_labels="{'region': 'master', 'zone': 'm3'}"
+infra01.cloud.chx openshift_node_labels="{'region': 'infra', 'zone': 'i1'}"
+infra02.cloud.chx openshift_node_labels="{'region': 'infra', 'zone': 'i2'}"
+app01.cloud.chx openshift_node_labels="{'region': 'primary', 'zone': 'a1'}"
+app02.cloud.chx openshift_node_labels="{'region': 'primary', 'zone': 'a2'}"
+app03.cloud.chx openshift_node_labels="{'region': 'primary', 'zone': 'a3'}"
 
 [glusterfs]
-app01 glusterfs_ip=192.168.1.206 glusterfs_zone=1 glusterfs_devices='[ "/dev/vdc" ]'
-app02 glusterfs_ip=192.168.1.207 glusterfs_zone=2 glusterfs_devices='[ "/dev/vdc" ]'
-app03 glusterfs_ip=192.168.1.208 glusterfs_zone=3 glusterfs_devices='[ "/dev/vdc" ]'
+app01.cloud.chx glusterfs_ip=192.168.1.206 glusterfs_zone=1 glusterfs_devices='[ "/dev/vdc" ]'
+app02.cloud.chx glusterfs_ip=192.168.1.207 glusterfs_zone=2 glusterfs_devices='[ "/dev/vdc" ]'
+app03.cloud.chx glusterfs_ip=192.168.1.208 glusterfs_zone=3 glusterfs_devices='[ "/dev/vdc" ]'
 ##
 ##
