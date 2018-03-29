@@ -74,6 +74,13 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 #openshift_metrics_hawkular_nodeselector={'region':'infra'}
 #openshift_metrics_heapster_nodeselector={'region':'infra'}
 #openshift_metrics_cassandra_nodeselector={'region':'infra'}
+##
+# Prometheus
+#openshift_hosted_prometheus_deploy=true
+#openshift_prometheus_namespace=openshift-metrics
+#openshift_prometheus_node_selector={"region":"infra"}
+#openshift_prometheus_storage_kind=dynamic
+
 
 
 # If using Route53 or you're pointed to the master with a "vanity" name
