@@ -112,6 +112,7 @@ poc-node2.cloud.chx  openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
 poc-node3.cloud.chx  openshift_node_labels="{'region': 'primary', 'zone': 'z3'}"
 
 [glusterfs]
+# "standalone" glusterfs nodes STILL need to be in the "[nodes]" section
 poc-node1.cloud.chx glusterfs_ip=192.168.1.251 glusterfs_zone=1 glusterfs_devices='[ "/dev/vdc" ]'
 poc-node2.cloud.chx glusterfs_ip=192.168.1.252 glusterfs_zone=2 glusterfs_devices='[ "/dev/vdc" ]'
 poc-node3.cloud.chx glusterfs_ip=192.168.1.253 glusterfs_zone=3 glusterfs_devices='[ "/dev/vdc" ]'
