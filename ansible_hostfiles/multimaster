@@ -131,6 +131,7 @@ app02.cloud.chx openshift_node_labels="{'region': 'primary', 'zone': 'a2'}"
 app03.cloud.chx openshift_node_labels="{'region': 'primary', 'zone': 'a3'}"
 
 [glusterfs]
+# "standalone" glusterfs nodes STILL need to be in the "[nodes]" section
 app01.cloud.chx glusterfs_ip=192.168.1.206 glusterfs_zone=1 glusterfs_devices='[ "/dev/vdc" ]'
 app02.cloud.chx glusterfs_ip=192.168.1.207 glusterfs_zone=2 glusterfs_devices='[ "/dev/vdc" ]'
 app03.cloud.chx glusterfs_ip=192.168.1.208 glusterfs_zone=3 glusterfs_devices='[ "/dev/vdc" ]'
