@@ -52,39 +52,63 @@ openshift_disable_check=disk_availability,docker_storage,memory_availability
 # Mulititenant functionality (i.e. each project gets it's own "private" network)
 os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
-# Uncomment when setting up logging/metrics
-#openshift_master_dynamic_provisioning_enabled=true
+# Uncomment when setting up logging/metrics/prometheus
+openshift_master_dynamic_provisioning_enabled=true
+dynamic_volumes_check=False
 
-# This is required otherwise it will fail openshift_sanitize_inventory
-## cloud provider is not configured but dynamic is set
-# dynamic_volumes_check=False
-
-# Metrics and Logging leave commented out; run as post deployment
-##
 # Logging
-#openshift_logging_install_logging=true
-#openshift_logging_es_pvc_dynamic=true
-#openshift_logging_es_pvc_size=28Gi
-#openshift_logging_es_pvc_storage_class_name=glusterfs-storage-block
-#openshift_logging_curator_nodeselector={'region':'infra'}
-#openshift_logging_es_nodeselector={'region':'infra'}
-#openshift_logging_kibana_nodeselector={'region':'infra'}
-#openshift_logging_es_memory_limit=4G
-##
+openshift_logging_install_logging=true
+openshift_logging_es_pvc_dynamic=true
+openshift_logging_es_pvc_size=28Gi
+openshift_logging_es_pvc_storage_class_name=glusterfs-storage-block
+openshift_logging_curator_nodeselector={'region':'infra'}
+openshift_logging_es_nodeselector={'region':'infra'}
+openshift_logging_kibana_nodeselector={'region':'infra'}
+openshift_logging_es_memory_limit=4G
+
 # Metrics
-#openshift_metrics_install_metrics=true
-#openshift_metrics_cassandra_storage_type=dynamic
-#openshift_metrics_cassandra_pvc_size=28Gi
-#openshift_metrics_cassanda_pvc_storage_class_name=glusterfs-storage-block
-#openshift_metrics_hawkular_nodeselector={'region':'infra'}
-#openshift_metrics_heapster_nodeselector={'region':'infra'}
-#openshift_metrics_cassandra_nodeselector={'region':'infra'}
-##
-# Prometheus
-#openshift_hosted_prometheus_deploy=true
-#openshift_prometheus_namespace=openshift-metrics
-#openshift_prometheus_node_selector={"region":"infra"}
-#openshift_prometheus_storage_kind=dynamic
+openshift_metrics_install_metrics=true
+openshift_metrics_cassandra_storage_type=dynamic
+openshift_metrics_cassandra_pvc_size=28Gi
+openshift_metrics_cassanda_pvc_storage_class_name=glusterfs-storage-block
+openshift_metrics_hawkular_nodeselector={'region':'infra'}
+openshift_metrics_heapster_nodeselector={'region':'infra'}
+openshift_metrics_cassandra_nodeselector={'region':'infra'}
+
+## Prometheus Metrics
+openshift_hosted_prometheus_deploy=true
+openshift_prometheus_namespace=openshift-metrics
+openshift_prometheus_node_selector={'region':'infra'}
+
+# Prometheus storage config
+openshift_prometheus_storage_access_modes=['ReadWriteOnce']
+openshift_prometheus_storage_volume_name=prometheus
+openshift_prometheus_storage_volume_size=10Gi
+openshift_prometheus_storage_type='pvc'
+openshift_prometheus_sc_name="glusterfs-storage"
+
+# For prometheus-alertmanager
+openshift_prometheus_alertmanager_storage_access_modes=['ReadWriteOnce']
+openshift_prometheus_alertmanager_storage_volume_name=prometheus-alertmanager
+openshift_prometheus_alertmanager_storage_volume_size=10Gi
+openshift_prometheus_alertmanager_storage_type='pvc'
+openshift_prometheus_alertmanager_sc_name="glusterfs-storage"
+
+# For prometheus-alertbuffer
+openshift_prometheus_alertbuffer_storage_access_modes=['ReadWriteOnce']
+openshift_prometheus_alertbuffer_storage_volume_name=prometheus-alertbuffer
+openshift_prometheus_alertbuffer_storage_volume_size=10Gi
+openshift_prometheus_alertbuffer_storage_type='pvc'
+openshift_prometheus_alertbuffer_sc_name="glusterfs-storage"
+
+openshift_prometheus_node_exporter_image_version=v3.9.14
+
+# Ansible Service Broker
+openshift_hosted_etcd_storage_kind=dynamic
+openshift_hosted_etcd_storage_volume_name=etcd-vol2
+openshift_hosted_etcd_storage_access_modes=["ReadWriteOnce"]
+openshift_hosted_etcd_storage_volume_size=10G
+ansible_service_broker_local_registry_whitelist=['.*-apb$']
 
 # If using Route53 or you're pointed to the master with a "vanity" name
 openshift_master_public_api_url=https://ocp.cloud.chx:8443
@@ -106,7 +130,7 @@ openshift_master_cluster_public_hostname=ocp.cloud.chx
 openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
 openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
 
-# OpenShift host groups
+## OpenShift host groups
 
 # host group for etcd
 [etcd]
