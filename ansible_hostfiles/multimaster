@@ -107,7 +107,7 @@ openshift_prometheus_node_exporter_image_version=v3.9.14
 openshift_hosted_etcd_storage_kind=dynamic
 openshift_hosted_etcd_storage_volume_name=etcd-vol2
 openshift_hosted_etcd_storage_access_modes=["ReadWriteOnce"]
-openshift_hosted_etcd_storage_volume_size=10G
+openshift_hosted_etcd_storage_volume_size=10Gi
 ansible_service_broker_local_registry_whitelist=['.*-apb$']
 
 # If using Route53 or you're pointed to the master with a "vanity" name
