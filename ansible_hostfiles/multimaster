@@ -101,7 +101,7 @@ openshift_prometheus_alertbuffer_storage_volume_size=10Gi
 openshift_prometheus_alertbuffer_storage_type='pvc'
 openshift_prometheus_alertbuffer_sc_name="glusterfs-storage"
 
-openshift_prometheus_node_exporter_image_version=v3.9.14
+openshift_prometheus_node_exporter_image_version=v3.9.25
 
 # Ansible Service Broker
 openshift_hosted_etcd_storage_kind=dynamic
