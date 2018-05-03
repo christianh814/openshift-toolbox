@@ -1,0 +1,98 @@
+# Create an OSEv3 group that contains the masters and nodes groups
+[OSEv3:children]
+masters
+nodes
+etcd
+nfs
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+
+# If ansible_ssh_user is not root, ansible_sudo must be set to true
+ansible_ssh_user=root
+
+# origin specific
+enable_excluders=False
+enable_docker_excluder=False
+ansible_service_broker_install=False
+openshift_node_kubelet_args={'pods-per-core': ['10']}
+openshift_release=v3.9.0
+openshift_pkg_version=v3.9.0
+openshift_image_tag=v3.9.0
+openshift_service_catalog_image_version=v3.9.0
+template_service_broker_image_version=v3.9.0
+template_service_broker_selector={"region":"infra"}
+containerized=True
+osm_use_cockpit=true
+
+# Install Enterprise or Origin; set up ntp
+openshift_deployment_type=origin
+deployment_type=origin
+
+# Network/DNS Related
+openshift_master_default_subdomain=apps.172.16.1.50.nip.io
+osm_cluster_network_cidr=10.1.0.0/16
+osm_host_subnet_length=8
+openshift_portal_net=172.30.0.0/16
+osm_default_node_selector="region=primary"
+openshift_docker_insecure_registries=172.30.0.0/16,registry.access.redhat.com
+
+# Automatically Deploy the router
+openshift_hosted_manage_router=true
+openshift_hosted_router_selector='region=infra'
+
+# Automatically deploy the registry using NFS
+openshift_hosted_manage_registry=true
+openshift_hosted_registry_selector='region=infra'
+openshift_hosted_registry_storage_kind=nfs
+openshift_hosted_registry_storage_access_modes=['ReadWriteMany']
+openshift_hosted_registry_storage_host=/exports
+openshift_hosted_registry_storage_nfs_options='*(rw,root_squash)'
+openshift_hosted_registry_storage_volume_name=docker-registry
+openshift_hosted_registry_storage_volume_size=50Gi
+
+# Disble Checks
+openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability
+
+# Mulititenant functionality (i.e. each project gets it's own "private" network)
+os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+
+# Ansible Service Broker using NFS
+openshift_hosted_etcd_storage_kind=nfs
+openshift_hosted_etcd_storage_access_modes=["ReadWriteOnce"]
+openshift_hosted_etcd_storage_nfs_directory=/exports
+openshift_hosted_etcd_storage_nfs_options='*(rw,root_squash)'
+openshift_hosted_etcd_storage_volume_name=etcd-asb 
+openshift_hosted_etcd_storage_volume_size=1Gi
+openshift_hosted_etcd_storage_labels={'storage':'etcd'}
+
+# If using Route53 or you're pointed to the master with a "vanity" name
+openshift_master_public_api_url=https://ocp.172.16.1.50.nip.io:8443
+openshift_master_public_console_url=https://ocp.172.16.1.50.nip.io:8443/console
+openshift_master_cluster_public_hostname=ocp.172.16.1.50.nip.io
+openshift_master_api_port=8443
+openshift_master_console_port=8443
+
+# The following enabled htpasswd authentication
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
+openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+
+# OpenShift host groups
+
+# host group for etcd
+[etcd]
+master.172.16.1.50.nip.io
+
+[nfs]
+master.172.16.1.50.nip.io
+
+# host group for masters - set scedulable to "true" for the web-console pod
+[masters]
+master.172.16.1.50.nip.io openshift_schedulable=true
+
+# host group for nodes, includes region info
+[nodes]
+master.172.16.1.50.nip.io openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
+node.172.16.1.51.nip.io  openshift_node_labels="{'region': 'primary', 'zone': 'z1'}"
+##
+##
