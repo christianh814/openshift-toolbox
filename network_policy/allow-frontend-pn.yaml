@@ -1,0 +1,12 @@
+kind: NetworkPolicy
+apiVersion: extensions/v1beta1
+metadata:
+  name: allow-8080-frontend-pn
+spec:
+  podSelector:
+    matchLabels:
+      app: pricelist-not
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 8080
