@@ -7,3 +7,4 @@ OpenShift Setup Tools And Howto's
 * [Container Native Storage](cns)
 * [Let's Encrypt Crons](certbot)
 * [AWS Reference Architecture Deployer](aws_refarch)
+* [Network Policy Example](network_policy)
