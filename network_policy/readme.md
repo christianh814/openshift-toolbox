@@ -1,5 +1,11 @@
 # NetworkPolicy QnD
 
+Make sure you're in the right project
+
+```
+oc project myproject
+```
+
 First Run a deny all rule:
 
 ```
