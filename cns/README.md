@@ -1,6 +1,8 @@
 # CNS
 
-CNS (Container Native Storage) is a way to dynamically create file/object/block storage leverging glusterfs for OpenShift
+CNS (Container Native Storage) is a way to dynamically create file/object/block storage leverging glusterfs for OpenShift. Here are some quick notes in no paticular order
+
+[Installation](#installation)
 
 ## Installation
 
