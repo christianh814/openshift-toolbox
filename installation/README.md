@@ -2,12 +2,12 @@
 
 The installation of OpenShift Container Platform (OCP); will be done via ansible. More information can be found using the OpenShift [documentation site](https://docs.openshift.com/container-platform/latest/welcome/index.html).
 
-* [Infrastrucure](infrastrucure)
-* [Host preparation](host-preparation)
-* [Docker Configuration](docker-configuration)
-* [Ansible Installer](ansible-installer)
-* [Running The Playbook](running-the-playbook)
-* [AWS Installer](aws-installer)
+* [Infrastrucure](#infrastrucure)
+* [Host preparation](#host-preparation)
+* [Docker Configuration](#docker-configuration)
+* [Ansible Installer](#ansible-installer)
+* [Running The Playbook](#running-the-playbook)
+* [AWS Installer](#aws-installer)
 
 ## Infrastrucure 
 
