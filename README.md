@@ -9,3 +9,4 @@ OpenShift Setup Tools And Howto's
 * [Let's Encrypt Crons](certbot)
 * [AWS Reference Architecture Deployer](aws_refarch)
 * [Network Policy Example](network_policy)
+* [DaemonSets](daemon_sets)
