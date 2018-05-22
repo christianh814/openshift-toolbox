@@ -2,7 +2,7 @@
     "kind": "EgressNetworkPolicy",
     "apiVersion": "v1",
     "metadata": {
-        "name": "default"
+        "name": "allow-espn"
     },
     "spec": {
         "egress": [
