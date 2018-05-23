@@ -36,17 +36,19 @@ Allow the "good" web server to access the db
 oc create -f allow-pa-database.yaml
 ```
 
-*NOTE*: If you want to allow pods from one project to another; you'll need to do something like this...
+*__NOTE__*: If you want to allow pods from one project to another; you'll need to do something like this...
 
 ```
-oc label ns myproject name=myproject
+oc label ns myproject project=myproject
 ```
 
-Then
+then
 
 ```
-oc create -f allow-from-namespace.yaml
+oc create -f allow-from-namespace.yaml -n yourproject
 ```
+
+^ This allows pods from the namespace labeled `myproject` to access pods to the `yourproject` namespace
 
 ## Note
 MIGHT Need to run `oc label namespace default name=default`
