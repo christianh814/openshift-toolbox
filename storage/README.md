@@ -54,7 +54,7 @@ NFS is a supported protocol and the most common.
 Installing/setting up NFS is beyond the scope of this paticular doc; but I do have notes on how to install an NFS server
 
 * [Linux NFS Server Setup](https://github.com/christianh814/notes/blob/master/documents/nfs_notes.md#nfs-v4)
-* [Ansible Config](https://github.com/christianh814/notes/blob/master/documents/nfs_notes.md#nfs-v4)
+* [Ansible Config](#ansible-config)
 
 #### Ansible Config
 
