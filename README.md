@@ -3,6 +3,7 @@ OpenShift Setup Tools And Howto's
 
 * [OpenShift Installation](installation)
 * [Registry Information](registry)
+* [Router Information](router)
 * [Manage Masters and Nodes](manage_servers)
 * [Sample Ansible Host Files](ansible_hostfiles)
 * [Sample HAProxy Config File](haproxy_config)
