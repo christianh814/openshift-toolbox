@@ -4,6 +4,7 @@ OpenShift abstracts storage, and it's up to the administrator to setup/configure
 
 * [Host Path](#host-path)
 * [NFS](#nfs)
+* [AWS](#aws)
 
 CNS (Container Native Storage), is a whole other beast. Notes for that can be found [here](../cns)
 
@@ -191,3 +192,75 @@ oc volumes dc/gogs-postgresql --add --name=pgsql-data --claim-name=pgsql-claim -
 ```
 
 Take special note that you're overwriting the right `--name`. Find out with `oc volume dc <myapp> --list`
+
+## AWS
+
+You can set up AWS `ebs` volumes for dynamic storage provisioning
+
+* [AWS Setup](aws-setup)
+* [AWS Config](aws-config)
+
+### AWS Setup
+
+### AWS Config
+
+[More Info](https://docs.openshift.com/container-platform/latest/install_config/persistent_storage/dynamically_provisioning_pvs.html#aws-elasticblockstore-ebs)
+
+As an admin on the master.
+
+```
+[root@ip-172-31-22-210 ~]# cat aws-ebs-class.yaml
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: aws-slow
+provisioner: kubernetes.io/aws-ebs
+parameters:
+  type: gp2
+  zone: us-west-1b
+  iopsPerGB: "10"
+  encrypted: "false"
+[root@ip-172-31-22-210 ~]# oc create -f aws-ebs-class.yaml
+storageclass "aws-slow" created
+[root@ip-172-31-22-210 ~]# oc get storageclass
+NAME       TYPE
+aws-slow   kubernetes.io/aws-ebs
+```
+
+Now on the client side
+
+```
+[chernand@chernand ~]$ cat aws-ebs.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+ name: gogs-claim
+ annotations:
+   volume.beta.kubernetes.io/storage-class: aws-slow
+spec:
+ accessModes:
+  - ReadWriteOnce
+ resources:
+   requests:
+     storage: 10Gi
+[chernand@chernand ~]$ oc create -f aws-ebs.yaml
+persistentvolumeclaim "gogs-claim" created
+[chernand@chernand ~]$ oc get pvc
+NAME         STATUS    VOLUME                                     CAPACITY   ACCESSMODES   AGE
+gogs-claim   Bound     pvc-a3268768-dea9-11e6-b791-02d2b538cbc2   10Gi       RWO           2s
+```
+
+You should be able to see it on the server side now
+
+```
+[root@ip-172-31-22-210 ~]# oc get pv
+NAME                                       CAPACITY   ACCESSMODES   RECLAIMPOLICY   STATUS    CLAIM              REASON    AGE
+pvc-a3268768-dea9-11e6-b791-02d2b538cbc2   10Gi       RWO           Delete          Bound     infra/gogs-claim             10s
+
+```
+
+To setup a default class
+
+```
+oc annotate storageclass glusterfs-storage-block storageclass.kubernetes.io/is-default-class="true"
+```
