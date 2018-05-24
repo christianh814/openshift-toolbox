@@ -256,11 +256,10 @@ You should be able to see it on the server side now
 [root@ip-172-31-22-210 ~]# oc get pv
 NAME                                       CAPACITY   ACCESSMODES   RECLAIMPOLICY   STATUS    CLAIM              REASON    AGE
 pvc-a3268768-dea9-11e6-b791-02d2b538cbc2   10Gi       RWO           Delete          Bound     infra/gogs-claim             10s
-
 ```
 
 To setup a default class
 
 ```
-oc annotate storageclass glusterfs-storage-block storageclass.kubernetes.io/is-default-class="true"
+oc annotate storageclass aws-slow storageclass.kubernetes.io/is-default-class="true"
 ```
