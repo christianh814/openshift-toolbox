@@ -202,6 +202,34 @@ You can set up AWS `ebs` volumes for dynamic storage provisioning
 
 ### AWS Setup
 
+You can set it up with the following steps. You'll need to export `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` before you run the playbook.
+
+1. Set up the following in `[OSEv3:vars]`
+
+```
+##  AWS
+openshift_cloudprovider_kind=aws
+openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+```
+
+2. If you'd like, set up the registry for object storage
+
+```
+# Registry Storage
+openshift_hosted_registry_storage_kind=object
+openshift_hosted_registry_storage_provider=s3
+openshift_hosted_registry_storage_s3_accesskey="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
+openshift_hosted_registry_storage_s3_secretkey="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
+openshift_hosted_registry_storage_s3_bucket=bucket_name
+openshift_hosted_registry_storage_s3_region=us-west-2
+openshift_hosted_registry_storage_s3_chunksize=26214400
+openshift_hosted_registry_storage_s3_rootdirectory=/registry
+openshift_hosted_registry_pullthrough=true
+openshift_hosted_registry_acceptschema2=true
+openshift_hosted_registry_enforcequota=true
+```
+
 ### AWS Config
 
 [More Info](https://docs.openshift.com/container-platform/latest/install_config/persistent_storage/dynamically_provisioning_pvs.html#aws-elasticblockstore-ebs)
