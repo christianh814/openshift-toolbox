@@ -8,6 +8,7 @@ The installation of OpenShift Container Platform (OCP); will be done via ansible
 * [Ansible Installer](#ansible-installer)
 * [Running The Playbook](#running-the-playbook)
 * [AWS Installer](#aws-installer)
+* [Package Excluder](#package-excluder)
 
 ## Infrastrucure 
 
@@ -233,3 +234,11 @@ oc label node infra1.cloud.chx node-role.kubernetes.io/infra=true
 ## AWS Installer
 
 There is a script provided by RH, that provisions an fully HA env on AWS. You can find notes for that [Here](https://github.com/christianh814/openshift-toolbox/tree/master/aws_refarch)
+
+## Package Excluder
+
+OpenShift excludes packages during install, you may want to unexclude it at times (you probably never have to; but here's how to in any event)
+
+```
+atomic-openshift-excluder [ unexclude | exclude ]
+```
