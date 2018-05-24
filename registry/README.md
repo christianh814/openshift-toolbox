@@ -22,7 +22,7 @@ root@master# curl -v $(oc get services | grep registry | awk '{print $4":"$5}/v2
 
 If you have a NFS server you'd like to use...
 
-Deploy registry without the "--mount-host" option
+Deploy registry without the `--mount-host` option
 ```
 root@master# oadm registry \
 --config=/etc/origin/master/admin.kubeconfig \
