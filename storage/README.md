@@ -197,8 +197,8 @@ Take special note that you're overwriting the right `--name`. Find out with `oc 
 
 You can set up AWS `ebs` volumes for dynamic storage provisioning
 
-* [AWS Setup](aws-setup)
-* [AWS Config](aws-config)
+* [AWS Setup](#aws-setup)
+* [AWS Config](#aws-config)
 
 ### AWS Setup
 
