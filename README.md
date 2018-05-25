@@ -16,3 +16,4 @@ OpenShift Setup Tools And Howto's
 * [DaemonSets](daemon_sets)
 * [Authentication](authentication)
 * [Metrics](metrics)
+* [Logging](logging)
