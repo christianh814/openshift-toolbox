@@ -14,3 +14,4 @@ OpenShift Setup Tools And Howto's
 * [AWS Reference Architecture Deployer](aws_refarch)
 * [Network Policy Example](network_policy)
 * [DaemonSets](daemon_sets)
+* [Authentication](authentication)
