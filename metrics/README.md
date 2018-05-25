@@ -1,6 +1,6 @@
-# Hawkular Metrics
+# Metrics
 
-This shows you how to install Hawkular Metrics. This assumes that you got [dynamic storage setup](../cns). Also note that I use ansible variables and those may change. I don't keep this doc very up to date so best to look at [my sample ansible hosts files](../ansible_hostfiles) go verify.
+This shows you how to install Metrics on OpenShift. This assumes that you got [dynamic storage setup](../cns). Also note that I use ansible variables and those may change. I don't keep this doc very up to date so best to look at [my sample ansible hosts files](../ansible_hostfiles) go verify.
 
 # Installation Hawkular
 
