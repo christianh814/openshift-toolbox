@@ -17,3 +17,4 @@ OpenShift Setup Tools And Howto's
 * [Authentication](authentication)
 * [Metrics](metrics)
 * [Logging](logging)
+* [And The Rest](miscellaneous)
