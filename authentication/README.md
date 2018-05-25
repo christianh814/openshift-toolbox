@@ -60,7 +60,8 @@ If the ldapsearch did not return any user, it means -D or -b may not be correct.
 
 If you see an error in `journalctl -u atomic-openshift-master`  there might be a conflict with the user identity when user trying to login (if you used `htpasswd` beforehand). Just do the following...
 ```
-oc get user oc delete user user1
+oc get user
+oc delete user user1
 ```
 
 Inspiration from [This workshop](https://github.com/RedHatWorkshops/openshiftv3-ops-workshop/blob/master/adding_an_ldap_provider.md)
