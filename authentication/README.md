@@ -63,10 +63,7 @@ If you see an error in `journalctl -u atomic-openshift-master`  there might be a
 oc get user oc delete user user1
 ```
 
-Inspiration from :
-
-  * [[https://access.redhat.com/solutions/2016873]]
-  * [[https://access.redhat.com/solutions/1978013]]
+Inspiration from [This workshop](https://github.com/RedHatWorkshops/openshiftv3-ops-workshop/blob/master/adding_an_ldap_provider.md)
 
 The configuration in `master-config.yaml` Should look something like this:
 
