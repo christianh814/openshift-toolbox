@@ -2,7 +2,7 @@
 
 This shows you how to install Hawkular Metrics. This assumes that you got [dynamic storage setup](../cns). Also note that I use ansible variables and those may change. I don't keep this doc very up to date so best to look at [my sample ansible hosts files](../ansible_hostfiles) go verify.
 
-# Installation
+# Installation Hawkular
 
 First, set up your `/etc/ansible/hosts` file with the following in the `[OSEv3:vars]` section
 
@@ -30,7 +30,7 @@ Then run the installer.
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/openshift-metrics/config.yml
 ```
 
-# Uninstall
+# Uninstall Hawkular
 
 To uninstall hawkular; run the same playbook but add `-e openshift_metrics_install_metrics=False`
 
@@ -79,7 +79,7 @@ Then run
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/openshift-prometheus/config.yml
 ```
 
-# Misc
+# Misc Hawkular
 
 If you ran the installer without the `*_nodeselector` options; you can do this to "move" it over to your infra nodes.
 

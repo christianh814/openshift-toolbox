@@ -15,4 +15,4 @@ OpenShift Setup Tools And Howto's
 * [Network Policy Example](network_policy)
 * [DaemonSets](daemon_sets)
 * [Authentication](authentication)
-* [Hawkular Metrics](hawkular)
+* [Metrics](metrics)
