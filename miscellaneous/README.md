@@ -379,3 +379,72 @@ One time running of a RHEL pod with useful tools
 ```
 oc run rheltest --image=registry.access.redhat.com/rhel7/rhel-tools --restart=Never --attach -i --tty
 ```
+
+# Jenkins Pipelines
+
+Quick and Dirty Jenkins notes
+
+```
+[root@ose3-master ~]# cat pipelines_notes.txt
+oadm policy add-cluster-role-to-group system:build-strategy-jenkinspipeline system:authenticated
+
+[root@ose3-master ~]# cat /etc/origin/master/pipelines.js
+window.OPENSHIFT_CONSTANTS.ENABLE_TECH_PREVIEW_FEATURE.pipelines = true;
+
+[root@ose3-master ~]# grep -B15 'pipelines.js' /etc/origin/master/master-config.yaml
+assetConfig:
+  logoutURL: ""
+  masterPublicURL: https://ose3-master.example.com:8443
+  publicURL: https://ose3-master.example.com:8443/console/
+  servingInfo:
+    bindAddress: 0.0.0.0:8443
+    bindNetwork: tcp4
+    certFile: master.server.crt
+    clientCA: ""
+    keyFile: master.server.key
+    maxRequestsInFlight: 0
+    requestTimeoutSeconds: 0
+  metricsPublicURL: "https://hawkular.cloudapps.example.com/hawkular/metrics"
+  loggingPublicURL: "https://kibana.cloudapps.example.com"
+  extensionScripts:
+  - /etc/origin/master/pipelines.js
+
+
+oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/image-streams/image-streams-centos7.json -n openshift
+oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/jenkins-ephemeral-template.json -n openshift
+oc create -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/jenkins-persistent-template.json -n openshift
+
+# as user
+oc login
+oc new-poroject jenkins-pipeline
+oc new-app jenkins-persistent
+     * With parameters:
+        * Jenkins Service Name=jenkins
+        * Jenkins JNLP Service Name=jenkins-jnlp
+        * Jenkins Password=ovuv0M3So0U3LCgw # generated
+        * Memory Limit=512Mi
+        * Volume Capacity=1Gi
+        * Jenkins ImageStream Namespace=openshift
+        * Jenkins ImageStreamTag=jenkins:latest
+
+oc new-app -f https://raw.githubusercontent.com/openshift/origin/master/examples/jenkins/pipeline/samplepipeline.json
+
+
+# as root on master https://docs.openshift.com/container-platform/3.3/install_config/configuring_pipeline_execution.html#overview
+
+[root@ose3-master ~]# grep -A10 jenkinsPipelineConfig /etc/origin/master/master-config.yaml
+jenkinsPipelineConfig:
+  autoProvisionEnabled: true
+  templateNamespace: openshift
+  templateName: jenkins-ephemeral
+  serviceName: jenkins
+  parameters: null
+```
+Jenkins to control different env
+
+```
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n ks-dev
+oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n ks-prod
+oc policy add-role-to-group system:image-puller system:serviceaccounts:ks-prod -n ks-dev
+```
+

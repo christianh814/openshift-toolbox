@@ -17,4 +17,5 @@ OpenShift Setup Tools And Howto's
 * [Authentication](authentication)
 * [Metrics](metrics)
 * [Logging](logging)
+* [OC Cluster Up](oc_cluster_up)
 * [And The Rest](miscellaneous)
