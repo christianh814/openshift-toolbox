@@ -156,6 +156,29 @@ Currently, you can only add a user to a group by setting the "group" array to a 
 }
 
 ```
+
+# Create Admin User
+
+First, you create the user using either `ldap` or the `htpasswd` file. It's basically whatever backend auth system you set up; for example; if you use `htpasswd` create the user like so...
+
+```
+htpasswd /etc/origin/openshift-passwd ocp-admin
+```
+
+Then, as `system:admin` give this user `cluster-admin` permissions (**CAREFUL** this is like "root" but for OpenShift)
+
+```
+oc adm policy add-cluster-role-to-user cluster-admin ocp-admin
+```
+
+Now they can login from anywhere with an `oc` cli tool and login with...
+
+```
+user@host$ oc login https://ose3-master.example.com:8443 --insecure-skip-tls-verify --username=ocp-admin
+```
+
+You can then maybe install [cockpit](https://github.com/RedHatWorkshops/openshiftv3-ops-workshop/blob/master/deploying_cockpit_as_a_container.md#step-2) if you want a sort of "admin" interface.
+
 # Login
 
 There are many methods to login including username/password or token.
