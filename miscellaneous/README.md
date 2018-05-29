@@ -227,7 +227,7 @@ If A pod dies kubernetes will fire the pod back up.
 
 But what if the pod is running but the application (pid) inside is hung or dead? Kubernetes needs a way to monitor the application.
 
-This is done with a "health check" outlined [[https://github.com/GoogleCloudPlatform/kubernetes/tree/master/docs/user-guide/liveness|here]]
+This is done with a "health check" outlined [here](https://docs.openshift.com/container-platform/latest/dev_guide/application_health.html)
 
 First edit the deploymentConfig
 ```
