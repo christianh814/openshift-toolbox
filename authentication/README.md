@@ -156,3 +156,29 @@ Currently, you can only add a user to a group by setting the "group" array to a 
 }
 
 ```
+# Login
+
+There are many methods to login including username/password or token.
+
+## User Login
+
+To login as a "regular" user...
+
+```
+user@host$ oc login https://ose3-master.example.com:8443 --insecure-skip-tls-verify --username=demo
+```
+## Admin Login
+
+On the master, you can log back into OCP as admin with...
+
+```
+root@master# oc login -u system:admin -n default
+```
+
+Or, you can specify the kubeconfig file directly
+
+```
+ oc login --config=/path/to/admin.kubeconfig -u system:admin
+```
+
+You can also export `KUBECONFIG` to wherever your kubeconfig is (when you login, it SHOULD be under `~/.kube/config`  but you can specify the one on the master if you'd like)
