@@ -5,8 +5,7 @@ OpenShift abstracts storage, and it's up to the administrator to setup/configure
 * [Host Path](#host-path)
 * [NFS](#nfs)
 * [AWS](#aws)
-
-CNS (Container Native Storage), is a whole other beast. Notes for that can be found [here](../cns)
+* [CNS](../cns)
 
 ## Host Path
 
