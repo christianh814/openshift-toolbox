@@ -16,6 +16,7 @@ root@master# oc adm manage-node ose3-master.example.com --schedulable=true
 ## Nodes
 
 * [Assign Node Roles](#roles)
+* [Node Selector](#node-selector)
 
 ## Roles
 
@@ -51,3 +52,24 @@ master2.cloud.chx   Ready     master    33d       v1.9.1+a0ce1bc657
 master3.cloud.chx   Ready     master    33d       v1.9.1+a0ce1bc657
 ```
 
+## Node Selector
+
+To deploy an app on a specific node....
+
+```
+oc edit namespace default
+```
+
+and add...
+
+```
+openshift.io/node-selector: region=infra
+```
+
+OR, you can just annotate it.
+
+```
+root@master# oc annotate namespace default openshift.io/node-selector=region=infra
+```
+
+Then make sure your `nodeSelector` matches the `key=value` paring.
