@@ -7,7 +7,7 @@ QnD
 
 1. Download latest `oc` client [here](https://github.com/openshift/origin/releases)
 
-2a. Temp setup
+2. Temp setup (option 1)
 
 ```
 yum -y install docker
@@ -29,7 +29,7 @@ firewall-cmd --reload
 oc cluster up --metrics=true --logging=true --public-hostname console.$DOMAIN --routing-suffix apps.$DOMAIN
 ```
 
-2b. Save config for later
+2. Save config for later (option 2)
 
 ```
 yum -y install docker
