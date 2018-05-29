@@ -205,3 +205,51 @@ Or, you can specify the kubeconfig file directly
 ```
 
 You can also export `KUBECONFIG` to wherever your kubeconfig is (when you login, it SHOULD be under `~/.kube/config`  but you can specify the one on the master if you'd like)
+
+# Custom Roles
+
+More info found [here](http://v1.uncontained.io/playbooks/operationalizing/custom_role_creation.html)
+
+Highlevel; find something like what you want and export it.
+
+```
+oc export clusterrole edit > edit_role.yaml
+cp edit_role.yaml customrole.yaml
+```
+
+Edit to your hearts content (I did a `diff` here to show you the change)
+
+```
+diff edit_role.yaml customrole.yaml
+
+8c8
+<   name: edit
+---
+>   name: edit_no_rsh
+16d15
+<   - pods/exec
+```
+
+Above you see I changed the name and removed `pods/exec`
+
+You also want to remove the `aggregationRule` (redo the diff because it'll look different than the `diff` above)
+
+```
+aggregationRule:
+  clusterRoleSelectors:
+  - matchLabels:
+      rbac.authorization.k8s.io/aggregate-to-edit: "true"
+```
+
+Load the new role
+```
+oc create -f customrole.yaml
+clusterrole "edit_no_rsh" created
+```
+
+Assign to a user
+
+```
+oc adm policy add-role-to-user edit_no_rsh bob -n myproject
+```
+

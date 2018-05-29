@@ -448,3 +448,92 @@ oc policy add-role-to-user edit system:serviceaccount:cicd:jenkins -n ks-prod
 oc policy add-role-to-group system:image-puller system:serviceaccounts:ks-prod -n ks-dev
 ```
 
+# Import Images
+
+You can import images to the internal registry like so...
+
+```
+oc import-image openshift/openjdk18-openshift --from=registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift --confirm -n openshift
+```
+
+# JSON Path
+
+Get specific items with `jsonpath`
+
+```
+oc get secrets registry-config -n default -o jsonpath='{.data.config\.yml}{"\n"}' | base64 -d
+```
+
+This is how I got route info
+```
+oc get route -n openshift-infra -o jsonpath='{.items[*].spec.tls.termination}{"\n"}'
+```
+
+Just do this and "follow the path"
+
+```
+oc get <resource> -o json
+```
+
+Good info [here](http://sferich888.blogspot.com/2017/01/learning-using-jsonpath-with-openshift.html)
+
+# External Registries
+
+Edit the buildConfig to look like
+
+```
+output:
+    to:
+      kind: DockerImage   
+      name: docker.io/veermuchandi/mytime:latest
+    pushSecret:
+      name: dockerhub
+```
+
+# ConfigMap Notes
+
+Edit a configmap by updating the file locally and upload it via the `oc` command
+
+```
+oc create configmap test --from-file='foo=foo' --dry-run -o yaml | oc replace -f -
+```
+
+I don't know where else to put this but I created users with gogs using this...
+
+```
+curl -H "Content-Type: application/json" -X POST \
+-d '{"source_id": 1, "login_name": "user-002", "username": "user-002","email": "user-002@mailinator.com"}' \
+"http://gogs.redhatworkshops.io/api/v1/admin/users?token=6abd69ed8c86ee2925df7830e5c7a95197b71552"
+```
+
+A better way to do this was via shell script
+
+```
+#!/bin/bash
+token="4fc0338c98cb2a36135db14a64046c4672874715"
+for i in {00..99}
+do
+  echo "{\"source_id\": 1, \"login_name\": \"user-${i}\", \"username\": \"user-${i}\",\"email\": \"user-${i}@mailinator.com\"}" > /tmp/user-${i}.json
+done
+
+for i in {01..99}
+do 
+  curl -H "Content-Type: application/json" -X POST -d @/tmp/user-${i}.json \
+  "http://gogs.redhatworkshops.io/api/v1/admin/users?token=${token}"
+done
+##
+##
+```
+# Custom Builders
+
+Tag customer builders in 3.7
+
+```
+oc patch is s2i-custom-python35 -p '{"spec":{"tags":[{"annotations":{"tags":"builder,python"},"name":"latest"}]}}' -n $PROJECT
+```
+
+Insecure registry
+```
+oc patch is jenkins -p '{"spec":{"tags":[{"importPolicy":{"insecure":true},"name":"latest"}]}}'
+```
+
