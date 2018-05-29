@@ -5,6 +5,7 @@ The OpenShift router is the ingress point for all traffic destined for services 
 * [Deploy Router](#deploy-router)
 * [Health Checks](#health-checks)
 * [Router Settings](#router-settings)
+* [Node Port](#node-port)
 
 ## Deploy Router
 
@@ -55,3 +56,42 @@ To do sticky set it to..
 ```
 oc annotate route/myapp haproxy.router.openshift.io/balance=source
 ```
+
+## Node Port
+
+A `nodePort` allows you to connect to a pod directly to one of the nodes (ANY node in the cluster) on a specific port (thus bypassing the router). This is useful if you want to expose a database outside of the cluster.
+
+To create nodeport; first setup the file
+
+```
+$ cat nodeport-ssh.yaml 
+apiVersion: v1
+kind: Service
+metadata:
+  name: ssh-fedora
+  labels:
+    vm: fedora
+spec:
+  type: NodePort
+  ports:
+    - port: 22
+      nodePort: 31122
+      name: ssh
+  selector:
+    vm: fedora
+```
+
+Make sure you label either the pod/deploymentconfig or whatever you're trying to reach
+
+```
+oc label vm vm-fedora vm=fedora
+oc label pod virt-launcher-vm-fedora-vt74t vm=fedora
+```
+
+Now you can create the definition
+
+```
+oc create -f nodeport-ssh.yaml
+```
+
+In this case; you'll be able connect into port `31122` (on to ANY server in the cluster) and it will foward it to port `22` on the pod that matches the label.
