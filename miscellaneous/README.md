@@ -88,10 +88,18 @@ user@host$ cd openshift-ansible/roles/openshift_examples/files/examples/xpaas-te
 user@host$ oc process -f eap6-basic-sti.json -v APPLICATION_NAME=ks,APPLICATION_HOSTNAME=ks.demo.sbx.osecloud.com,GIT_URI=https://github.com/RedHatWorkshops/kitchensink,GIT_REF="",GIT_CONTEXT_DIR="" | oc create -f -
 ```
 
-Custom Service
+Create a service address if there wasn't one created for you
 ```
 user@host$ oc expose dc/basicauthurl --port=443 --generator=service/v1 -n auth
 ```
+
+Expose a specific service on one port, but the container is listening on another
+
+```
+oc expose service nginx --name=exposed-svc --port=12201 --protocol="TCP" --target-port=7474 --generator="service/v2"
+```
+Here, service is listening on `12201` but the container is listening on `7474`
+
 # Rolling Deployments
 
 By default, when a new build is fired off it will stop the application while the new container is created. You can change the deployment time on an app
