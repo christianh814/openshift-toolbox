@@ -537,3 +537,27 @@ Insecure registry
 oc patch is jenkins -p '{"spec":{"tags":[{"importPolicy":{"insecure":true},"name":"latest"}]}}'
 ```
 
+# Service Accounts
+
+To create a `serviceaccount` for various tasks
+
+```
+oc create serviceaccount mysa -n myproject
+```
+Then you can get this `serviceaccount`'s token (this is a LONG LASTING TOKEN, so keep safe)
+
+```
+oc sa get-token mysa -n myproject
+```
+
+You can also, for example, give this `serviceaccount` user elevated access (let's say, for example, jenkins)
+
+```
+oc adm policy add-cluster-role-to-user cluster-admin system:serviceaccount:myproject:mysa
+```
+
+I think you can do it like this too
+
+```
+oc adm policy add-cluster-role-to-user cluster-admin -z mysa -n myproject
+```
