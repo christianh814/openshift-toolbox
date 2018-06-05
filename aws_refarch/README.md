@@ -294,4 +294,41 @@ You should be ready to install openshift now. You will have various configs unde
 ~/.ssh/config-${clusterid}.${dns_domain}-*
 ```
 
-These files have examples of what you need to use for  your inventory file. I created an inventory file called `~/aws_inventory.ini`, [here is an example](), use this to compile your own inventory file. **DON'T JUST COPY THIS ONE!!!**  	
+These files have examples of what you need to use for  your inventory file. I created an inventory file called `~/aws_inventory.ini`, [here is an example](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/aws_refarch/aws_inventory.ini), use this to compile your own inventory file. **DON'T JUST COPY THIS ONE!!!**  	
+
+You can verify this with ansible `ping` module. You should see the hostnames in aws.
+
+```
+ansible -i ~/aws_inventory.ini nodes -b -m ping
+```
+
+Disable the aws repos
+
+```
+ansible -i ~/aws_inventory.ini nodes -b -m command -a "yum-config-manager --disable 'rhui-REGION-client-config-server-7' --disable 'rhui-REGION-rhel-server-rh-common' --disable 'rhui-REGION-rhel-server-releases'"
+```
+
+Register your systems
+
+```
+ansible -i ~/aws_inventory.ini nodes -b -m redhat_subscription -a "state=present username=myusername@example.com password=mypassword"
+```
+
+Attach to the proper pools
+
+```
+ansible -i ~/aws_inventory.ini nodes -b -m shell -a "subscription-manager attach --pool XXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+```
+
+Attach to the right repos
+
+```
+ansible -i ~/aws_inventory.ini nodes -b -m shell -a 'subscription-manager repos --disable="*" --enable="rhel-7-server-rpms" --enable="rhel-7-server-extras-rpms" --enable="rhel-7-server-ose-3.9-rpms" --enable="rhel-7-fast-datapath-rpms"'
+```
+
+Now you can run the playbooks
+
+```
+ansible-playbook -i ~/aws_inventory.ini /usr/share/ansible/openshift-ansible/playbooks/prerequisites.yml
+ansible-playbook -i ~/aws_inventory.ini /usr/share/ansible/openshift-ansible/playbooks/deploy_cluster.yml
+```
