@@ -22,6 +22,7 @@ osm_host_subnet_length=8
 openshift_portal_net=172.30.0.0/16
 osm_default_node_selector="region=primary"
 openshift_docker_insecure_registries=172.30.0.0/16
+# container_runtime_docker_storage_setup_device=/dev/nvme1n1
 
 # CNS Storage
 openshift_storage_glusterfs_namespace=glusterfs
