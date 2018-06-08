@@ -37,6 +37,7 @@ openshift_hosted_registry_selector='region=infra'
 
 ##  AWS
 openshift_cloudprovider_kind=aws
+openshift_clusterid=myocp
 openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 
