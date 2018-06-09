@@ -4,7 +4,7 @@ This installer sets up OpenShift on AWS in a HA configuration. This is a summary
 
 In the end you'll have the following.
 
-![aws refarch overview](./ose-on-aws-architecture.jpg)
+![aws refarch overview](./ose-on-aws-architecture.png)
 
 You will need the following to get started
 * An AWS IAM account
