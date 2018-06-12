@@ -1,0 +1,73 @@
+# Create an OSEv3 group that contains the masters and nodes groups
+[OSEv3:children]
+masters
+nodes
+etcd
+
+# Set variables common for all OSEv3 hosts
+[OSEv3:vars]
+
+# If ansible_ssh_user is not root, ansible_sudo must be set to true
+ansible_ssh_user=root
+
+# Install Enterprise or Origin; set up ntp
+openshift_deployment_type=openshift-enterprise
+openshift_clock_enabled=true
+
+# Network/DNS Related
+openshift_master_default_subdomain=apps.172.16.1.47.nip.io
+osm_cluster_network_cidr=10.1.0.0/16
+osm_host_subnet_length=8
+openshift_portal_net=172.30.0.0/16
+osm_default_node_selector="region=aio"
+openshift_docker_insecure_registries=172.30.0.0/16
+
+openshift_release=v3.9
+#openshift_image_tag=v3.9.27
+oreg_url_master=registry.access.redhat.com/openshift3/ose-${component}:${version}
+oreg_url_node=registry.access.redhat.com/openshift3/ose-${component}:${version}
+
+# Automatically Deploy the router
+openshift_hosted_manage_router=true
+openshift_hosted_router_selector='region=aio'
+
+# Automatically deploy the registry
+openshift_hosted_manage_registry=true
+openshift_enable_unsupported_configurations=true
+openshift_hosted_registry_selector='region=aio'
+
+# Disble Checks
+openshift_disable_check=disk_availability,docker_storage,memory_availability
+
+# Mulititenant functionality (i.e. each project gets it's own "private" network)
+os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
+
+# If using Route53 or you're pointed to the master with a "vanity" name
+openshift_master_public_api_url=https://master.ocp.172.16.1.47.nip.io:8443
+openshift_master_public_console_url=https://master.ocp.172.16.1.47.nip.io:8443/console
+openshift_master_cluster_public_hostname=master.ocp.172.16.1.47.nip.io
+openshift_master_api_port=8443
+openshift_master_console_port=8443
+
+template_service_broker_selector={"region": "aio"}
+
+# The following enabled htpasswd authentication
+openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
+openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
+
+# OpenShift host groups
+
+# host group for etcd
+[etcd]
+master.ocp.172.16.1.47.nip.io
+
+# host group for masters - set scedulable to "true" for the web-console pod
+[masters]
+master.ocp.172.16.1.47.nip.io openshift_schedulable=true
+
+# host group for nodes, includes region info
+[nodes]
+master.ocp.172.16.1.47.nip.io openshift_node_labels="{'region': 'aio', 'zone': 'default'}"
+
+###
+###

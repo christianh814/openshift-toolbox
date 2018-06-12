@@ -4,6 +4,7 @@ CNS (Container Native Storage) is a way to dynamically create file/object/block 
 
 * [Installation](#installation)
 * [Heketi](#heketi)
+* [AIO Install](#aio-install)
 
 ## Installation
 
@@ -80,3 +81,7 @@ Device added successfully
 [root@master01 ~]# heketi-cli device add --name=/dev/vdd --node=d15e22573b033749fcb708b4969ad795
 Device added successfully
 ```
+
+## AIO Install
+
+"All in One" Install is running CNS on a single node (only for testing). 
