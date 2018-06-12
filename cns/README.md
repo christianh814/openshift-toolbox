@@ -84,4 +84,132 @@ Device added successfully
 
 ## AIO Install
 
-"All in One" Install is running CNS on a single node (only for testing). 
+"All in One" Install is running CNS on a single node (only for testing).  Once you've installed an [all-in-one](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/all-in-one) openshift server follow these steps
+
+### Set Up
+
+Set up the prereqs as you would normally following [this howto](https://github.com/christianh814/openshift-toolbox/tree/master/cns#installation). Here are the "cliff notes" from that doc (**BUT FOLLOW THAT DOC, DON'T SKIP...RAVI, I'M LOOKING AT YOU!!!!**)
+
+```
+git clone https://github.com/RedHatWorkshops/openshiftv3-ops-workshop
+cd openshiftv3-ops-workshop
+ansible-playbook ./resources/cns-host-prepare.yaml
+oc adm new-project glusterfs
+oc project glusterfs
+oc adm policy add-scc-to-user privileged -z default -n glusterfs
+```
+
+Next create a `cns.json` file that specifies your node and the disk you're using
+
+```
+{
+    "clusters": [
+        {
+            "nodes": [
+                {
+                    "node": {
+                        "hostnames": {
+                            "manage": [
+                                "master.ocp.172.16.1.47.nip.io"
+                            ],
+                            "storage": [
+                                "172.16.1.47"
+                            ]
+                        },
+                        "zone": 1
+                    },
+                    "devices": [
+                        "/dev/vdb"
+                    ]
+                }
+            ]
+        }
+    ]
+}
+```
+
+### Hack the deployer
+
+You'll need to edit `cns-deploy` to do some things that aren't currently supported officially by Red Hat
+
+```
+vim `which cns-deploy`
+```
+
+Here you'll looking for a line that has `setup-openshift-heketi-storage` command option. It's around line `874`. It looks like this...
+
+```
+eval_output "${heketi_cli} setup-openshift-heketi-storage --listfile=/tmp/heketi-storage.json --image rhgs3/rhgs-volmanager-rhel7:v3.9.0 2>&1"
+```
+
+You'll need to **change** this line and add `--durability none` to it...in the end it'll look like this
+
+```
+eval_output "${heketi_cli} setup-openshift-heketi-storage --durability none --listfile=/tmp/heketi-storage.json --image rhgs3/rhgs-volmanager-rhel7:v3.9.0 2>&1"
+```
+
+### Install CNS
+
+Now you can run `cns-deploy` that will create a "one node cns pod"
+
+```
+cns-deploy -n glusterfs -g -y -c oc  --no-block  --no-object cns.json
+```
+
+Verify with 
+
+```
+[root@master ~]# oc get pods -n glusterfs
+NAME              READY     STATUS    RESTARTS   AGE
+glusterfs-jbhmd   1/1       Running   0          35m
+heketi-1-2d67k    1/1       Running   0          33m
+```
+
+Now create a storage class, make sure you add `volumetype: "none"`, this makes it a "distributed"  volume of one disk
+
+```
+apiVersion: storage.k8s.io/v1beta1
+kind: StorageClass
+metadata:
+  name: gluster-container
+provisioner: kubernetes.io/glusterfs
+parameters:
+  resturl: "http://heketi-glusterfs.apps.172.16.1.47.nip.io"
+  restuser: "admin"
+  secretNamespace: "default"
+  secretName: "heketi-secret"
+  volumetype: "none"
+```
+
+Create the secret file (SOP here...nothing special)
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: heketi-secret
+  namespace: default
+data:
+  key: TXkgU2VjcmV0
+type: kubernetes.io/glusterfs
+```
+
+Now load these
+
+```
+oc create -f glusterfs-secret.yaml
+oc create -f glusterfs-storageclass.yaml
+```
+
+Set it up as your default storageclass if you wish
+
+```
+[root@master ~]# oc annotate storageclass gluster-container storageclass.kubernetes.io/is-default-class="true"
+storageclass "gluster-container" annotated
+
+[root@master ~]# oc get sc
+NAME                          PROVISIONER               AGE
+gluster-container (default)   kubernetes.io/glusterfs   30m
+```
+
+That's it!
