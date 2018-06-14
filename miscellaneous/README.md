@@ -569,3 +569,13 @@ I think you can do it like this too
 ```
 oc adm policy add-cluster-role-to-user cluster-admin -z mysa -n myproject
 ```
+
+# Quotas
+
+Set quotas with....
+
+```
+oc create quota myq --hard=pods=5,requests.storage=5G -n myproject
+```
+
+More info [found here](https://docs.openshift.com/container-platform/latest/admin_guide/quota.html)
