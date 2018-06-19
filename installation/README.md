@@ -139,6 +139,7 @@ Re-initialize docker.
 **Warning** This will destroy any docker containers or images currently on the host.
 ```
     # systemctl stop docker
+    # vgremove -ff docker-vg
     # rm -rf /var/lib/docker/*
     # wipefs -a /path/to/dev
     # cat /dev/null > /etc/sysconfig/docker-storage
