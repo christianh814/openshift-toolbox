@@ -498,6 +498,30 @@ output:
       name: dockerhub
 ```
 
+To connect to a password protected registry...
+
+1. First login from the command line
+
+```
+docker login myregistry.com --username=myuser --password=secret
+```
+2. Then create a secret referencing the fullpath of the file it created
+
+```
+oc secrets new myregistry .dockerconfigjson=/root/.docker/config.json
+```
+3. Finally `link` the secret to any service account you may need it for (e.g. `deployer`, `builder`, `default`, or a custom one you may have made)
+
+```
+oc secrets link deployer myregistry --for=pull
+```
+
+4. You should be able to pull that image now
+
+```
+oc new-app myregistry.com/mynamespace/myapp:latest --name=myapp
+```
+
 # ConfigMap Notes
 
 Edit a configmap by updating the file locally and upload it via the `oc` command
