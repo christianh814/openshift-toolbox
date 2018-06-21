@@ -599,7 +599,15 @@ oc adm policy add-cluster-role-to-user cluster-admin -z mysa -n myproject
 Set quotas with....
 
 ```
-oc create quota myq --hard=pods=5,requests.storage=5G -n myproject
+oc create quota myq --hard=pods=5,requests.storage=5G,persistentvolumeclaims=10 -n myproject
 ```
+
+To restrict storageclasses
+
+```
+oc create quota demo-quota --hard=glusterfs-storage-block.storageclass.storage.k8s.io/persistentvolumeclaims=0,glusterfs-storage.storageclass.storage.k8s.io/requests.storage=20G
+```
+
+Format is `<storage-class-name>.storageclass.storage.k8s.io/requests.storage` and `<storage-class-name>.storageclass.storage.k8s.io/persistentvolumeclaims`
 
 More info [found here](https://docs.openshift.com/container-platform/latest/admin_guide/quota.html)
