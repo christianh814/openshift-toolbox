@@ -8,41 +8,53 @@ This assumes the following
 
 NOTE: This was tested with `oc cluster up`
 
-## Install FreeIPA  Template
+## Prepare Cluster
 
-Import the community version of FreeIPA template into OpenShift to test on if you don't have an LDAP server handy.
-
-```
-oc login -u system:admin
-oc create -f https://raw.githubusercontent.com/freeipa/freeipa-container/master/freeipa-server-openshift.json -n openshift
-```
-
-Next, import the image as the developer user
+You must set the `container_manage_cgroup` SEBoolean to `on` on ALL servers
 
 ```
-oc login -u developer
-oc import-image freeipa-server:latest --from=freeipa/freeipa-server:centos-7 --confirm
+ansible all -m shell -a "setsebool -P container_manage_cgroup on"
 ```
 
-## Deploy FreeIPA
-
-Now that you have the template and image imported; install FreeIPA on OpenShift.
-
-Create Service Account
+It's helpful if you pre-pull the image (this is not required)
 
 ```
-oc project myproject
-oc create serviceaccount useroot 
+ansible all -m shell -a "docker pull freeipa/freeipa-server:centos-7"
+```
+
+## Install FreeIPA
+
+First, create a project to "house" IPA and switch to it
+
+```
+oc new-project ldap
+oc project ldap
+```
+
+Create a service account and give it access to run pods as root
+
+```
+oc create serviceaccount useroot
 oc adm policy add-scc-to-user anyuid -z useroot
+oc patch scc anyuid -p '{"seccompProfiles":["docker/default"]}'
 ```
 
-Next, login to your webconsole and create your ipa server with the following parameters, in the `myproject` project. The defaults should be fine.
+Use the upstream template to create an IPA instance
 
-![freeipa-parameters](images/freeipa-parameters.png)
+```
+oc new-app --name ipa -f https://raw.githubusercontent.com/freeipa/freeipa-container/master/freeipa-server-openshift.json \
+-p IPA_SERVER_IMAGE=freeipa-server:centos-7 \
+-p IPA_ADMIN_PASSWORD=password \
+-p TIMEOUT=1200
+```
 
-Once you are sure of the parameters; click "Create"
+To trigger the deplopyment, import the image
 
-FreeIPA generates certificates/keys for itself so you might need to generate some activity on your system, if you look at the deployment logs and see the following
+```
+oc import-image freeipa-server:centos-7 --from=freeipa/freeipa-server:centos-7 --confirm
+```
+
+If you get the following warning...
 
 ```
 Configuring Kerberos KDC (krb5kdc). Estimated time: 30 seconds
@@ -52,7 +64,8 @@ Configuring Kerberos KDC (krb5kdc). Estimated time: 30 seconds
 WARNING: Your system is running out of entropy, you may experience long delays
 ```
 
-Just run this to speed it along (run ^c after a minute or two)
+Just run this on the node the pod is running on to speed it along (run ^c after a minute or two). You don't need this if you set the `TIMEOUT` long enough to where it doesn't matter
+
 ```
 while true; do find /; done 
 ```
@@ -204,23 +217,20 @@ I created this `nodePort` config so I can run `ldapsearch` against the master.
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: null
+  name: ldap
   labels:
-    app: freeipa-server
-    template: freeipa-server
-  name: freeipa-server-np
+    app: ipa
 spec:
+  type: NodePort
   ports:
-  - name: ldap-np
-    nodePort: 32389
-    port: 389
-    protocol: TCP
-    targetPort: 389
+    - port: 389
+      nodePort: 32389
+      name: ldap
   selector:
-    deploymentconfig: freeipa-server
-  sessionAffinity: None
-  type: LoadBalancer
+    app: ipa
 ```
+
+Note: I used `oc get pods --show-labels` to get the labels/selector
 
 Now run `oc create -f freeipa-nodeport.yaml` to create the service.
 
