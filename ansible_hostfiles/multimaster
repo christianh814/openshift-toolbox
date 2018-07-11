@@ -34,7 +34,7 @@ openshift_storage_glusterfs_heketi_wipe=true
 openshift_storage_glusterfs_wipe=true
 openshift_storage_glusterfs_storageclass_default=true
 openshift_storage_glusterfs_block_storageclass=true
-openshift_storage_glusterfs_block_host_vol_size=30
+openshift_storage_glusterfs_block_host_vol_size=50
 
 # Automatically Deploy the router
 openshift_hosted_manage_router=true
@@ -63,7 +63,7 @@ dynamic_volumes_check=False
 # Logging
 openshift_logging_install_logging=true
 openshift_logging_es_pvc_dynamic=true
-openshift_logging_es_pvc_size=28Gi
+openshift_logging_es_pvc_size=20Gi
 openshift_logging_es_pvc_storage_class_name=glusterfs-storage-block
 openshift_logging_curator_nodeselector={'region':'infra'}
 openshift_logging_es_nodeselector={'region':'infra'}
@@ -73,7 +73,7 @@ openshift_logging_es_memory_limit=4G
 # Metrics
 openshift_metrics_install_metrics=true
 openshift_metrics_cassandra_storage_type=dynamic
-openshift_metrics_cassandra_pvc_size=28Gi
+openshift_metrics_cassandra_pvc_size=20i
 openshift_metrics_cassanda_pvc_storage_class_name=glusterfs-storage-block
 openshift_metrics_hawkular_nodeselector={'region':'infra'}
 openshift_metrics_heapster_nodeselector={'region':'infra'}
