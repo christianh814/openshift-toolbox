@@ -88,7 +88,7 @@ Device added successfully
 
 ### Set Up
 
-Set up the prereqs as you would normally following [this howto](https://github.com/christianh814/openshift-toolbox/tree/master/cns#installation). Here are the "cliff notes" from that doc (**BUT FOLLOW THAT DOC, DON'T SKIP...RAVI, I'M LOOKING AT YOU!!!!**)
+Set up the prereqs as you would normally following [this howto](https://github.com/RedHatWorkshops/openshiftv3-ops-workshop/blob/master/cns.md#container-native-storage). Here are the "cliff notes" from that doc (**BUT FOLLOW THAT DOC, DON'T SKIP...RAVI, I'M LOOKING AT YOU!!!!**)
 
 ```
 git clone https://github.com/RedHatWorkshops/openshiftv3-ops-workshop
