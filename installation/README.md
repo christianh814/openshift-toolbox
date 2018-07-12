@@ -194,6 +194,8 @@ Sample HAProxy configs if you want to build your own HAProxy server
   * [HAProxy Config](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/haproxy_config/haproxy.cfg)
   * [HAProxy with Let's Encrypt](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/haproxy_config/haproxy-letsencrypt.cfg)
 
+If you used let's encrypt, you might find [these crons](../certbot) useful
+
 ## Running The Playbook
 
 You can run the playbook (specifying a `-i` if you wrote the hosts file somewhere else) at this point
