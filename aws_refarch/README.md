@@ -154,7 +154,7 @@ ansible_connection=local
 ansible_become=False
 ```
 
-Now, you'll need to edit the `playbooks/vars/main.yaml` file to match your paticular environment. Here are what I did to mine (YMMV). I just changed `sshkey_password`, `clusterid`, `dns_domain`, `aws_region`
+Now, you'll need to edit the `playbooks/vars/main.yaml` file to match your paticular environment. Here are what I did to mine (YMMV). I just changed `sshkey_password`, `clusterid`, `dns_domain`, `aws_region`, and I uncommented `ec2ami` and added the ami I wanted to use
 
 ```
 ---
@@ -186,53 +186,8 @@ ec2_type_node: "m5.2xlarge"
 ec2_type_cns: "m5.2xlarge"
 
 rhel_release: "rhel-7.5"
+ec2ami: ami-abc3231a
 ```
-
-**NOTE** I Also needed to edit `playbooks/roles/aws/tasks/getec2ami.yaml` because it couldn't find  the right AMI, YMMV but here is how mine looked like. Specifically, II only changed the `shell` module in this task. This may or maynot apply to you.
-
-```
----
-- name: Fetch Red Hat Cloud Access ami
-  ###shell: aws ec2 describe-images \
-  ###  --region "{{ aws_region }}" --owners 309956199498 | \
-  ###  jq -r '.Images[] | [.Name,.ImageId] | @csv' | \
-  ###  sed -e 's/\"//g' | \
-  ###  grep -v Beta | \
-  ###  grep -i Access2-GP2 | \
-  ###  grep -i "{{ rhel_release }}" | \
-  ###  sort | \
-  ###  tail -1
-  shell: aws ec2 describe-images \
-    --region "{{ aws_region }}" --owners 309956199498 | \
-    jq -r '.Images[] | [.Name,.ImageId] | @csv' | \
-    sed -e 's/\"//g' | \
-    grep -v Beta | \
-    grep -i "{{ rhel_release }}" | \
-    sort | \
-    tail -1
-  args:
-    executable: /bin/bash
-  register: ec2ami
-  changed_when: "'ami-' not in ec2ami.stdout"
-
-- name: 'NOTICE!  Red Hat Cloud Access machine image not found'
-  vars:
-    notice: |
-         NOTICE!  Red Hat Cloud Access machine image not found!
-         Please verify the process has been completed successfully.
-
-         See the following url...
-         https://access.redhat.com/cloude/manager/gold_imports/new
-  debug:
-    msg: "{{ notice.split('\n') }}"
-  when: ec2ami.changed
-  failed_when: "'ami-' not in ec2ami.stdout"
-
-- name: 'Set fact: ec2ami'
-  set_fact:
-    ec2ami: "{{ ec2ami.stdout.split(',')[1] }}"
-```
-
 
 Now you can run the playbook to provision the environment
 
