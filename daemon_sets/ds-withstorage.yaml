@@ -12,7 +12,7 @@ spec:
         app: custom-mongo-shard1
       containers:
         - name: custom-mongo-shard1
-          image: docker-registry.default.svc:5000:5000/myproject/custom-mongo:latest
+          image: docker-registry.default.svc:5000/myproject/custom-mongo:latest
           ports:
           - containerPort: 27017
             hostPort: 27017
