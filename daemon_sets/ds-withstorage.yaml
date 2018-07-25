@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: custom-mongo-shard1
+spec:
+  template:
+    metadata:
+      labels:
+        app: custom-mongo-shard1
+    spec:
+      nodeSelector:
+        app: custom-mongo-shard1
+      containers:
+        - name: custom-mongo-shard1
+          image: docker-registry.default.svc:5000:5000/myproject/custom-mongo:latest
+          ports:
+          - containerPort: 27017
+            hostPort: 27017
+          - containerPort: 27018
+            hostPort: 27018
+          - containerPort: 27019
+            hostPort: 27019
+          volumeMounts:
+          - mountPath: /var/lib/mongodb/data
+            name: mytest
+          - mountPath: /etc/mongo
+            name: volume-cm
+      volumes:
+      - name: mytest
+        persistentVolumeClaim:
+          claimName: mongo-test1
+      - configMap:
+          defaultMode: 420
+          name: mongo-shard1
+        name: volume-cm
