@@ -40,6 +40,32 @@ Or
 ```
 chcon -R -t svirt_sandbox_file_t /registry
 ```
+You can also use a "raw" device for `hostPath` and have a pod/container use it. Below is an example (assuming you are, as stated above, privileged). Note that the `nodeSelector` is important since you're specifying a disk (it's also important when specifying a path too)
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: welcome-raw
+spec:
+  nodeSelector:
+    myapp: welcome-raw
+  containers:
+  - image: redhatworkshops/welcome-php
+    name: welcome-raw-container
+    volumeMounts:
+    - mountPath: /data
+      name: raw-disk
+  volumes:
+  - name: raw-disk
+    hostPath:
+      # disk location on host. If type is "Directory" then this is the dir on disk
+      path: /dev/vdc
+      # this is a raw device. Type can also be "Directory"
+      type: BlockDevice
+```
+
+Note that if `fsType` isn't specified under `hostPath:` then it uses `ext4`
 
 ## NFS
 
