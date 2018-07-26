@@ -35,11 +35,15 @@ semanage fcontext -a -t svirt_sandbox_file_t "/registry(/.*)?"
 restorecon -vR /registry
 ```
 
-Or
+Or if `chcon` is your thing...do one of these two
 
 ```
 chcon -R -t svirt_sandbox_file_t /registry
+### OR
+chcon -R unconfined_u:object_r:svirt_sandbox_file_t:s0
 ```
+
+
 You can also use a "raw" device for `hostPath` and have a pod/container use it. Below is an example (assuming you are, as stated above, privileged). Note that the `nodeSelector` is important since you're specifying a disk (it's also important when specifying a path too)
 
 ```yaml
