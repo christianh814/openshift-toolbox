@@ -611,3 +611,11 @@ oc create quota demo-quota --hard=glusterfs-storage-block.storageclass.storage.k
 Format is `<storage-class-name>.storageclass.storage.k8s.io/requests.storage` and `<storage-class-name>.storageclass.storage.k8s.io/persistentvolumeclaims`
 
 More info [found here](https://docs.openshift.com/container-platform/latest/admin_guide/quota.html)
+
+# Post deployment hook
+
+You can set a post deployment hook like so
+
+```
+oc set deployment-hook dc/myapp --post -- /bin/sh -c 'echo helloworld'
+```
