@@ -40,7 +40,7 @@ Or if `chcon` is your thing...do one of these two
 ```
 chcon -R -t svirt_sandbox_file_t /registry
 ### OR
-chcon -R unconfined_u:object_r:svirt_sandbox_file_t:s0
+chcon -R unconfined_u:object_r:svirt_sandbox_file_t:s0 /registry
 ```
 
 
