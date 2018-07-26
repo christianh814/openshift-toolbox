@@ -46,23 +46,23 @@ You can also use a "raw" device for `hostPath` and have a pod/container use it. 
 apiVersion: v1
 kind: Pod
 metadata:
-  name: welcome-raw
+  name: welcome-local
 spec:
   nodeSelector:
-    myapp: welcome-raw
+    myapp: welcome-local
   containers:
   - image: redhatworkshops/welcome-php
-    name: welcome-raw-container
+    name: welcome-local-container
     volumeMounts:
     - mountPath: /data
-      name: raw-disk
+      name: local-dir
   volumes:
-  - name: raw-disk
+  - name: local-dir
     hostPath:
       # disk location on host. If type is "Directory" then this is the dir on disk
-      path: /dev/vdc
+      path: /path/to/dir
       # this is a raw device. Type can also be "Directory"
-      type: BlockDevice
+      type: Directory
 ```
 
 Note that if `fsType` isn't specified under `hostPath:` then it uses `ext4`
