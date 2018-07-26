@@ -59,9 +59,9 @@ spec:
   volumes:
   - name: local-dir
     hostPath:
-      # disk location on host. If type is "Directory" then this is the dir on disk
+      # If type is "BlockDevice" then this is the dir on disk
       path: /path/to/dir
-      # this is a raw device. Type can also be "Directory"
+      # type can also be "BlockDevice"
       type: Directory
 ```
 
