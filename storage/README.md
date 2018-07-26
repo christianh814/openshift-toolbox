@@ -31,16 +31,16 @@ oc adm policy add-scc-to-user privileged -z router
 If you're using `/registry` as your registry storage...
 
 ```
-semanage fcontext -a -t svirt_sandbox_file_t "/registry(/.*)?"
+semanage fcontext -a -t container_file_t "/registry(/.*)?"
 restorecon -vR /registry
 ```
 
 Or if `chcon` is your thing...do one of these two
 
 ```
-chcon -R -t svirt_sandbox_file_t /registry
+chcon -R -t container_file_t /registry
 ### OR
-chcon -R unconfined_u:object_r:svirt_sandbox_file_t:s0 /registry
+chcon -R unconfined_u:object_r:container_file_t:s0 /registry
 ```
 
 
