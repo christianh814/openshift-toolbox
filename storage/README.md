@@ -69,8 +69,6 @@ spec:
       type: Directory
 ```
 
-Note that if `fsType` isn't specified under `hostPath:` then it uses `ext4`
-
 ## NFS
 
 NFS is a supported protocol and the most common.
