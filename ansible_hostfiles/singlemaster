@@ -46,6 +46,11 @@ openshift_hosted_registry_selector='region=infra'
 # Disble Checks
 openshift_disable_check=disk_availability,docker_storage,memory_availability
 
+# 
+# Network Policies that are available:
+# redhat/openshift-ovs-networkpolicy # fine grained control
+# redhat/openshift-ovs-subnet # "flat" network
+#
 # Mulititenant functionality (i.e. each project gets it's own "private" network)
 os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
 
