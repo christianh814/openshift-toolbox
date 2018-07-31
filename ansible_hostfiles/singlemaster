@@ -60,6 +60,7 @@ os_sdn_network_plugin_name='redhat/openshift-ovs-networkpolicy'
 openshift_master_dynamic_provisioning_enabled=true
 dynamic_volumes_check=False
 
+
 # Logging
 openshift_logging_install_logging=true
 openshift_logging_es_pvc_dynamic=true
