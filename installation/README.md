@@ -65,7 +65,7 @@ subscription-manager repos  --disable=*
 subscription-manager repos \
     --enable="rhel-7-server-rpms" \
     --enable="rhel-7-server-extras-rpms" \
-    --enable="rhel-7-server-ose-3.9-rpms" \
+    --enable="rhel-7-server-ose-3.10-rpms" \
     --enable="rhel-7-fast-datapath-rpms" \
     --enable="rhel-7-server-ansible-2.4-rpms"
 ```
@@ -73,10 +73,10 @@ subscription-manager repos \
 Make sure the pre-req pkgs are installed/removed and make sure the system is updated
 
 ```
-yum -y install wget git vim net-tools bind-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct
+yum -y install wget git vim net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct
 yum -y update
-yum -y install atomic-openshift-utils
 systemctl reboot
+yum -y install openshift-ansible
 ```
 
 Then install docker when it comes back up. Make sure you're running the version it states in the docs
