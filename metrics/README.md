@@ -9,12 +9,11 @@ First, set up your `/etc/ansible/hosts` file with the following in the `[OSEv3:v
 ```
 # Metrics
 openshift_metrics_install_metrics=true
-openshift_metrics_cassandra_storage_type=dynamic
-openshift_metrics_cassandra_pvc_size=28Gi
-openshift_metrics_cassanda_pvc_storage_class_name=glusterfs-storage-block
-openshift_metrics_hawkular_nodeselector={'region':'infra'}
-openshift_metrics_heapster_nodeselector={'region':'infra'}
-openshift_metrics_cassandra_nodeselector={'region':'infra'}
+openshift_metrics_cassandra_pvc_size=20i
+openshift_metrics_cassandra_storage_class_name=glusterfs-storage-block
+openshift_metrics_hawkular_nodeselector={'node-role.kubernetes.io/infra':'true'}
+openshift_metrics_heapster_nodeselector={'node-role.kubernetes.io/infra':'true'}
+openshift_metrics_cassandra_nodeselector={'node-role.kubernetes.io/infra':'true'}
 ```
 
 Also verify that you have this under `[OSEv3:vars]` as well
