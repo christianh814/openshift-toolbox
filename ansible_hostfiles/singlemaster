@@ -71,7 +71,8 @@ openshift_logging_kibana_nodeselector={'node-role.kubernetes.io/infra':'true'}
 openshift_logging_es_memory_limit=4G
 
 # Metrics
-# BUG...you'll have to do storage manually
+# BUG...you'll have to do storage manually post-install
+# openshift_metrics_cassandra_storage_type=dynamic
 openshift_metrics_install_metrics=true
 openshift_metrics_cassandra_pvc_size=20i
 openshift_metrics_cassandra_storage_class_name=glusterfs-storage-block
