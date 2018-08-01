@@ -388,6 +388,13 @@ One time running of a RHEL pod with useful tools
 oc run rheltest --image=registry.access.redhat.com/rhel7/rhel-tools --restart=Never --attach -i --tty
 ```
 
+Also you can enter a failed pod with
+
+```
+oc get pods
+oc debug <pod name that failed>
+```
+
 # Jenkins Pipelines
 
 Quick and Dirty Jenkins notes
