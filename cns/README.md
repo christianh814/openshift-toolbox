@@ -148,6 +148,12 @@ You'll need to **change** this line and add `--durability none` to it...in the e
 eval_output "${heketi_cli} setup-openshift-heketi-storage --durability none --listfile=/tmp/heketi-storage.json --image rhgs3/rhgs-volmanager-rhel7:v3.9.0 2>&1"
 ```
 
+In 3.10 I needed to run this...
+
+```
+sed -i 's/--show-all//g' `which cns-deploy`
+```
+
 ### Install CNS
 
 Now you can run `cns-deploy` that will create a "one node cns pod"
