@@ -56,6 +56,8 @@ Id:a533436be2ced2b46f2d48238c7b46f3    Cluster:ef045a0b9a13c955a717ab4d6b4e1e3b 
 Id:a705b4e18c4a0d82f0223f8a994dd0f4    Cluster:ef045a0b9a13c955a717ab4d6b4e1e3b    Name:vol_a705b4e18c4a0d82f0223f8a994dd0f4
 ```
 
+__Expanding Volume__
+
 I expanded a volume using:
 
 ```
@@ -63,6 +65,8 @@ heketi-cli volume expand --volume=a533436be2ced2b46f2d48238c7b46f3 --expand-size
 ```
 
 The `--expand-size` is how much you want to ADD to the existing storage. For example; if the volume was `10GB` and you passwd `--expand-size=5` it'll now be `15GB`.
+
+__Adding Disks__
 
 If you added another disk to your nodes, for example `/dev/vdd` you can add them to your CNS cluster like so.
 
