@@ -82,6 +82,38 @@ Device added successfully
 Device added successfully
 ```
 
+__Expand OCS (CNS) Cluster__
+
+Added a GlusterFS device by first labeling the node
+
+```
+oc label node node4.example.com glusterfs=storage-host
+```
+
+Then (you may not need to do this YMMV) add the ports on the firewall on the node you're adding under `/etc/sysconfig/iptables` (restart `iptables` after)
+
+```
+-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24007 -j ACCEPT
+-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24008 -j ACCEPT
+-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 2222 -j ACCEPT
+-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m multiport --dports 49152:49664 -j ACCEPT
+-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 24010 -j ACCEPT
+-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 3260 -j ACCEPT
+-A OS_FIREWALL_ALLOW -p tcp -m state --state NEW -m tcp --dport 111 -j ACCEPT
+```
+
+Now add the node with `heketi-cli`
+
+```
+[root@master01 ~]# heketi-cli node add --zone=1 --cluster=597fceb5d6c876b899e48f599b988f54 --management-host-name=node4.example.com --storage-host-name=192.168.10.104
+```
+
+Add the disk
+
+```
+[root@master01 ~]# heketi-cli device add --name=/dev/sdc --node=095d5f26b56dc6c64564a9bc17338cbf
+```
+
 ## AIO Install
 
 "All in One" Install is running CNS on a single node (only for testing).  Once you've installed an [all-in-one](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/all-in-one) openshift server follow these steps
