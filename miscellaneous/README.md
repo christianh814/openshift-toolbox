@@ -626,3 +626,98 @@ You can set a post deployment hook like so
 ```
 oc set deployment-hook dc/myapp --post -- /bin/sh -c 'echo helloworld'
 ```
+
+# Poor Man's Template
+
+You can have one `yaml` (or `json` file)  that has all the resources you need for that one app (`dc` with `pvc` for example). Just separate your `yaml` with `---` between each definition.
+
+Here's an example using `ds` (but you can do it with pretty much anything)
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: custom-mongo-shard1
+spec:
+  template:
+    metadata:
+      labels:
+        app: custom-mongo-shard1
+    spec:
+      nodeSelector:
+        app: custom-mongo-shard1
+      containers:
+        - name: custom-mongo-shard1
+          image: docker-registry.default.svc:5000/customshardmongo/mongo-shard1:3.6
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 27018
+            hostPort: 27018
+          volumeMounts:
+          - mountPath: /var/lib/mongodb/data
+            name: shard1-storage
+          - mountPath: /etc/mongo
+            name: shard1-config
+      volumes:
+      - name: shard1-storage
+        persistentVolumeClaim:
+          claimName: ks-shard1-ds
+      - configMap: 
+          defaultMode: 420
+          name: custom-mongo-shard1-config
+        name: shard1-config
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ks-shard1-ds
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 75Gi
+---
+apiVersion: v1
+data:
+  mongod-shard1.conf: | 
+    ##
+    ## For list of options visit:
+    ## https://docs.mongodb.org/manual/reference/configuration-options/
+    ##
+    ## For Mongo SHARD Configuration Only
+    ##
+    # systemLog Options - How to do logging
+    # where to write logging data.
+    #  quiet: true
+    systemLog:
+      destination: file
+      logAppend: true
+      path: /var/log/mongodb/mongod.log
+    # how the process runs
+    # ProcessManagement:
+    # fork: true  # fork and run in background
+    # pidFilePath: /var/run/mongodb/mongod.pid  # location of pidfile
+    #  timeZoneInfo: /usr/share/zoneinfo
+    # net Options - Network interfaces settings
+    net:
+      # Specify port number (27018 by default for Shards)
+      port: 27018
+      bindIp: 0.0.0.0
+    # storage Options - How and Where to store data
+    storage:
+      # Directory for datafiles
+      dbPath: /var/lib/mongodb/data
+    # journal:
+    #   enabled: true
+    #replication:
+    replication:
+      replSetName: "ks-shard-1"
+    #sharding:
+    sharding:
+      clusterRole: shardsvr
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: custom-mongo-shard1-config
+```
