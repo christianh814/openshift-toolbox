@@ -188,7 +188,6 @@ Sample Ansible Hosts files
   * [Multi Master](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/multimaster)
   * [AWS Install](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/awsinstall)
   * [GluserFS Config](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/glusterfs)
-  * [Disconnected Install](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/disconnected)
 
 Sample HAProxy configs if you want to build your own HAProxy server
   * [HAProxy Config](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/haproxy_config/haproxy.cfg)
