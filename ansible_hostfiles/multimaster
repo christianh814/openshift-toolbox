@@ -52,9 +52,10 @@ openshift_disable_check=disk_availability,docker_storage,memory_availability
 # 
 # Network Policies that are available:
 # redhat/openshift-ovs-networkpolicy # fine grained control
+# redhat/openshift-ovs-multitenant # each project gets it's own "private" network
 # redhat/openshift-ovs-subnet # "flat" network
 #
-# Mulititenant functionality (i.e. each project gets it's own "private" network)
+# Network OVS Plugin to use
 os_sdn_network_plugin_name='redhat/openshift-ovs-networkpolicy'
 
 # Uncomment when setting up logging/metrics/prometheus
