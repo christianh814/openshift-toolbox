@@ -10,8 +10,22 @@ CNS (Container Native Storage) is a way to dynamically create file/object/block 
 
 There are two methods to install CNS
 
-* [Using the Ansible Host File](../ansible_hostfiles/singlemaster#L26-L33)
+* [Using the Ansible Host File](../ansible_hostfiles/singlemaster#L26-L33) (see note below)
 * [Post OpenShift Installation](https://github.com/RedHatWorkshops/openshiftv3-ops-workshop/blob/master/cns.md)
+
+Note: For the ansible based installation; you can add the following if you want a specific node group for the storage nodes (if you have "standalone" storage nodes). Just add the following options
+
+```
+openshift_node_groups=[{'name': 'node-config-master', 'labels': ['node-role.kubernetes.io/master=true']}, {'name': 'node-config-infra', 'labels': ['node-role.kubernetes.io/infra=true']}, {'name': 'node-config-compute', 'labels': ['node-role.kubernetes.io/compute=true']}, {'name': 'node-config-storage', 'labels': ['node-role.kubernetes.io/storage=true']}]
+```
+
+Then in you `[nodes]` section add `openshift_node_group_name='node-config-storage'` for your storage nodes
+
+```
+storage1.cloud.chx openshift_node_group_name='node-config-storage'
+storage2.cloud.chx openshift_node_group_name='node-config-storage'
+storage3.cloud.chx openshift_node_group_name='node-config-storage'
+```
 
 ## Heketi
 
