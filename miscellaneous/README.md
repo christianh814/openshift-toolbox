@@ -721,3 +721,19 @@ metadata:
   creationTimestamp: null
   name: custom-mongo-shard1-config
 ```
+
+# Network Debugging
+
+Sniffing a container network interface:
+
+Get the list of pods on a given node and identify the one you want to sniff:
+`# oc describe node ocp-nodeX.example.com`
+
+Figure out the virtual interface number:
+`# oc exec logging-fluentd-2d5ck -n logging cat /sys/class/net/eth0/iflink`
+
+Login to the node the pod is on and run the following to find the interace name to use with tcpdump:
+`# ip a | grep veth`
+
+Once you find the name by the number you got from iflink then attach tcpdump to that interface:
+`# tcpdump -i vethd54dbac4`
