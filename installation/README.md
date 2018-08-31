@@ -69,7 +69,7 @@ subscription-manager repos \
     --enable="rhel-7-server-ansible-2.4-rpms"
 ```
 
-NOTE: You might need to run into a bug in 3.10 where there are dependecy issues. You'll just need to enable the `rhel-7-fast-datapath-rpms` repo or add `package_availability` in the `openshift_disable_check` var in ansible.
+NOTE: You might run into a bug in 3.10 where there are dependecy issues. You'll just need to enable the `rhel-7-fast-datapath-rpms` repo or add `package_availability` in the `openshift_disable_check` var in ansible.
 
 Make sure the pre-req pkgs are installed/removed and make sure the system is updated
 
@@ -85,6 +85,13 @@ Then install docker when it comes back up. Make sure you're running the version 
 ```
 yum -y install docker-1.13.1
 docker version
+```
+
+If you're planning on using gluster; update the default package to the latest version
+
+```
+subscription-manager repos --enable=rh-gluster-3-client-for-rhel-7-server-rpms
+yum -y update glusterfs-fuse
 ```
 
 ## Docker Configuration
