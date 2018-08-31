@@ -66,14 +66,15 @@ subscription-manager repos \
     --enable="rhel-7-server-rpms" \
     --enable="rhel-7-server-extras-rpms" \
     --enable="rhel-7-server-ose-3.10-rpms" \
-    --enable="rhel-7-fast-datapath-rpms" \
     --enable="rhel-7-server-ansible-2.4-rpms"
 ```
+
+NOTE: You might need to run into a bug in 3.10 where there are dependecy issues. You'll just need to enable the `rhel-7-fast-datapath-rpms` repo or add `package_availability` in the `openshift_disable_check` var in ansible.
 
 Make sure the pre-req pkgs are installed/removed and make sure the system is updated
 
 ```
-yum -y install wget git vim net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct
+yum -y install wget git net-tools bind-utils yum-utils iptables-services bridge-utils bash-completion kexec-tools sos psacct
 yum -y update
 systemctl reboot
 yum -y install openshift-ansible
