@@ -10,7 +10,7 @@ CNS (Container Native Storage) is a way to dynamically create file/object/block 
 
 There are two methods to install CNS
 
-* [Using the Ansible Host File](../ansible_hostfiles/singlemaster#L26-L33) (see note below)
+* [Using the Ansible Host File](../ansible_hostfiles/singlemaster##L28-L35) (see note below)
 * [Post OpenShift Installation](https://github.com/RedHatWorkshops/openshiftv3-ops-workshop/blob/master/cns.md)
 
 Note: For the ansible based installation; you can add the following if you want a specific node group for the storage nodes (if you have "standalone" storage nodes). Just add the following options
