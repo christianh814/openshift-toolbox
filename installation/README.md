@@ -9,6 +9,7 @@ The installation of OpenShift Container Platform (OCP); will be done via ansible
 * [Running The Playbook](#running-the-playbook)
 * [AWS Installer](#aws-installer)
 * [Package Excluder](#package-excluder)
+* [Uninstaller](#uninstaller)
 
 ## Infrastrucure 
 
@@ -251,6 +252,7 @@ OpenShift excludes packages during install, you may want to unexclude it at time
 ```
 atomic-openshift-excluder [ unexclude | exclude ]
 ```
+
 ## Uninstaller
 
 If you need to "start over", you can uninstall OpenShift with the following playbook...
