@@ -16,6 +16,8 @@ ansible_ssh_user=root
 # Install Enterprise or Origin; set up ntp
 openshift_deployment_type=openshift-enterprise
 openshift_clock_enabled=true
+oreg_auth_user="{{ lookup('env','OREG_AUTH_USER') }}"
+oreg_auth_password="{{ lookup('env','OREG_AUTH_PASSWORD') }}"
 
 # Network/DNS Related
 openshift_master_default_subdomain=apps.cloud.chx
