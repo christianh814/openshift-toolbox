@@ -251,3 +251,12 @@ OpenShift excludes packages during install, you may want to unexclude it at time
 ```
 atomic-openshift-excluder [ unexclude | exclude ]
 ```
+## Uninstaller
+
+If you need to "start over", you can uninstall OpenShift with the following playbook...
+
+```
+root@master# ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/adhoc/uninstall.yml
+```
+
+Note that this may have unintended consequences (like destroying formatted disks, removing config files, etc). Run this only when needed.
