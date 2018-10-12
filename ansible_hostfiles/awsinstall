@@ -1,61 +1,10 @@
-# Create an OSEv3 group that contains the masters and nodes groups
-[OSEv3:children]
-masters
-nodes
-etcd
-
-# Set variables common for all OSEv3 hosts
-[OSEv3:vars]
-# SSH user, this user should allow ssh based auth without requiring a password
-ansible_ssh_user=ec2-user
-
-# If ansible_ssh_user is not root, ansible_sudo must be set to true
-ansible_sudo=true
-ansible_become=yes
-
-# Install Enterprise or Origin; set up ntp
-openshift_deployment_type=openshift-enterprise
-openshift_clock_enabled=true
-
-# Network/DNS Related
-openshift_master_default_subdomain=apps.osecloud.com
-osm_cluster_network_cidr=10.1.0.0/16
-osm_host_subnet_length=8
-openshift_portal_net=172.30.0.0/16
-osm_default_node_selector="region=primary"
-openshift_docker_insecure_registries=172.30.0.0/16
-
-
-# Automatically Deploy the router and registry
-openshift_hosted_manage_router=true
-openshift_hosted_manage_registry=true
-openshift_hosted_router_selector='region=infra'
-openshift_hosted_registry_selector='region=infra'
-
-## Uncomment for multitenant functionality (i.e. each project gets it's own "private" network)
-#os_sdn_network_plugin_name='redhat/openshift-ovs-multitenant'
-
-##  AWS
+## To enable AWS api access
 openshift_cloudprovider_kind=aws
 openshift_clusterid=myocp
 openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 
-# Metrics
-openshift_hosted_metrics_public_url=https://hawkular.apps.osecloud.com/hawkular/metrics 
-openshift_hosted_metrics_deploy=true
-openshift_hosted_metrics_storage_kind=dynamic
-openshift_hosted_metrics_deployer_version=v3.5
-
-# Logging
-openshift_master_logging_public_url=https://kibana.apps.osecloud.com
-openshift_hosted_logging_deploy=true
-openshift_hosted_logging_storage_kind=dynamic
-openshift_hosted_logging_deployer_version=v3.5
-# Ops Logs?
-#openshift_logging_use_ops=true
-
-# Registry Storage
+# This is to use AWS Object Storage with with the Registry
 openshift_hosted_registry_storage_kind=object
 openshift_hosted_registry_storage_provider=s3
 openshift_hosted_registry_storage_s3_accesskey="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
@@ -67,37 +16,4 @@ openshift_hosted_registry_storage_s3_rootdirectory=/registry
 openshift_hosted_registry_pullthrough=true
 openshift_hosted_registry_acceptschema2=true
 openshift_hosted_registry_enforcequota=true
-
-# If using Route53 and you're pointed to the master with a "vanity" name
-openshift_master_public_api_url=https://mmchx.osecloud.com:8443
-openshift_master_public_console_url=https://mmchx.osecloud.com:8443/console
-
-# Might need this if using xip.io?
-#openshift_master_cluster_hostname=master.52.14.59.23.xip.io
-#openshift_master_cluster_public_hostname=master.52.14.59.23.xip.io
-
-# Disble Checks and Broker
-# ansible_service_broker_install=false
-# template_service_broker_install=false
-# openshift_enable_service_catalog=false
-openshift_disable_check=disk_availability,docker_storage,memory_availability
-
-# The following enabled htpasswd authentication
-openshift_master_identity_providers=[{'name': 'htpasswd_auth', 'login': 'true', 'challenge': 'true', 'kind': 'HTPasswdPasswordIdentityProvider', 'filename': '/etc/origin/openshift-passwd'}]
-openshift_master_htpasswd_users={'developer': '$apr1$q2fVVf46$85HP/4JHGYeFBKAKPBblo0'}
-
-# host group for etcd
-[etcd]
-master.osecloud.com
-
-# host group for masters
-[masters]
-master.osecloud.com openshift_ip=10.128.0.3 openshift_public_ip=104.155.137.53 openshift_schedulable=true
-
-# host group for nodes, includes region info
-[nodes]
-master.osecloud.com openshift_ip=10.128.0.3 openshift_public_ip=104.155.137.53 openshift_node_labels="{'region': 'infra', 'zone': 'default'}"
-node1.osecloud.com  openshift_ip=10.128.0.3 openshift_public_ip=104.155.137.53 openshift_node_labels="{'region': 'primary', 'zone': 'z1'}"
-node2.osecloud.com  openshift_ip=10.128.0.3 openshift_public_ip=104.155.137.53 openshift_node_labels="{'region': 'primary', 'zone': 'z2'}"
-##
-##
+#

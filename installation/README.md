@@ -194,8 +194,9 @@ Next You must create an `/etc/ansible/hosts` file for the playbook to use during
 Sample Ansible Hosts files
   * [Single Master](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/singlemaster)
   * [Multi Master](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/multimaster)
-  * [AWS Install](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/awsinstall)
-  * [GluserFS Config](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/glusterfs)
+
+With Cloud installations; you need to enable API access to the cloud provide. Below are example entries (NOT whole "hostfiles"; rather what you need to add to the above)
+  * [AWS Hostfile Options](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/awsinstall)
 
 Sample HAProxy configs if you want to build your own HAProxy server
   * [HAProxy Config](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/haproxy_config/haproxy.cfg)
