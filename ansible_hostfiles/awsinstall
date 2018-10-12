@@ -1,10 +1,15 @@
+## You may need to set the ansible "ssh user" and have it use sudo
+ansible_ssh_user=ec2-user
+ansible_sudo=true
+ansible_become=yes
+
 ## To enable AWS api access
 openshift_cloudprovider_kind=aws
 openshift_clusterid=myocp
 openshift_cloudprovider_aws_access_key="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
 openshift_cloudprovider_aws_secret_key="{{ lookup('env','AWS_SECRET_ACCESS_KEY') }}"
 
-# This is to use AWS Object Storage with with the Registry
+## This is to use AWS Object Storage with with the Registry
 openshift_hosted_registry_storage_kind=object
 openshift_hosted_registry_storage_provider=s3
 openshift_hosted_registry_storage_s3_accesskey="{{ lookup('env','AWS_ACCESS_KEY_ID') }}"
