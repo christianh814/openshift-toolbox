@@ -195,7 +195,7 @@ Sample Ansible Hosts files
   * [Single Master](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/singlemaster)
   * [Multi Master](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/multimaster)
 
-With Cloud installations; you need to enable API access to the cloud provide. Below are example entries (NOT whole "hostfiles"; rather what you need to add to the above)
+With Cloud installations; you need to enable API access to the cloud provider. Below are example entries (NOT whole "hostfiles"; rather what you need to add to the above)
   * [AWS Hostfile Options](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/awsinstall)
 
 Sample HAProxy configs if you want to build your own HAProxy server
