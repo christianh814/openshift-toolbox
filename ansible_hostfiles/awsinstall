@@ -16,4 +16,5 @@ openshift_hosted_registry_storage_s3_rootdirectory=/registry
 openshift_hosted_registry_pullthrough=true
 openshift_hosted_registry_acceptschema2=true
 openshift_hosted_registry_enforcequota=true
-#
+##
+##
