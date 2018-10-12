@@ -244,7 +244,7 @@ oc label node infra1.cloud.chx node-role.kubernetes.io/infra=true
 
 ## AWS Installer
 
-There is a script provided by RH, that provisions an fully HA env on AWS. You can find notes for that [Here](https://github.com/christianh814/openshift-toolbox/tree/master/aws_refarch)
+There is a script provided by RH, that provisions an fully HA env on AWS. You can find notes for that [Here](../aws_refarch)
 
 ## Package Excluder
 
