@@ -73,7 +73,7 @@ Id:a705b4e18c4a0d82f0223f8a994dd0f4    Cluster:ef045a0b9a13c955a717ab4d6b4e1e3b 
 QnD way...
 
 ```
-export HEKETI_CLI_SERVER=http://$(oc get routes heketi-storage --no-headers -n glusterfs | awk '{print $2}')
+export HEKETI_CLI_SERVER=http://$(oc get routes heketi-storage  -n glusterfs  -o jsonpath='{.spec.host}')
 export HEKETI_CLI_KEY=$(oc get secrets heketi-storage-admin-secret -n glusterfs -o jsonpath='{.data.key}' | base64 -d)
 export HEKETI_CLI_USER=admin
 ```
