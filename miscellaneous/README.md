@@ -563,6 +563,26 @@ done
 ##
 ##
 ```
+
+Gitlab works similar
+
+```
+#!/bin/bash
+token="iABFty2pZAZo4412s7ww"
+for i in {01..99}
+do
+  echo "{\"name\":\"OpenShift User-${i}\", \"username\":\"user-${i}\", \"email\": \"openshift-user-${i}@mailinator.com\", \"password\": \"openshift123\", \"skip_confirmation\": \"true\"}" > /tmp/user-${i}.json
+done
+
+for i in {01..99}
+do
+ true
+  curl -k -X POST --header "PRIVATE-TOKEN: ${token}" --header "Content-Type: application/json" -d @/tmp/user-${i}.json \
+  "https://gitlab.apps.example.com/api/v4/users/"
+done
+##
+##
+```
 # Custom Builders
 
 Tag customer builders in 3.7
