@@ -49,7 +49,7 @@ openshift_hosted_registry_storage_volume_size=25Gi
 #openshift_hosted_registry_replicas=2
 
 # Disble Checks
-openshift_disable_check=disk_availability,docker_storage,memory_availability
+openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability,package_availability,package_version
 
 # 
 # Network Policies that are available:

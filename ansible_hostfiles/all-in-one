@@ -31,7 +31,7 @@ openshift_hosted_manage_registry=true
 openshift_enable_unsupported_configurations=true
 
 # Disble Checks
-openshift_disable_check=disk_availability,docker_storage,memory_availability
+openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability,package_availability,package_version
 
 # 
 # Network Policies that are available:
