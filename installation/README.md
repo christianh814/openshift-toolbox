@@ -7,9 +7,10 @@ The installation of OpenShift Container Platform (OCP); will be done via ansible
 * [Docker Configuration](#docker-configuration)
 * [Ansible Installer](#ansible-installer)
 * [Running The Playbook](#running-the-playbook)
-* [AWS Installer](#aws-installer)
 * [Package Excluder](#package-excluder)
 * [Uninstaller](#uninstaller)
+* [Cloud Install](#cloud-install)
+* [Disconnected Install](#disconnected-install)
 
 ## Infrastrucure 
 
@@ -242,10 +243,6 @@ Label infra nodes if you need to...
 oc label node infra1.cloud.chx node-role.kubernetes.io/infra=true
 ```
 
-## AWS Installer
-
-There is a script provided by RH, that provisions an fully HA env on AWS. You can find notes for that [Here](../aws_refarch)
-
 ## Package Excluder
 
 OpenShift excludes packages during install, you may want to unexclude it at times (you probably never have to; but here's how to in any event)
@@ -263,3 +260,17 @@ root@master# ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/adh
 ```
 
 Note that this may have unintended consequences (like destroying formatted disks, removing config files, etc). Run this only when needed.
+
+## Cloud Install
+
+Here are Notes about cloud based installations
+
+* [AWS Install](../aws_refarch)
+* [Azure Install](https://access.redhat.com/documentation/en-us/reference_architectures/2018/html/deploying_and_managing_openshift_3.9_on_azure/index)
+* [GCE Install](https://access.redhat.com/documentation/en-us/reference_architectures/2018/html/deploying_and_managing_openshift_3.9_on_google_cloud_platform/)
+* [Openstack Install](https://access.redhat.com/documentation/en-us/reference_architectures/2018/html/deploying_and_managing_openshift_3.9_on_red_hat_openstack_platform_10/index)
+
+
+## Disconnected Install
+
+There are many factors to take into consideration when trying to do a disconnected install. Instructions/notes for that can be found [HERE](guides/disconnected.md)

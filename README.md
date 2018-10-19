@@ -8,7 +8,6 @@ OpenShift Setup Tools And Howto's
 * [Storage Notes](storage)
 * [Run FreeIPA on OpenShift](ipa_on_ocp)
 * [Container Native Storage](cns)
-* [AWS Reference Architecture Deployer](aws_refarch)
 * [Network Policy Example](network_policy)
 * [DaemonSets](daemon_sets)
 * [Authentication](authentication)
