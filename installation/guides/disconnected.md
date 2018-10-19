@@ -217,4 +217,7 @@ done
 
 ## Install OpenShift
 
-Now you can install OpenShift like you would normally. 
+Now you can install OpenShift like you would normally. The example ansible host files found [HERE](../../ansible_hostfiles/) is well commented but I'll go over the options you may need to change/uncomment
+
+```
+```
