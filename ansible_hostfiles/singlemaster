@@ -16,14 +16,26 @@ ansible_ssh_user=root
 # Install Enterprise or Origin; set up ntp
 openshift_deployment_type=openshift-enterprise
 openshift_clock_enabled=true
+
+# Registry auth needed if you're using RH's registry.
 oreg_auth_user="{{ lookup('env','OREG_AUTH_USER') }}"
 oreg_auth_password="{{ lookup('env','OREG_AUTH_PASSWORD') }}"
+
+### Disconnected Install
+#openshift_docker_blocked_registries=registry.access.redhat.com,docker.io,registry.redhat.io
+#openshift_docker_additional_registries=registry.cloud.chx
+#oreg_url=registry.cloud.chx/openshift3/ose-${component}:${version}
+#openshift_examples_modify_imagestreams=true
+#openshift_release=v3.11
+#openshift_image_tag=v3.11
+###
 
 # Network/DNS Related
 openshift_master_default_subdomain=apps.cloud.chx
 osm_cluster_network_cidr=10.1.0.0/16
 osm_host_subnet_length=8
 openshift_portal_net=172.30.0.0/16
+# This can be set to 0.0.0.0/0 for disconnected installs
 openshift_docker_insecure_registries=172.30.0.0/16
 #container_runtime_docker_storage_setup_device=/dev/nvme1n1
 

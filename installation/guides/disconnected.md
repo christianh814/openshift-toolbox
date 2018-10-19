@@ -5,6 +5,7 @@ There are many things to take into account. I will write "highlevel" notes here 
 * [Sync Repositories](#sync-repos)
 * [Sync Registry](#sync-registry)
 * [Install OpenShift](#install-openshift)
+* [Troubleshooting](troubleshooting)
 
 NOTE: Most of this is hacked together from [Nick's Repo](https://github.com/nnachefski/ocpstuff/blob/master/install/setup-disconnected.md)
 
@@ -163,6 +164,13 @@ Restart the service if you made any changes
 systemctl restart docker-distribution
 ```
 
+You'll need to open up the firewall
+
+```
+firewall-cmd --permanent --add-service=https
+firewall-cmd --reload
+```
+
 __Install Skopeo__
 
 You'll need certian python modules to do the sync so install them with epel (then disable epel)
@@ -220,4 +228,37 @@ done
 Now you can install OpenShift like you would normally. The example ansible host files found [HERE](../../ansible_hostfiles/) is well commented but I'll go over the options you may need to change/uncomment
 
 ```
+openshift_docker_blocked_registries=registry.access.redhat.com,docker.io,registry.redhat.io
+openshift_docker_additional_registries=registry.example.com
+oreg_url=registry.example.com/openshift3/ose-${component}:${version}
+openshift_examples_modify_imagestreams=true
+openshift_release=v3.11
+openshift_image_tag=v3.11
+openshift_docker_insecure_registries=0.0.0.0/0
 ```
+
+That's all I had to use but YMMV.
+
+## Troubleshooting
+
+If you are getting errors deploying run `journalctl --no-pager | grep -i "pull"` ...you'll see something like this in the output
+
+```
+57.cloud.chx_kube-system(9ab708c14a27c2f93c7c3c0de192c3de)" failed: rpc error: code = Unknown desc = failed pulling image "registry.cloud.chx/openshift3/ose-pod:v3.11.16": Error: image openshift3/ose-pod:v3.11.16 not found
+```
+
+That means that the `.z` tag wasn't pulled in the core images. Pull/tag/upload. I wrote a script that does this
+
+```
+#!/bin/bash
+tag=v3.11.16
+repo=registry.cloud.chx
+for image in $(< core_images.txt)
+do
+  docker pull ${repo}/${image}; docker tag ${repo}/${image} ${repo}/$(echo ${image} |awk -F: '{print $1}'):${tag}
+  docker push ${repo}/$(echo ${image} |awk -F: '{print $1}'):${tag}
+done
+##
+```
+
+Run that and then re-reun the installer
