@@ -34,12 +34,12 @@ root@master# oadm registry \
 
 Then specify backend nfs storage
 ```
-root@master# oc volume deploymentconfigs/docker-registry --add --overwrite --name=registry-storage --mount-path=/registry --source='{"nfs": { "server": "<fqdn>", "path": "/path/to/export"}}'
+root@master# oc set volume deploymentconfigs/docker-registry --add --overwrite --name=registry-storage --mount-path=/registry --source='{"nfs": { "server": "<fqdn>", "path": "/path/to/export"}}'
 ```
 
 use a pv
 ```
-oc volume deploymentconfigs/docker-registry --add --name=registry-storage -t pvc --claim-name=registry-pvc --overwrite
+oc set volume deploymentconfigs/docker-registry --add --name=registry-storage -t pvc --claim-name=registry-pvc --overwrite
 ```
 
 There are known issues when using multiple registry replicas with the same NFS volume. We recommend changing the docker-registry service’s sessionAffinity to ClientAPI like this:
@@ -94,7 +94,7 @@ Create the directory where the registry will mount the keys
 Add the secret volume to the registry deployment configuration
 
 ```
-[root@ose3-master ~]# oc volume dc/docker-registry --add --type=secret --secret-name=registry-secret -m /registry-secrets 
+[root@ose3-master ~]# oc set volume dc/docker-registry --add --type=secret --secret-name=registry-secret -m /registry-secrets 
 ```
 
 Enable TLS by adding the following environment variables to the registry deployment configuration

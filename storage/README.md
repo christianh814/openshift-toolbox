@@ -214,11 +214,11 @@ claim1    map[]     Bound     pv0001
 Finally, we need to modify the DeploymentConfig to specify that this volume should be mounted
 
 ```
-oc volumes dc/gogs --add --claim-name=gogs-repos-claim --mount-path=/home/gogs/gogs-repositories -t persistentVolumeClaim
-oc volumes dc/gogs-postgresql --add --name=pgsql-data --claim-name=pgsql-claim --mount-path=/var/lib/pgsql/data -t persistentVolumeClaim --overwrite
+oc set volume dc/gogs --add --claim-name=gogs-repos-claim --mount-path=/home/gogs/gogs-repositories -t persistentVolumeClaim
+oc set volume dc/gogs-postgresql --add --name=pgsql-data --claim-name=pgsql-claim --mount-path=/var/lib/pgsql/data -t persistentVolumeClaim --overwrite
 ```
 
-Take special note that you're overwriting the right `--name`. Find out with `oc volume dc <myapp> --list`
+Take special note that you're overwriting the right `--name`. Find out with `oc set volume dc <myapp> --list`
 
 ## AWS
 
