@@ -225,10 +225,11 @@ Once this completes successfully, run `oc get nodes` and you should see "Ready"
 
 ```
 root@master# oc get nodes
-NAME                      LABELS                                           STATUS
-ose3-master.example.com   kubernetes.io/hostname=ose3-master.example.com   Ready
-ose3-node1.example.com    kubernetes.io/hostname=ose3-node1.example.com    Ready
-ose3-node2.example.com    kubernetes.io/hostname=ose3-node2.example.com    Ready
+NAME                                          STATUS    ROLES          AGE       VERSION
+ip-172-31-19-75.us-west-1.compute.internal    Ready     compute        10d       v1.11.0+d4cacc0
+ip-172-31-23-129.us-west-1.compute.internal   Ready     compute        10d       v1.11.0+d4cacc0
+ip-172-31-23-47.us-west-1.compute.internal    Ready     compute        10d       v1.11.0+d4cacc0
+ip-172-31-28-6.us-west-1.compute.internal     Ready     infra,master   10d       v1.11.0+d4cacc0
 ```
 
 I also like to see all my pods statuses
@@ -237,7 +238,7 @@ I also like to see all my pods statuses
 oc get pods --all-namespaces
 ```
 
-Label infra nodes if you need to...
+Label nodes if the installer didn't for whatever reason...
 
 ```
 oc label node infra1.cloud.chx node-role.kubernetes.io/infra=true
