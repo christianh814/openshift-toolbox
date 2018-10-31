@@ -5,6 +5,7 @@ CNS (Container Native Storage) is a way to dynamically create file/object/block 
 * [Installation](#installation)
 * [Heketi](#heketi)
 * [AIO Install](#aio-install)
+* [Monitoring](#monitoring)
 
 ## Installation
 
@@ -277,3 +278,83 @@ gluster-container (default)   kubernetes.io/glusterfs   30m
 ```
 
 That's it!
+
+## Monitoring
+
+Prometheus uses `servicemonitors`  to figure out what to monitor.  For example, from OCP 3.11
+
+```
+$ oc get servicemonitors -n openshift-monitoring
+NAME                          AGE
+alertmanager                  6d
+cluster-monitoring-operator   6d
+kube-apiserver                6d
+kube-controllers              6d
+kube-state-metrics            6d
+kubelet                       6d
+node-exporter                 6d
+prometheus                    6d
+prometheus-operator           6d
+```
+
+We need to create a "heketi" `servicemonitor`.  For example:
+
+```yaml
+$ cat heketi-servicemonitor.yml
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: heketi
+  labels:
+    k8s-app: heketi
+  namespace: openshift-monitoring
+spec:
+  endpoints:
+  - bearerTokenFile: /var/run/secrets/kubernetes.io/serviceaccount/token
+    interval: 30s
+    port: heketi
+    scheme: http
+    targetPort: 0
+  namespaceSelector:
+    matchNames:
+    - glusterfs
+  selector:
+    matchLabels:
+      heketi: storage-service
+```
+
+The idea is to give it a namespace under `namespaceSelector` where your OCS cluster's namespace. You can get correct label with following (change `-n glusterfs` to match your OCS namespace)  The port `heketi` in the yaml matches port name in service. Use the following command to get the right entries for above.
+
+```
+$ oc describe svc heketi-storage -n glusterfs
+Name:              heketi-storage
+Namespace:         glusterfs
+Labels:            glusterfs=heketi-storage-service
+                   heketi=storage-service
+Annotations:       description=Exposes Heketi service
+Selector:          glusterfs=heketi-storage-pod
+Type:              ClusterIP
+IP:                172.30.232.132
+Port:              heketi  8080/TCP
+TargetPort:        8080/TCP
+Endpoints:         10.1.3.5:8080
+Session Affinity:  None
+Events:            <none>
+```
+
+When you have file ready run...
+
+```
+$ oc create -f heketi-servicemonitor.yml -n openshift-monitoring
+servicemonitor.monitoring.coreos.com/heketi-sm created
+```
+
+Next, add cluster-reader rights to prometheus
+
+```
+$ oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:openshift-monitoring:prometheus-k8s -n openshift-monitoring
+```
+
+Log into grafana as `admin` (the account **HAS** to be named `admin` in this realease of OCP). Import the following json as a dashboard and make sure you choose `prometheus` as a source.
+
+You can download an example [HERE]() (NOTE: You **WILL** have to change values before you import in the json. The names of the nodes is all I had to change)
