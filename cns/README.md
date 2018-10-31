@@ -358,3 +358,7 @@ $ oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:op
 Log into grafana as `admin` (the account **HAS** to be named `admin` in this realease of OCP). Import the following json as a dashboard and make sure you choose `prometheus` as a source.
 
 You can download an example [HERE](ocs-grafana-dash.json) (NOTE: You **WILL** have to change values before you import in the json. The names of the nodes under `hostname=` is all I had to change in this file)
+
+In the end, it'll look like this.
+
+![ocs-grafana](ocs-grafana.png)
