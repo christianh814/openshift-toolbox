@@ -105,7 +105,6 @@ If you need to look for a subclass...
 Here's an example of doing it inside on an ansible host file
 
 ```
-```
 openshift_master_identity_providers=[{'name':'Active_Directory','login':'true','challenge':'true','kind':'LDAPPasswordIdentityProvider','attributes':{'id':['userPrincipalName'],'email':['userPrincipalName'],'name':['name'],'preferredUsername':['sAMAccountName']},'insecure':'true','bindDN':'CN=svc-openshift,CN=Users,DC=moos,DC=red','bindPassword':'REMOVED','url':'ldap://dc.moos.red:389/CN=Users,DC=moos,DC=red?sAMAccountName?sub?(objectClass=person)'}]
 ```
 
