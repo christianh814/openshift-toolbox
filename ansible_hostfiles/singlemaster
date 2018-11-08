@@ -126,6 +126,7 @@ ansible_service_broker_local_registry_whitelist=['.*-apb$']
 # If using Route53 or you're pointed to the master with a "vanity" name
 openshift_master_public_api_url=https://ocp.cloud.chx:8443
 openshift_master_public_console_url=https://ocp.cloud.chx:8443/console
+openshift_master_cluster_public_hostname=ocp.cloud.chx
 openshift_master_api_port=8443
 openshift_master_console_port=8443
 
