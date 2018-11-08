@@ -24,7 +24,7 @@ I installed CentOS with the following in mind
 
 I preped the hosts with the follwing steps borrowed from the [setup script](https://github.com/gshipley/installcentos/blob/master/install-openshift.sh). Note that I **DID NOT** run the script but used to to prepare my hosts
 
-<detailed instructions to come>
+_detailed instructions to come_
 
 ## Inventory File
 
