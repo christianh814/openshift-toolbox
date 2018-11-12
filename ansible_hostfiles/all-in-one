@@ -30,6 +30,9 @@ openshift_hosted_manage_router=true
 openshift_hosted_manage_registry=true
 openshift_enable_unsupported_configurations=true
 
+# Disable ASB
+ansible_service_broker_install=false
+
 # Disble Checks
 openshift_disable_check=disk_availability,docker_storage,memory_availability,docker_image_availability,package_availability,package_version
 
