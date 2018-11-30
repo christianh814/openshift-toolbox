@@ -537,6 +537,7 @@ Edit a configmap by updating the file locally and upload it via the `oc` command
 oc create configmap test --from-file='foo=foo' --dry-run -o yaml | oc replace -f -
 ```
 
+# Gogs Stuff
 I don't know where else to put this but I created users with gogs using this...
 
 ```
@@ -545,7 +546,7 @@ curl -H "Content-Type: application/json" -X POST \
 "http://gogs.redhatworkshops.io/api/v1/admin/users?token=6abd69ed8c86ee2925df7830e5c7a95197b71552"
 ```
 
-A better way to do this was via shell script
+A better way to do this was via shell script (**NOTE** remove `source_id` and change `login_name` to `password` if you are using local accounts and not ldap)
 
 ```
 #!/bin/bash
@@ -564,7 +565,24 @@ done
 ##
 ```
 
-Gitlab works similar
+I created the migration with the following
+
+```
+## Start where it makes sense
+for i in {3..203}
+do
+  echo "{\"clone_addr\": \"https://github.com/christianh814/php-pricelist\", \"uid\": ${i}, \"repo_name\": \"php-pricelist\"}" > /tmp/${i}-pricelist.json
+  echo "{\"clone_addr\": \"https://github.com/christianh814/welcome-php\", \"uid\": ${i}, \"repo_name\": \"welcome-php\"}" > /tmp/${i}-welcome.json
+  curl -H "Content-Type: application/json" -X POST -d @/tmp/${i}-pricelist.json \
+  "http://gogs-lab-infra.apps.visanorcal-6a24.openshiftworkshop.com/api/v1/repos/migrate?token=${token}"
+  curl -H "Content-Type: application/json" -X POST -d @/tmp/${i}-welcome.json \
+  "http://gogs-lab-infra.apps.visanorcal-6a24.openshiftworkshop.com/api/v1/repos/migrate?token=${token}"
+done
+```
+
+# Gitlab
+
+Gitlab works similar to gogs
 
 ```
 #!/bin/bash
