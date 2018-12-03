@@ -38,38 +38,18 @@ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/openshift-metric
 -e openshift_metrics_install_metrics=False
 ```
 
-# Prometheus
+# Prometheus/Grafana
 
 Same idea with prometheus; make sure you have something like `[OSEv3:vars]` in your `/etc/ansible/hosts` file
 
 ```
-## Prometheus Metrics
-openshift_hosted_prometheus_deploy=true
-openshift_prometheus_namespace=openshift-metrics
-openshift_prometheus_node_selector={'node-role.kubernetes.io/infra':'true'}
-
-# Prometheus storage config
-openshift_prometheus_storage_access_modes=['ReadWriteOnce']
-openshift_prometheus_storage_volume_name=prometheus
-openshift_prometheus_storage_volume_size=10Gi
-openshift_prometheus_storage_type='pvc'
-openshift_prometheus_sc_name="glusterfs-storage"
-
-# For prometheus-alertmanager
-openshift_prometheus_alertmanager_storage_access_modes=['ReadWriteOnce']
-openshift_prometheus_alertmanager_storage_volume_name=prometheus-alertmanager
-openshift_prometheus_alertmanager_storage_volume_size=10Gi
-openshift_prometheus_alertmanager_storage_type='pvc'
-openshift_prometheus_alertmanager_sc_name="glusterfs-storage"
-
-# For prometheus-alertbuffer
-openshift_prometheus_alertbuffer_storage_access_modes=['ReadWriteOnce']
-openshift_prometheus_alertbuffer_storage_volume_name=prometheus-alertbuffer
-openshift_prometheus_alertbuffer_storage_volume_size=10Gi
-openshift_prometheus_alertbuffer_storage_type='pvc'
-openshift_prometheus_alertbuffer_sc_name="glusterfs-storage"
-
-openshift_prometheus_node_exporter_image_version=v3.10.14
+# Prometheus Metrics
+openshift_cluster_monitoring_operator_install=true
+openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
+openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
+openshift_cluster_monitoring_operator_prometheus_storage_capacity=15Gi
+openshift_cluster_monitoring_operator_alertmanager_storage_capacity=15Gi
+openshift_cluster_monitoring_operator_node_selector={'node-role.kubernetes.io/infra':'true'}
 ```
 
 Then run
@@ -78,26 +58,7 @@ Then run
 ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/openshift-prometheus/config.yml
 ```
 
-# Grafana
-
-For Grafana I added
-
-```
-# Grafana
-openshift_grafana_node_selector={'node-role.kubernetes.io/infra':'true'}
-openshift_grafana_storage_type='pvc'
-openshift_grafana_sc_name="glusterfs-storage"
-openshift_grafana_storage_volume_size=10Gi
-openshift_grafana_node_exporter=true
-```
-
-Then I ran 
-
-```
-ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/openshift-grafana/config.yml
-```
-
-**NOTE** I had to run this twice because of some error
+(NOTE: Grafana installs automatically)
 
 # Misc Hawkular
 
