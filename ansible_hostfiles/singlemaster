@@ -94,28 +94,14 @@ openshift_metrics_hawkular_nodeselector={'node-role.kubernetes.io/infra':'true'}
 openshift_metrics_heapster_nodeselector={'node-role.kubernetes.io/infra':'true'}
 openshift_metrics_cassandra_nodeselector={'node-role.kubernetes.io/infra':'true'}
 
-## Prometheus Metrics
-openshift_hosted_prometheus_deploy=true
-openshift_prometheus_namespace=openshift-metrics
-openshift_prometheus_node_selector={'node-role.kubernetes.io/infra':'true'}
+# Prometheus Metrics
+openshift_cluster_monitoring_operator_install=true
+openshift_cluster_monitoring_operator_prometheus_storage_enabled=true
+openshift_cluster_monitoring_operator_alertmanager_storage_enabled=true
+openshift_cluster_monitoring_operator_prometheus_storage_capacity=15Gi
+openshift_cluster_monitoring_operator_alertmanager_storage_capacity=15Gi
+openshift_cluster_monitoring_operator_node_selector={'node-role.kubernetes.io/infra':'true'}
 
-# Prometheus storage config
-openshift_prometheus_storage_volume_name=prometheus
-openshift_prometheus_storage_volume_size=10Gi
-openshift_prometheus_storage_type='pvc'
-openshift_prometheus_sc_name="glusterfs-storage"
-
-# For prometheus-alertmanager
-openshift_prometheus_alertmanager_storage_volume_name=prometheus-alertmanager
-openshift_prometheus_alertmanager_storage_volume_size=10Gi
-openshift_prometheus_alertmanager_storage_type='pvc'
-openshift_prometheus_alertmanager_sc_name="glusterfs-storage"
-
-# For prometheus-alertbuffer
-openshift_prometheus_alertbuffer_storage_volume_name=prometheus-alertbuffer
-openshift_prometheus_alertbuffer_storage_volume_size=10Gi
-openshift_prometheus_alertbuffer_storage_type='pvc'
-openshift_prometheus_alertbuffer_sc_name="glusterfs-storage"
 
 ## Ansible Service Broker - only install it if you REALLY need it.
 ansible_service_broker_install=false
