@@ -21,19 +21,25 @@ oc label namespace default name=kube-service-catalog
 oc project myproject
 ```
 
-You need to deny ALL traffic coming into your namespace. This essentially "breaks" your project as ALL traffic (wanted and unwanted alike) is blocked.
+You need to deny ALL traffic coming into your namespace.
+
 
 ```
 oc create -f default-deny.yaml
 ```
 
+^ This essentially "breaks" your project as ALL traffic (wanted and unwanted alike) is blocked.
+
 ## Allow Router/K8S
 
-Next, you want to be able to have the router/kubernetes to be able to access your namespace. (this makes your app "browsable")
+Next, you want to be able to have the router/kubernetes to be able to access your namespace.
+
 
 ```
 oc create -f allow-from-default-namespace.yml
 ```
+
+^ this makes your app "browsable"
 
 ## Allow Pod access
 
@@ -106,3 +112,4 @@ To block access from pods within a namespace to go out of the cluster you can ru
 oc create -f allow-domain.json -n myproject
 ```
 
+This blocks/allows traffic going outside the OCP cluster
