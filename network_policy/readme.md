@@ -8,6 +8,7 @@ These are "quick and dirty" notes. Hacked together by [this blog](https://blog.o
 It's important to make sure the default namespace is labeled properly. This is an admin task
 
 ```
+oc login -u system:admin
 oc label namespace default name=default
 oc label namespace default name=kube-service-catalog
 ```
@@ -18,6 +19,7 @@ oc label namespace default name=kube-service-catalog
 **NOTE** Before you start, make sure you're in the right project!
 
 ```
+oc login -u developer
 oc project myproject
 ```
 
