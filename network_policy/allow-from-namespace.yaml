@@ -1,16 +1,11 @@
 kind: NetworkPolicy
 apiVersion: extensions/v1beta1
 metadata:
-  name: allow-8080-emailsvc 
+  name: allow-from-namespace
 spec:
   podSelector:
-    matchLabels:
-      app: emailsvc
   ingress:
   - from: 
     - namespaceSelector:
         matchLabels:
           project: myproject
-    ports:
-    - protocol: TCP
-      port: 8080
