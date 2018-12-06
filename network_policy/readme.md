@@ -114,4 +114,4 @@ To block access from pods within a namespace to go out of the cluster you can ru
 oc create -f allow-domain.json -n myproject
 ```
 
-This blocks/allows traffic going outside the OCP cluster
+This blocks/allows traffic going outside the OCP cluster. **NOTE** this is an admin task; you have to be `system:admin` or equiv to use Egress rules.
