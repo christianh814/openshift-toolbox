@@ -66,10 +66,11 @@ Disable all repositories and enable only the required ones:
 subscription-manager repos  --disable=*
 yum-config-manager --disable \*
 subscription-manager repos \
-    --enable="rhel-7-server-rpms" \
-    --enable="rhel-7-server-extras-rpms" \
-    --enable="rhel-7-server-ose-3.11-rpms" \
-    --enable="rhel-7-server-ansible-2.6-rpms"
+    --enable=rhel-7-server-rpms \
+    --enable=rhel-7-server-extras-rpms \
+    --enable=rhel-7-server-ose-3.11-rpms \
+    --enable=rhel-7-server-ansible-2.6-rpms \
+    --enable=rh-gluster-3-client-for-rhel-7-server-rpms
 ```
 
 Make sure the pre-req pkgs are installed/removed and make sure the system is updated
@@ -86,13 +87,6 @@ Then install docker when it comes back up. Make sure you're running the version 
 ```
 yum -y install docker-1.13.1
 docker version
-```
-
-If you're planning on using gluster; update the default package to the latest version
-
-```
-subscription-manager repos --enable=rh-gluster-3-client-for-rhel-7-server-rpms
-yum -y update glusterfs-fuse
 ```
 
 ## Docker Configuration
