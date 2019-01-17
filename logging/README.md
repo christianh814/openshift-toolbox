@@ -8,13 +8,14 @@ To Install add the following under `[OSEv3:vars]` in `/etc/ansible/hosts`
 
 ```
 # Logging
+# Logging
 openshift_logging_install_logging=true
 openshift_logging_es_pvc_dynamic=true
-openshift_logging_es_pvc_size=28Gi
+openshift_logging_es_pvc_size=20Gi
 openshift_logging_es_pvc_storage_class_name=glusterfs-storage-block
-openshift_logging_curator_nodeselector={'region':'infra'}
-openshift_logging_es_nodeselector={'region':'infra'}
-openshift_logging_kibana_nodeselector={'region':'infra'}
+openshift_logging_curator_nodeselector={'node-role.kubernetes.io/infra':'true'}
+openshift_logging_es_nodeselector={'node-role.kubernetes.io/infra':'true'}
+openshift_logging_kibana_nodeselector={'node-role.kubernetes.io/infra':'true'}
 openshift_logging_es_memory_limit=4G
 ```
 
@@ -46,5 +47,5 @@ If you messed up and didn't include `*_nodeselector`; then moved them with
 
 ```
 oc get dc -n logging
-oc patch dc/<dc name> -n loggin -p '{"spec":{"template":{"spec":{"nodeSelector":{"region":"infra"}}}}}'
+oc patch dc/<dc name> -n loggin -p '{"spec":{"template":{"spec":{"nodeSelector":{"node-role.kubernetes.io/infra":"true"}}}}}'
 ```
