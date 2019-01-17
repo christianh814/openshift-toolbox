@@ -66,5 +66,5 @@ ansible-playbook /usr/share/ansible/openshift-ansible/playbooks/openshift-promet
 If you ran the installer without the `*_nodeselector` options; you can do this to "move" it over to your infra nodes.
 
 ```
-oc patch ns openshift-infra -p '{"metadata": {"annotations": {"openshift.io/node-selector": "region=infra"}}}'
+oc patch ns openshift-infra -p '{"metadata": {"annotations": {"openshift.io/node-selector": "node-role.kubernetes.io/infra=true"}}}'
 ```
