@@ -8,7 +8,6 @@ To Install add the following under `[OSEv3:vars]` in `/etc/ansible/hosts`
 
 ```
 # Logging
-# Logging
 openshift_logging_install_logging=true
 openshift_logging_es_pvc_dynamic=true
 openshift_logging_es_pvc_size=20Gi
