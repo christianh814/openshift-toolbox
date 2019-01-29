@@ -93,7 +93,7 @@ docker version
 
 Docker storage doesn't need to be configured as we use `overlayfs`.
 
-I moved the `lvm` config section [here](installation/guides/docker-ocp.md) just for historical purposes. (you won't need them though)
+I moved the `lvm` config section [here](guides/docker-ocp.md) just for historical purposes. (you won't need them though)
 
 ## Ansible Installer
 
