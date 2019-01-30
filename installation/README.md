@@ -26,12 +26,12 @@ For this installation we have the following
   * 4CPU
   * 16GB RAM
   * Disk 0 (Root Drive) - 50GB
-  * Disk 1 - 100GB mounted as /var
+  * Disk 1 - 100GB mounted as `/var`
 * Nodes
   * 4CPU
   * 16GB RAM
   * Disk 0 (Root Drive) - 50GB
-  * Disk 1 - 100GB mounted as /var
+  * Disk 1 - 100GB mounted as `/var`
   * Disk 2 - 500GB Raw/Unformatted (for Container Native Storage)
 
 Here is a diagram of how OCP is layed out
