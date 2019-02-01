@@ -131,6 +131,8 @@ cp /etc/ansible/hosts{,.bak}
 
 Next You must create an `/etc/ansible/hosts` file for the playbook to use during the installation
 
+> **NOTE**, for a PoC install, you can't have LESS than a `/21` (i.e. NO `/24`) or a osm_host_subnet_length less than 9
+
 Sample Ansible Hosts files
   * [Single Master](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/singlemaster)
   * [Multi Master](https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/ansible_hostfiles/multimaster)
