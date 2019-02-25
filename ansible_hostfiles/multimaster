@@ -48,6 +48,10 @@ openshift_storage_glusterfs_wipe=true
 openshift_storage_glusterfs_storageclass_default=true
 openshift_storage_glusterfs_block_storageclass=true
 openshift_storage_glusterfs_block_host_vol_size=50
+openshift_storage_glusterfs_image=registry.redhat.io/rhgs3/rhgs-server-rhel7:v3.11
+openshift_storage_glusterfs_block_image=registry.redhat.io/rhgs3/rhgs-gluster-block-prov-rhel7:v3.11
+openshift_storage_glusterfs_s3_image=registry.redhat.io/rhgs3/rhgs-s3-server-rhel7:v3.11
+openshift_storage_glusterfs_heketi_image=registry.redhat.io/rhgs3/rhgs-volmanager-rhel7:v3.11
 
 # Automatically Deploy the router
 openshift_hosted_manage_router=true
