@@ -1,0 +1,15 @@
+apiVersion: "istio.openshift.com/v1alpha1"
+kind: "Installation"
+metadata:
+  name: "istio-installation"
+  namespace: istio-operator
+spec:
+  istio:
+    authentication: true
+    prefix: docker.io/maistra
+  jaeger:
+    prefix: docker.io/jaegertracing
+  kiali:
+    username: admin
+    password: admin
+    prefix: docker.io/kiali
