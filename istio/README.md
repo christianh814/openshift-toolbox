@@ -101,8 +101,10 @@ oc get pods -l app=sleep
 
 Should show the following output
 
-> NAME                    READY     STATUS    RESTARTS   AGE
-> sleep-9b989c67c-xbr6t   2/2       Running   0          14s
+```
+NAME                    READY     STATUS    RESTARTS   AGE
+sleep-9b989c67c-xbr6t   2/2       Running   0          14s
+```
 
 
 Delete it once it's successful
