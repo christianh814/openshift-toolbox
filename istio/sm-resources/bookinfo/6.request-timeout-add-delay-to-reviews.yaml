@@ -1,4 +1,3 @@
----
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -7,12 +6,11 @@ spec:
   hosts:
   - reviews
   http:
-  - retries:
-      attempts: 3
-      perTryTimeout: 4.000s
+  - fault:
+      delay:
+        percent: 100
+        fixedDelay: 2s
     route:
     - destination:
         host: reviews
-        subset: v2
-      weight: 100
----
+        subset: v1
