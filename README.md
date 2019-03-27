@@ -14,5 +14,5 @@ OpenShift Setup Tools And Howto's
 * [Metrics](metrics)
 * [Logging](logging)
 * [Service Mesh](istio)
-* [OC Cluster Up](oc_cluster_up)
+* [Operators](operators)
 * [And The Rest](miscellaneous)
