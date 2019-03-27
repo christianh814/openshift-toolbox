@@ -100,7 +100,7 @@ welcome-operator/
 └── watches.yaml
 ```
 
-Note that `--api-version=` and `--kind` have a direct effect on how you're going to call this when you create it!
+Note that `--api-version=` and `--kind` have a direct affect on how you're going to call this when you create it!
 
 ```
 $ grep -i Kind welcome-operator/deploy/crds/welcome_v1alpha1_welcome_crd.yaml
