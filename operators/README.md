@@ -14,3 +14,4 @@ An [Operator Framework](https://coreos.com/blog/introducing-operator-framework) 
 I'll break down this down into easily consumable sections
 
 * [Install SDK](docs/install.md)
+* [Namespaced Scoped Operator](docs/namespaced.md)
