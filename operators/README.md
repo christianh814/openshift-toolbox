@@ -15,3 +15,4 @@ I'll break down this down into easily consumable sections
 
 * [Install SDK](docs/install.md)
 * [Namespaced Scoped Operator](docs/namespaced.md)
+* [Cluster Scoped Operator](docs/clusterd.md)
