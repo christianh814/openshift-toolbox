@@ -395,7 +395,7 @@ rules:
 Lastly, change the `deploy/role_binding.yaml` file to replace `REPLACE_NAMESPACE` to the namespace you will deploy the operator on
 
 ```
-$ sed -i 's/REPLACE_NAMESPACE/welcome-php-operator/'g deploy/role_binding.yaml
+$ sed -i 's/REPLACE_NAMESPACE/welcome-php-operator/g' deploy/role_binding.yaml
 ```
 
 ## Deploying the Operator
