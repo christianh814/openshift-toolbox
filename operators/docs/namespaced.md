@@ -12,6 +12,7 @@ Here are the steps to create a simple operator that deploys a hello world applic
 * [Using the K8S Module](#using-the-k8s-module)
 * [Building the Operator](#building-the-operator)
 * [Deplyoing the Operator](#deploying-the-operator)
+* [Troubleshooting](#troubleshooting)
 
 ## Create The Operator
 
@@ -105,8 +106,7 @@ Note that `--api-version=` and `--kind` have a direct affect on how you're going
 ```
 $ grep -i Kind welcome-operator/deploy/crds/welcome_v1alpha1_welcome_crd.yaml
 kind: CustomResourceDefinition
-    kind: Welcome
-    listKind: WelcomeList
+    kind: Welcome listKind: WelcomeList
 
 $ grep  api  welcome-operator/deploy/crds/welcome_v1alpha1_welcome_cr.yaml 
 apiVersion: welcome.example.com/v1alpha1
@@ -480,3 +480,21 @@ Hints
 
 * Any changes/additions to the ansible files needs a "re-build" of the Operator
 * Remember local builds of the operator need to be pushed up to your repo
+
+## Troubleshooting
+
+The best way to find out what's wrong is to look at either the Ansbile container or the Operator container
+
+Ansible container...
+
+```
+$ oc logs welcome-operator-76f84cc4f6-xgkf6 -c ansible
+```
+
+Operator container...
+
+```
+$ oc logs welcome-operator-76f84cc4f6-xgkf6 -c operator
+```
+
+Ansible container has logs about the playbook run whereas the operator container has logs about operator specific tasks (also includes dump of ansible playbook runs)
