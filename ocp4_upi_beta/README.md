@@ -7,3 +7,4 @@ I mostly used [this doc](https://docs.openshift.com/container-platform/4.1/insta
 * [Prereqs](docs/0.prereqs.md)
 * [Setup Artifacts](docs/1.setup.md)
 * [Install RHCOS](docs/2.installrhcos.md)
+* [Install OCP4](docs/2.installocp4.md)
