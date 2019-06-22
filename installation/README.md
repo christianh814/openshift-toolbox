@@ -6,4 +6,4 @@ Please select a version you wish to install
 
 * [OpenShift Enterprise v2](https://github.com/christianh814/notes/blob/master/documents/openshift_v2.md)
 * [OpenShift Container Platform v3](3.md)
-* [OpenShift Container Platform v4](../ocp4_upi)
+* [OpenShift Container Platform v4](../ocp4_upi/)
