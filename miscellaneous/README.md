@@ -775,3 +775,11 @@ Login to the node the pod is on and run the following to find the interace name 
 
 Once you find the name by the number you got from iflink then attach tcpdump to that interface:
 `# tcpdump -i vethd54dbac4`
+
+# Get Node Information
+
+On OCP4, see how many CPUs you're using (for entitlements)
+
+```
+oc get nodes -o custom-columns='NAME:metadata.name,CPU:status.capacity.cpu,Memory:status.capacity.memory,NodeInfo:status.nodeInfo.osImage'
+```
