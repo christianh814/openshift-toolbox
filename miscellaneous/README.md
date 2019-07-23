@@ -783,3 +783,11 @@ On OCP4, see how many CPUs you're using (for entitlements)
 ```
 oc get nodes -o custom-columns='NAME:metadata.name,CPU:status.capacity.cpu,Memory:status.capacity.memory,NodeInfo:status.nodeInfo.osImage'
 ```
+
+# Sort By
+
+Sort events by time
+
+```
+oc get events --sort-by="lastTimestamp"
+```
