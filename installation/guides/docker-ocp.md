@@ -48,12 +48,13 @@ DOCKER_STORAGE_OPTIONS=--storage-opt dm.fs=xfs --storage-opt dm.thinpooldev=/dev
 Re-initialize docker.
 
 **Warning** This will destroy any docker containers or images currently on the host.
-```
-    # systemctl stop docker
-    # vgremove -ff docker-vg
-    # rm -rf /var/lib/docker/*
-    # wipefs -a /path/to/dev
-    # cat /dev/null > /etc/sysconfig/docker-storage
-    # docker-storage-setup
-    # systemctl restart docker
+
+```shell
+systemctl stop docker
+vgremove -ff docker-vg
+rm -rf /var/lib/docker/*
+wipefs -a /path/to/dev
+cat /dev/null > /etc/sysconfig/docker-storage
+docker-storage-setup
+systemctl restart docker
 ```
