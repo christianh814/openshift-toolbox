@@ -1,4 +1,4 @@
-# OpenShift 4.1 UPI Install
+# OpenShift 4 UPI Install
 
 This is a high-level guide that will help you install OCP 4.1 UPI on BareMetal (but works on VMs). OCP4.x requires more infra components than 3.x and makes a lot of assumptions. I will go over them here; but remember. These are **__HIGH LEVEL__** notes and assumes you know what you're doing.
 
@@ -11,7 +11,7 @@ Please consult the [official docs](https://docs.openshift.com/container-platform
 
 If you are using Libvirt, and doing a "lab" install...I suggest you look at my [helper node](https://github.com/christianh814/ocp4-upi-helpernode#ocp4-upi-helper-node-playbook) repo to expedite things. In that repo there is a [quick start](https://github.com/christianh814/ocp4-upi-helpernode/blob/master/quickstart.md) guide that makes things extra fast!
 
-# OpenShift 4.1 IPI Cloud Installers
+# OpenShift 4 IPI Cloud Installers
 
 Using the IPI Cloud installers is an easier, more automated, but less flexiable way of installing OCP4.x and requires less setup. If installing in the cloud, I recommend one of these.
 
