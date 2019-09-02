@@ -16,5 +16,5 @@ If you are using Libvirt, and doing a "lab" install...I suggest you look at my [
 Using the IPI Cloud installers is an easier, more automated, but less flexiable way of installing OCP4.x and requires less setup. If installing in the cloud, I recommend one of these.
 
 * [AWS Installer](https://docs.openshift.com/container-platform/4.1/installing/installing_aws/installing-aws-default.html)
-* [Azure Installer](https://image.freepik.com/free-vector/coming-soon-message-illuminated-with-light-projector_1284-3622.jpg)
-* [GCE Installer](https://image.freepik.com/free-vector/coming-soon-message-illuminated-with-light-projector_1284-3622.jpg)
+* [Azure Installer](https://github.com/openshift/installer/tree/master/docs/user/azure)
+* [GCE Installer](https://github.com/openshift/installer/tree/master/docs/user/gcp)
