@@ -18,3 +18,10 @@ Using the IPI Cloud installers is an easier, more automated, but less flexiable 
 * [AWS Installer](https://docs.openshift.com/container-platform/4.1/installing/installing_aws/installing-aws-default.html)
 * [Azure Installer](https://github.com/openshift/installer/tree/master/docs/user/azure)
 * [GCE Installer](https://github.com/openshift/installer/tree/master/docs/user/gcp)
+
+# OpenShift 4 Restricted Installs
+
+The following are guide for "restricted" type of installs of OpenShift 4
+
+* [Disconnected Install](https://github.com/christianh814/blogs/blob/master/docs/openshift-4.2-disconnected/README.md)
+* [Proxy Install](tk)
