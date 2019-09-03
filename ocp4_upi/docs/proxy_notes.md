@@ -32,7 +32,7 @@ pullSecret: '{"auths": ...}'
 sshKey: 'ssh-ed25519 AAAA...'
 ```
 
-What's important here is the `noProxy` setting. Remember to put in the range of your network, the range of the service network, and the range of the pod network. Also, add the domain of the environment you're installing in.
+What's important here is the `noProxy` setting. Remember to put in the range of your environemnt's network, the range of the `serviceNetwork`, and the range of the pod `clusterNetworks`. Also, add the domain of the environment you're installing in.
 
 **NOTE** You want to put these on the "helper node" (or your bastion host) if you're using it (inside of `/etc/environment`)
 
