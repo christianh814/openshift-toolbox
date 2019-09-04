@@ -1,5 +1,7 @@
 # OpenShift 4 Proxy Install
 
+> **NOTE** This is for OCP 4.2 and newer
+
 The only difference is that, the `install-config.yaml` file will have the proxy information. This proxy information is a "global" configuration for the cluster. Here is an example:
 
 ```yaml
