@@ -784,6 +784,12 @@ On OCP4, see how many CPUs you're using (for entitlements)
 oc get nodes -o custom-columns='NAME:metadata.name,CPU:status.capacity.cpu,Memory:status.capacity.memory,NodeInfo:status.nodeInfo.osImage'
 ```
 
+Show nodes by taint
+
+```
+oc get nodes -o=custom-columns=NAME:.metadata.name,TAINTS:.spec.taints
+```
+
 # Sort By
 
 Sort events by time
