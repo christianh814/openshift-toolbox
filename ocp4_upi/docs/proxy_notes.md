@@ -49,4 +49,4 @@ export no_proxy="192.168.7.0/24,10.254.0.0/16,72.30.0.0/16,.example.com"
 ```
 Note the leading `.` in `.example.com` ...this is a Linux thing that NEEDS to be on the bastion/helper but **NOT** in the `install-config.yaml`
 
-[Back to ToC](../ocp4_upi)
+[Back to ToC](../)
