@@ -13,6 +13,15 @@ Sometimes, in order to deploy pods on them, you'll need to mark your masters `sc
 root@master# oc adm manage-node ose3-master.example.com --schedulable=true
 ```
 
+In 4.2 nightly builds, the masters are schedulable by default;mark them as unschedulable by first running
+
+```
+oc edit schedulers cluster
+```
+
+Then set `masterschedulable` to `false`. Then you can remove the worker label from the master.
+
+
 ## Nodes
 
 * [Assign Node Roles](#roles)
