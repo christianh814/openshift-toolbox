@@ -26,5 +26,5 @@ Using the IPI Cloud installers is an easier, more automated, but less flexiable 
 
 The following are guide for "restricted" type of installs of OpenShift 4
 
-* [Disconnected Install](https://github.com/christianh814/blogs/blob/master/docs/openshift-4.2-disconnected/README.md)
+* [Disconnected Install](https://github.com/christianh814/blogs/tree/master/docs/openshift-4.2-restricted-network-install)
 * [Proxy Install](docs/proxy_notes.md)
