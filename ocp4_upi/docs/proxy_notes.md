@@ -42,10 +42,10 @@ What's important here is the `noProxy` setting. Remember to put in the range of 
 root@helper# cat /etc/environment
 export HTTP_PROXY="http://proxyuser:proxypass@myproxy.example.com:3128"
 export HTTPS_PROXY="http://proxyuser:proxypass@myproxy.example.com:3128"
-export NO_PROXY="192.168.7.0/24,10.254.0.0/16,72.30.0.0/16,.example.com"
+export NO_PROXY="192.168.7.0/24,10.254.0.0/16,172.30.0.0/16,.example.com"
 export http_proxy="http://proxyuser:proxypass@myproxy.example.com:3128"
 export https_proxy="http://proxyuser:proxypass@myproxy.example.com:3128"
-export no_proxy="192.168.7.0/24,10.254.0.0/16,72.30.0.0/16,.example.com"
+export no_proxy="192.168.7.0/24,10.254.0.0/16,172.30.0.0/16,.example.com"
 ```
 Note the leading `.` in `.example.com` ...this is a Linux thing that NEEDS to be on the bastion/helper but **NOT** in the `install-config.yaml`
 
