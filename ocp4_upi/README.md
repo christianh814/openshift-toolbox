@@ -9,7 +9,7 @@ Please consult the [official docs](https://docs.openshift.com/container-platform
 * [Install RHCOS](docs/2.installrhcos.md)
 * [Install OCP4](docs/3.installocp4.md)
 
-If you are using Libvirt, and/or doing a "lab" install (or PoC)...I suggest you look at my [helper node](https://github.com/christianh814/ocp4-upi-helpernode#ocp4-upi-helper-node-playbook) repo to expedite things. In that repo there is a [quick start](https://github.com/christianh814/ocp4-upi-helpernode/blob/master/quickstart.md) guide that makes things extra fast!
+If you are using Libvirt, and/or doing a "lab" install (or PoC)...I suggest you look at my [helper node](https://github.com/christianh814/ocp4-upi-helpernode#ocp4-upi-helper-node-playbook) repo to expedite things. In that repo there is a [quickstart](https://github.com/christianh814/ocp4-upi-helpernode/blob/master/docs/quickstart.md) guide that makes things extra fast!
 
 # OpenShift 4 IPI Cloud Installers
 
