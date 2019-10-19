@@ -29,7 +29,7 @@ platform:
 proxy:
   httpProxy: http://proxyuser:proxypass@myproxy.example.com:3128
   httpsProxy: http://proxyuser:proxypass@myproxy.example.com:3128
-  noProxy: 192.168.7.0/24,10.254.0.0/16,172.30.0.0/16,example.com
+  noProxy: 192.168.7.0/24,10.254.0.0/16,172.30.0.0/16,.example.com
 pullSecret: '{"auths": ...}'
 sshKey: 'ssh-ed25519 AAAA...'
 ```
@@ -47,6 +47,5 @@ export http_proxy="http://proxyuser:proxypass@myproxy.example.com:3128"
 export https_proxy="http://proxyuser:proxypass@myproxy.example.com:3128"
 export no_proxy="192.168.7.0/24,10.254.0.0/16,172.30.0.0/16,.example.com"
 ```
-Note the leading `.` in `.example.com` ...this is a Linux thing that NEEDS to be on the bastion/helper but **NOT** in the `install-config.yaml`
 
 [Back to ToC](../)
