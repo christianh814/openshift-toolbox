@@ -1,0 +1,102 @@
+#!/bin/bash
+#
+ocbin=/usr/local/bin/oc
+jayq=/usr/bin/jq
+crl=/usr/bin/curl
+ocmirrorurl=https://mirror.openshift.com/pub/openshift-v4/clients/ocp
+stagingdir=/usr/local/src/ocbin
+tarchive=/usr/bin/tar
+#
+basicchecks () {
+	[[ ! -f ${ocbin} ]] && echo "The OC binary doesn't seem to exist" && exit 253
+	[[ ! -f ${jayq} ]] && echo "The JQ binary doesn't seem to exist" && exit 253
+	[[ ! -f ${crl} ]] && echo "The CURL binary doesn't seem to exist" && exit 253
+	[[ ! -f ${tarchive} ]] && echo "The TAR binary doesn't seem to exist" && exit 253
+}
+#
+upgrade () {
+	basicchecks
+	clientversion=$(oc version --client -o json | jq -r .clientVersion.gitVersion | awk -F'-' '{print $3}')
+	serverversion=$(oc version -o json | jq -r  .openshiftVersion)
+	if [ ${clientversion} == ${serverversion} ]; then
+		echo "Client version and Server version match, nothing to do."
+		exit 0
+	else
+		echo "Upgrading client to version ${serverversion}"
+		dowloadurl=${ocmirrorurl}/${serverversion}/openshift-client-linux-${serverversion}.tar.gz
+		cp -a ${ocbin} ${ocbin}.backup
+		rm -f ${ocbin}
+		mkdir -m 777 -p ${stagingdir}
+		${crl} -o ${stagingdir}/openshift-client-linux-${serverversion}.tar.gz -s ${dowloadurl}
+		${tarchive} -xzf ${stagingdir}/openshift-client-linux-${serverversion}.tar.gz -C ${stagingdir}/
+		if [ ! -f ${stagingdir}/oc ]; then
+			echo "FATAL ERROR: Could not validate new OC client...reverting"
+			cp -a ${ocbin}.backup ${ocbin}
+		fi
+		cp -a ${stagingdir}/oc $(dirname ${ocbin})/
+		rm -rf ${stagingdir}/*
+	fi
+}
+#
+downgrade () {
+	basicchecks
+	echo "Downgrading client "
+	[[ ! -f ${ocbin}.backup ]] && echo "There is nothing to revert to" && exit 253
+	cp -a ${ocbin}.backup ${ocbin}
+}
+#
+force () {
+	forcedownload=https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-client-linux-4.3.0.tar.gz
+	echo "WARNING: This does no santiy checks and just blindly downloads a version (currently 4.3.0)."
+	echo -n "Are you sure you want to continue?[Y/n] "
+	read ans
+	#
+	case "${ans}" in
+		Y|Yes)
+			dowloadurl=${forcedownload}
+			rm -f ${ocbin} ${ocbin}.backup
+			mkdir -m 777 -p ${stagingdir}
+			${crl} -o ${stagingdir}/openshift-client-linux-4.1.0.tar.gz -s ${dowloadurl}
+			${tarchive} -xzf ${stagingdir}/openshift-client-linux-4.1.0.tar.gz -C ${stagingdir}/
+			if [ ! -f ${stagingdir}/oc ]; then
+				echo "FATAL ERROR: Could not validate new OC client...manual intervention required"
+				exit 254
+			fi
+			cp -a ${stagingdir}/oc $(dirname ${ocbin})/
+			rm -rf ${stagingdir}/*
+			echo "You may want to do a \"$(basename $0) upgrade\" at this point"
+		  ;;
+		*)
+		  echo -e "Force upgrade aborted\n"
+		  ;;
+	esac
+}
+#
+showhelp () {
+	echo "$(basename $0) [upgrade|downgrade|help]"
+}
+#
+#
+case "${1}" in
+	upgrade|update|up)
+	  upgrade
+	  ;;
+	revert|downgrade|undo)
+	  downgrade
+	  ;;
+	force|download)
+	  force
+	  ;;
+	help|-h)
+	  showhelp
+	  ;;
+	*)
+	  echo "ERROR! Required parameter to the script was not passed" 
+	  showhelp
+	  exit 254
+	  ;;
+esac
+#
+exit 0
+##
+##
