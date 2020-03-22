@@ -13,6 +13,6 @@ An [Operator Framework](https://coreos.com/blog/introducing-operator-framework) 
 
 I'll break down this down into easily consumable sections
 
-* [Install SDK](docs/install.md)
+* [Install SDK](https://github.com/operator-framework/operator-sdk#workflow)
 * [Namespaced Scoped Operator](docs/namespaced.md)
 * [Cluster Scoped Operator](docs/clusterd.md)
