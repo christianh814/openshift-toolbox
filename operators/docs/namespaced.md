@@ -171,7 +171,7 @@ metadata:
   name: welcome
   namespace: "{{ meta.namespace }}"
 spec:
-  replicas: "{{ instances }}"
+  replicas: {{ instances }}
   selector:
     matchLabels:
       app: "{{ meta.name }}-welcome"
@@ -359,6 +359,7 @@ Create a project
 ```
 $ oc new-project welcome-operator
 $ oc project welcome-operator
+$ oc adm policy add-scc-to-user anyuid -z welcome-operator -n welcome-operator
 ```
 
 First, deploy the service account
