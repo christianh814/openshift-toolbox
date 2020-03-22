@@ -104,11 +104,12 @@ welcome-operator/
 Note that `--api-version=` and `--kind` have a direct affect on how you're going to call this when you create it!
 
 ```
-$ grep -i Kind welcome-operator/deploy/crds/welcome_v1alpha1_welcome_crd.yaml
+$ grep -i Kind welcome-operator/deploy/crds/welcome.example.com_welcomes_crd.yaml
 kind: CustomResourceDefinition
-    kind: Welcome listKind: WelcomeList
+    kind: Welcome
+    listKind: WelcomeList
 
-$ grep  api  welcome-operator/deploy/crds/welcome_v1alpha1_welcome_cr.yaml 
+$ grep api welcome-operator/deploy/crds/welcome.example.com_v1alpha1_welcome_cr.yaml 
 apiVersion: welcome.example.com/v1alpha1
 ```
 
