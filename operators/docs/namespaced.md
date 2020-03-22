@@ -475,18 +475,10 @@ Hints
 
 ## Troubleshooting
 
-The best way to find out what's wrong is to look at either the Ansbile container or the Operator container
-
-Ansible container...
+The best way to find out what's wrong is to look at either the Ansbile/Operator pod
 
 ```
-$ oc logs welcome-operator-76f84cc4f6-xgkf6 -c ansible
+oc logs -f welcome-operator-66f877b566-h5kbr
 ```
 
-Operator container...
-
-```
-$ oc logs welcome-operator-76f84cc4f6-xgkf6 -c operator
-```
-
-Ansible container has logs about the playbook run whereas the operator container has logs about operator specific tasks (also includes dump of ansible playbook runs)
+You'll need to be familiar with both openshift and ansible to do the debugging
