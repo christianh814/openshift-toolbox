@@ -19,7 +19,7 @@ Here are the steps to create a simple operator that deploys a hello world applic
 We create the operator with the `operator-sdk new` command
 
 ```
-$ operator-sdk new welcome-operator --type=ansible --api-version=welcome.example.com/v1alpha1 --kind=Welcome --skip-git-init
+$ operator-sdk new welcome-operator --type=ansible --api-version=welcome.example.com/v1alpha1 --kind=Welcome
 INFO[0000] Creating new Ansible operator 'welcome-operator'. 
 INFO[0000] Created deploy/service_account.yaml          
 INFO[0000] Created deploy/role.yaml                     
