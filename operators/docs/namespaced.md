@@ -379,7 +379,7 @@ rolebinding.rbac.authorization.k8s.io/welcome-operator created
 Now, create the CRD 
 
 ```
-$ oc create -f deploy/crds/welcome_v1alpha1_welcome_crd.yaml
+$ oc create -f deploy/crds/welcome.example.com_welcomes_crd.yaml
 ```
 
 Lastly, deploy the Operator
