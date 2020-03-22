@@ -384,8 +384,8 @@ After a while the operator pod should be running
 
 ```
 $ oc get pods
-NAME                                READY     STATUS    RESTARTS   AGE
-welcome-operator-76f84cc4f6-xgkf6   2/2       Running   0          1m
+NAME                                READY   STATUS    RESTARTS   AGE
+welcome-operator-66f877b566-h5kbr   1/1     Running   0          7m31s
 ```
 
 Create a custom resource under `/tmp/welcome-cr.yaml` remembering that you can define `instances` since it's a variable
