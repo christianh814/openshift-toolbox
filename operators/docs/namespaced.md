@@ -308,22 +308,10 @@ spec:
     spec:
       serviceAccountName: welcome-operator
       containers:
-        - name: ansible
-          command:
-          - /usr/local/bin/ao-logs
-          - /tmp/ansible-operator/runner
-          - stdout
+        - name: welcome-operator
           # Replace this with the built image name
-          image: quay.io/christianh814/welcome-operator:latest
-          imagePullPolicy: Always
-          volumeMounts:
-          - mountPath: /tmp/ansible-operator/runner
-            name: runner
-            readOnly: true
-        - name: operator
-          # Replace this with the built image name
-          image: quay.io/christianh814/welcome-operator:latest
-          imagePullPolicy: Always
+          image: "quay.io/christianh814/welcome-operator:latest"
+          imagePullPolicy: "Always"
           volumeMounts:
           - mountPath: /tmp/ansible-operator/runner
             name: runner
@@ -338,6 +326,8 @@ spec:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
               value: "welcome-operator"
+            - name: ANSIBLE_GATHERING
+              value: explicit
       volumes:
         - name: runner
           emptyDir: {}
