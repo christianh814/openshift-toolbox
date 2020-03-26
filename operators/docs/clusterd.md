@@ -24,7 +24,7 @@ Now `cd` into this dir to do the remainder of this howto
 $ cd welcome-php-operator/
 ```
 
-Note that with the `--cluster-scoped` this changes the operator to watch all namespaces
+Change `deploy/operator.yaml` so it watches all namespaces
 
 ```
 $ grep -A1 WATCH_NAMESPACE deploy/operator.yaml
@@ -32,18 +32,19 @@ $ grep -A1 WATCH_NAMESPACE deploy/operator.yaml
               value: ""
 ```
 
-It creates a `ClusterRole` instead of a `Role`
+Change `Role` to `ClusterRole` in the `deploy/role.yaml` file
 
 ```
 $ grep ClusterRole deploy/role.yaml
 kind: ClusterRole
 ```
 
-And, a `ClusterRoleBindng` instead of a `RoleBinding`
+And, `RoleBinding` to  `ClusterRoleBindng`, as well as `Role` to `ClusterRole` in the `deploy/role_binding.yaml` file
 
 ```
-$ grep ClusterRoleBinding deploy/role_binding.yaml 
+$ egrep 'ClusterRoleBinding|ClusterRole' deploy/role_binding.yaml
 kind: ClusterRoleBinding
+  kind: ClusterRole
 ```
 
 ## Using the K8S Module
