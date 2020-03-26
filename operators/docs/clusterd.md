@@ -200,21 +200,23 @@ This should be enough to now build your operator
 
 Before you build your operator, you need to login to your repository (I'm using Quay but you can use Docker Hub)
 
+> :warning: I'm using `podman` but you can use `docker` if you wish
+
 ```
-$ sudo docker login quay.io
+$ podman login quay.io
 Login Succeeded
 ```
 
 Now run `operator-sdk build` referencing where you're going to push the image (it builds locally first)
 
 ```
-$ sudo operator-sdk build quay.io/christianh814/welcome-php-operator:latest
+$ operator-sdk build --image-builder podman quay.io/christianh814/welcome-php-operator:latest
 ```
 
 Once that's built, push it to your registry
 
 ```
-$ docker push quay.io/christianh814/welcome-php-operator:latest
+$ podman push quay.io/christianh814/welcome-php-operator:latest
 ```
 
 > __**NOTE**__ If you're using Quay, you may need to login and make this image "public"
