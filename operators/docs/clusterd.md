@@ -395,10 +395,31 @@ rules:
   - '*'
 ```
 
-Lastly, change the `deploy/role_binding.yaml` file to replace `REPLACE_NAMESPACE` to the namespace you will deploy the operator on
+Edit the `deploy/role_binding.yaml` file to have the namespace you will deploy the operator on. It should look like this.
 
 ```
-$ sed -i 's/REPLACE_NAMESPACE/welcome-php-operator/g' deploy/role_binding.yaml
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: welcome-php-operator
+  namespace: welcome-php-operator
+subjects: welcome-php-operator
+- kind: ServiceAccount
+  name: welcome-php-operator
+roleRef:
+  kind: ClusterRole
+  name: welcome-php-operator
+  apiGroup: rbac.authorization.k8s.io
+```
+
+Edit the `deploy/service_account.yaml` to have the namespace as well
+
+```
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: welcome-php-operator
+  namespace: welcome-php-operator
 ```
 
 ## Deploying the Operator
