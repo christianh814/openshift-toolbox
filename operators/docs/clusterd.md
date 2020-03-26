@@ -93,7 +93,7 @@ metadata:
   name: "{{ meta.name }}-welcome-php"
   namespace: "{{ meta.namespace }}"
 spec:
-  replicas: "{{ instances }}"
+  replicas: {{ instances }}
   selector:
     matchLabels:
       app: "{{ meta.name }}-welcome-php"
