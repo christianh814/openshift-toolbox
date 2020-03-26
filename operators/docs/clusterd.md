@@ -15,7 +15,7 @@ Here are the steps to create a simple operator that deploys a hello world applic
 We create the operator with the `operator-sdk new` command
 
 ```
-$ operator-sdk new welcome-php-operator --type=ansible --api-version=welcome-php.example.com/v1alpha1 --kind=Welcomephp --skip-git-init --cluster-scoped
+$ operator-sdk new welcome-php-operator --type=ansible --api-version=welcome-php.example.com/v1alpha1 --kind=Welcomephpd
 ```
 
 Now `cd` into this dir to do the remainder of this howto
