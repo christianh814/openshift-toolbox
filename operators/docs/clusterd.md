@@ -445,7 +445,7 @@ Configure the serviceaccount, the role/rolebinding, and the CRD
 $ oc create -f deploy/service_account.yaml \
 -f deploy/role.yaml \
 -f deploy/role_binding.yaml \
--f deploy/crds/welcome-php_v1alpha1_welcomephp_crd.yaml 
+-f deploy/crds/welcome-php.example.com_welcomephps_crd.yaml
 ```
 
 Deploy the Operator
