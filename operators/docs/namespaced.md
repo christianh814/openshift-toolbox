@@ -6,7 +6,7 @@ Namespace-scoped operators are preferred because of their flexibility. They enab
 
 These types of operators are useful for things that run in a cluster that don't need users creating customer resources for. An example is the prometheus operator that monitors the entire cluster.
 
-Here are the steps to create a simple operator that deploys a hello world application
+Here are the steps to create a simple operator that deploys a hello world application:
 
 * [Create The Operator](#create-the-operator)
 * [Using the K8S Module](#using-the-k8s-module)
