@@ -95,7 +95,7 @@ metadata:
   name: "{{ meta.name }}-welcome-php"
   namespace: "{{ meta.namespace }}"
 spec:
-  replicas: {{ instances }}
+  replicas: {{ instances | int }}
   selector:
     matchLabels:
       app: "{{ meta.name }}-welcome-php"
@@ -437,6 +437,7 @@ Create a project called `welcome-php-operator` (since that's what the operator i
 ```
 $ oc new-project welcome-php-operator
 $ oc project welcome-php-operator
+$ oc adm policy add-scc-to-user anyuid -z welcome-php-operator -n welcome-php-operator
 ```
 
 Configure the serviceaccount, the role/rolebinding, and the CRD
