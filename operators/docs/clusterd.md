@@ -551,18 +551,8 @@ Hints
 
 ## Troubleshooting
 
-The best way to find out what's wrong is to look at either the Ansbile container or the Operator container
-
-Ansible container...
+The best way to find out what's wrong is to look at the operator logs. You need to be good a debugging ansible errors and k8s module in ansible errors as well.
 
 ```
-$ oc logs welcome-php-operator-6468bbbb9c-82jwv -c ansible
+$ oc logs -f welcome-php-operator-6468bbbb9c-82jwv 
 ```
-
-Operator container...
-
-```
-$ oc logs welcome-php-operator-6468bbbb9c-82jwv -c operator
-```
-
-Ansible container has logs about the playbook run whereas the operator container has logs about operator specific tasks (also includes dump of ansible playbook runs)
