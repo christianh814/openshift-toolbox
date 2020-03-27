@@ -250,15 +250,17 @@ This should be enough to now build your operator
 
 Before you build your operator, you need to login to your repository (I'm using Quay but you can use Docker Hub)
 
+> :warning: I'm using `podman` but you can use `docker` as well
+
 ```
-$ sudo docker login quay.io
+$ podman login quay.io
 Login Succeeded
 ```
 
 Now run `operator-sdk build` referencing where you're going to push the image (it builds locally first)
 
 ```
-$ sudo operator-sdk build quay.io/christianh814/welcome-operator:latest
+$ operator-sdk build --image-builder podman quay.io/christianh814/welcome-operator:latest
 INFO[0000] Building Docker image quay.io/christianh814/welcome-operator:latest 
 Sending build context to Docker daemon 50.69 kB
 Step 1/3 : FROM quay.io/operator-framework/ansible-operator:v0.6.0
@@ -284,7 +286,7 @@ INFO[0074] Operator build complete.
 Once that's built, push it to your registry
 
 ```
-$ docker push quay.io/christianh814/welcome-operator:latest
+$ podman push quay.io/christianh814/welcome-operator:latest
 ```
 
 > __**NOTE**__ If you're using Quay, you may need to login and make this image "public"
