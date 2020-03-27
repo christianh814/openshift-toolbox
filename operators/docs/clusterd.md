@@ -397,17 +397,17 @@ rules:
   - '*'
 ```
 
-Edit the `deploy/role_binding.yaml` file to have the namespace you will deploy the operator on. It should look like this.
+Edit the `deploy/role_binding.yaml` file to have the namespace you will deploy the operator on under `.subjects.namespace`. It should look like this.
 
 ```
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: welcome-php-operator
-  namespace: welcome-php-operator
-subjects: welcome-php-operator
+subjects:
 - kind: ServiceAccount
   name: welcome-php-operator
+  namespace: welcome-php-operator
 roleRef:
   kind: ClusterRole
   name: welcome-php-operator
