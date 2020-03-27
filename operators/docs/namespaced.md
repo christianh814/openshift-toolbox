@@ -171,7 +171,7 @@ metadata:
   name: welcome
   namespace: "{{ meta.namespace }}"
 spec:
-  replicas: {{ instances }}
+  replicas: {{ instances | int }}
   selector:
     matchLabels:
       app: "{{ meta.name }}-welcome"
