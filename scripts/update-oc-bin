@@ -1,5 +1,11 @@
 #!/bin/bash
 #
+# Don't bother running if you're not root
+if [ $(id -u) -ne 0 ]; then
+	echo "This utility must be run as root."
+	exit 253
+fi
+#
 ocbin=/usr/local/bin/oc
 jayq=/usr/bin/jq
 crl=/usr/bin/curl
