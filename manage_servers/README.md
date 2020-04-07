@@ -82,3 +82,17 @@ root@master# oc annotate namespace default openshift.io/node-selector=region=inf
 ```
 
 Then make sure your `nodeSelector` matches the `key=value` paring.
+
+## Adding nodes on OpenShift 4
+
+To get ignition for worker
+
+```
+oc extract -n openshift-machine-api secret/worker-user-data --keys=userData --to=-
+```
+
+To get ignition for master
+
+```
+oc extract -n openshift-machine-api secret/master-user-data --keys=userData --to=-
+```
