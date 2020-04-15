@@ -52,6 +52,26 @@ spec:
 
 Do an oc create of that file
 
+```shell
+oc create -f https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/mco/examples/mcp-with-mc.yaml
 ```
-oc create -f 
+
+Then label one of your nodes
+
 ```
+oc label node  worker1.ocp4.example.com node-role.kubernetes.io/worker-bm=""
+```
+
+You'll see something like this
+
+```
+oc get nodes
+NAME                       STATUS   ROLES              AGE   VERSION
+master0.ocp4.example.com   Ready    master             50m   v1.16.2
+master1.ocp4.example.com   Ready    master             50m   v1.16.2
+master2.ocp4.example.com   Ready    master             50m   v1.16.2
+worker0.ocp4.example.com   Ready    worker             50m   v1.16.2
+worker1.ocp4.example.com   Ready    worker,worker-bm   50m   v1.16.2
+```
+
+Since `worker1.ocp4.example.com` matches both `worker` MCP and `worker-bm`, it'll get both MCPs. But since `worker1.ocp4.example.com` is the only one that matches `worker-bm` MCP. It's the only one with the `/etc/foo/` contents.
