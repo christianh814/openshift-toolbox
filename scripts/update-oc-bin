@@ -64,8 +64,8 @@ force () {
 			dowloadurl=${forcedownload}
 			rm -f ${ocbin} ${ocbin}.backup
 			mkdir -m 777 -p ${stagingdir}
-			${crl} -o ${stagingdir}/openshift-client-linux-4.1.0.tar.gz -s ${dowloadurl}
-			${tarchive} -xzf ${stagingdir}/openshift-client-linux-4.1.0.tar.gz -C ${stagingdir}/
+			${crl} -o ${stagingdir}/openshift-client-linux.tar.gz -s ${dowloadurl}
+			${tarchive} -xzf ${stagingdir}/openshift-client-linux.tar.gz -C ${stagingdir}/
 			if [ ! -f ${stagingdir}/oc ]; then
 				echo "FATAL ERROR: Could not validate new OC client...manual intervention required"
 				exit 254
