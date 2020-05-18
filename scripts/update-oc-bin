@@ -54,8 +54,8 @@ downgrade () {
 }
 #
 force () {
-	forcedownload=https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-client-linux-4.3.0.tar.gz
-	echo "WARNING: This does no santiy checks and just blindly downloads a version (currently 4.3.0)."
+	forcedownload=https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.4.3/openshift-client-linux-4.4.3.tar.gz
+	echo "WARNING: This does no santiy checks and just blindly downloads a version (currently 4.4.3)."
 	echo -n "Are you sure you want to continue?[Y/n] "
 	read ans
 	#
