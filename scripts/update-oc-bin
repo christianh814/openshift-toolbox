@@ -26,6 +26,7 @@ upgrade () {
 	basicchecks
 	clientversion=$(oc version --client -o json | jq -r .releaseClientVersion)
 	serverversion=$(oc version -o json | jq -r  .openshiftVersion)
+	[[ ${serverversion} == "null" ]] && echo "You need to be logged in to the cluster. Are you running as SUDO? That can be a problem too" && exit 251
 	if [ ${clientversion} == ${serverversion} ]; then
 		echo "Client version and Server version match, nothing to do."
 		exit 0
