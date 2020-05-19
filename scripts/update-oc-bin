@@ -18,13 +18,13 @@ basicchecks () {
 	[[ ! -f ${jayq} ]] && echo "The JQ binary doesn't seem to exist" && exit 253
 	[[ ! -f ${crl} ]] && echo "The CURL binary doesn't seem to exist" && exit 253
 	[[ ! -f ${tarchive} ]] && echo "The TAR binary doesn't seem to exist" && exit 253
-	clientversion=$(oc version --client -o json | jq -r .clientVersion.gitVersion | awk -F'-' '{print $3}')
-	[[ ${clientversion} == "dirty" ]] && echo "Your version is TOO old; try \"$(basename $0) force\" first (dangerous)" && exit 252
+	clientversion=$(oc version --client -o json | jq -r .releaseClientVersion)
+	[[ ${clientversion} == "null" ]] && echo "Your version is TOO old; try \"$(basename $0) force\" first (dangerous)" && exit 252
 }
 #
 upgrade () {
 	basicchecks
-	clientversion=$(oc version --client -o json | jq -r .clientVersion.gitVersion | awk -F'-' '{print $3}')
+	clientversion=$(oc version --client -o json | jq -r .releaseClientVersion)
 	serverversion=$(oc version -o json | jq -r  .openshiftVersion)
 	if [ ${clientversion} == ${serverversion} ]; then
 		echo "Client version and Server version match, nothing to do."
