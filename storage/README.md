@@ -318,3 +318,15 @@ To setup a default class
 ```
 oc annotate storageclass aws-slow storageclass.kubernetes.io/is-default-class="true"
 ```
+
+### PVC Via CLI
+
+Short and sweet
+
+```shell
+oc set volume dc/file-uploader --add --name=my-shared-storage \
+-t pvc --claim-mode=ReadWriteMany --claim-size=1Gi \
+--claim-name=my-shared-storage --claim-class=ocs-storagecluster-cephfs \
+--mount-path=/opt/app-root/src/uploaded \
+-n my-shared-storage
+```
