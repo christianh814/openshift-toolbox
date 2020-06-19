@@ -4,7 +4,7 @@ A "clusterd" scoped operator is an operator that will act on the entire cluster.
 
 Here are the steps to create a simple operator that deploys a hello world application. This howto is an extention of the [namespaced](namespaced.md) howto..so go do that one FIRST if it's your first time creating an operator; then comeback and do this one.
 
-> :warning: Always refer to the [upstream doc](https://github.com/operator-framework/operator-sdk/blob/master/doc/operator-scope.md#cluster-scoped-operator-usage) if you get stuck
+> :warning: Always refer to the [upstream doc](https://sdk.operatorframework.io/docs/operator-scope/) if you get stuck
 
 * [Create The Operator](#create-the-operator)
 * [Using the K8S Module](#using-the-k8s-module)
