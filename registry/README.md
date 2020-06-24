@@ -211,3 +211,88 @@ On the master...verify that it's in the registry
 ```
 [root@ose3-master ~]# oc get is -n myphp
 ```
+
+# OpenShift 4 - Object Storage
+
+These are highleve notes I did on 4.5...you've been warned...
+
+## Deploy Minio Operator
+
+Instructions can be [found here](https://github.com/minio/minio-operator)
+
+Edit the operator (things like namespaces and access/secret keys...I didn't change from the default)
+
+```shell
+wget https://raw.githubusercontent.com/minio/minio-operator/master/minio-operator.yaml
+sed -i 's/namespace: default/namespace: minio/g' minio-operator.yaml
+```
+
+Edit the CR, setting a sane size rather than the default
+
+```shell
+wget https://raw.githubusercontent.com/minio/minio-operator/master/examples/minioinstance.yaml
+sed -i 's/storage: 1Ti/storage: 10Gi/g' minioinstance.yaml
+```
+
+Now deploy it on OpenShift
+
+```shell
+oc new-project minio
+oc project minio
+oc create -f minio-operator.yaml -n minio
+oc create -f minioinstance.yaml -n minio
+oc expose svc minio-service --name=minio -n minio
+```
+
+## Create Bucket
+
+Use [mc](https://docs.min.io/docs/minio-client-quickstart-guide) (or the webui) to create a bucket
+
+```shell
+wget https://dl.min.io/client/mc/release/linux-amd64/mc
+chmod +x ./mc
+sudo mv ./mc /usr/local/bin/
+mc config host add minio http://$(oc get route minio -o jsonpath='{.spec.host}' -n minio) minio minio123
+mc mb minio/openshift
+mc ls minio
+```
+
+## Create secrets
+
+I don't know which one is needed. One or both may be needed (someone test and let me know)
+
+```shell
+oc create secret generic image-registry-private-configuration-user \
+--from-literal=REGISTRY_STORAGE_S3_ACCESSKEY=minio --from-literal=REGISTRY_STORAGE_S3_SECRETKEY=minio123 --namespace openshift-image-registry
+oc create secret generic installer-cloud-credentials \ 
+--from-literal=aws_access_key_id=minio --from-literal=aws_secret_access_key=minio123 --namespace openshift-image-registry
+```
+
+## Edit the Operator
+
+Edit the operator with `oc edit configs.imageregistry.operator.openshift.io/cluster` and set the following
+
+Set `.spec.managementState` to be "Managed"
+
+```yaml
+spec:
+  managementState: Managed
+```
+
+Set `.spec.replicas` to what you want (optional)
+```yaml
+spec:
+  replicas: 3
+```
+
+Set `.spec.storage` to the following (ip is the svc address). BUCKET MUST EXIST! Region is "dummied"
+
+```yaml
+spec:
+  storage:
+    s3: 
+      bucket: openshift
+      encrypt: false
+      region: us-east-1
+      regionEndpoint: http://172.30.255.113:9000
+```
