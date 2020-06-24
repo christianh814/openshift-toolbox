@@ -218,7 +218,7 @@ These are highleve notes I did on 4.5...you've been warned...
 
 ## Deploy Minio Operator
 
-Instructions can be [found here](https://github.com/minio/minio-operator)
+Upstream instructions can be [found here](https://github.com/minio/minio-operator)
 
 Edit the operator (things like namespaces and access/secret keys...I didn't change from the default)
 
