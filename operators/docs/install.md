@@ -4,7 +4,7 @@ The first step is to install the SDK. The SDK will help you build and deploy you
 
 ## Prerequisites
 
-See the [github page](https://github.com/operator-framework/operator-sdk#workflow)
+See the [github page](https://github.com/operator-framework/operator-sdk). You just need to download the `operator-sdk` cli from the [releases page](https://github.com/operator-framework/operator-sdk/releases)
 
 ## Create an Operator
 
