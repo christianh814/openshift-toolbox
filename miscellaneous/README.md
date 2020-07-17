@@ -795,5 +795,11 @@ oc get nodes -o=custom-columns=NAME:.metadata.name,TAINTS:.spec.taints
 Sort events by time
 
 ```
-oc get events --sort-by="lastTimestamp"
+oc get events --sort-by=.metadata.creationTimestamp
+```
+
+Sort by role
+
+```
+oc get nodes --sort-by={.metadata.labels."node-role\.kubernetes\.io\/worker"}
 ```
