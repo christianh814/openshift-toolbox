@@ -259,13 +259,11 @@ mc ls minio
 
 ## Create secrets
 
-I don't know which one is needed. One or both may be needed (someone test and let me know)
+Create the secret with your minio key/secret
 
 ```shell
 oc create secret generic image-registry-private-configuration-user \
 --from-literal=REGISTRY_STORAGE_S3_ACCESSKEY=minio --from-literal=REGISTRY_STORAGE_S3_SECRETKEY=minio123 --namespace openshift-image-registry
-oc create secret generic installer-cloud-credentials \ 
---from-literal=aws_access_key_id=minio --from-literal=aws_secret_access_key=minio123 --namespace openshift-image-registry
 ```
 
 ## Edit the Operator
