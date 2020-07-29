@@ -266,7 +266,7 @@ oc create secret generic image-registry-private-configuration-user \
 --from-literal=REGISTRY_STORAGE_S3_ACCESSKEY=minio --from-literal=REGISTRY_STORAGE_S3_SECRETKEY=minio123 --namespace openshift-image-registry
 ```
 
-## Edit the Operator
+## Edit the Registry Operator
 
 Edit the operator with `oc edit configs.imageregistry.operator.openshift.io/cluster` and set the following
 
@@ -293,4 +293,12 @@ spec:
       encrypt: false
       region: us-east-1
       regionEndpoint: http://172.30.255.113:9000
+```
+
+Here's a few patches to speed things up for you
+
+```
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed"}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"replicas":3}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio-service.minio.svc.cluster.local:9000"}}}}'
 ```
