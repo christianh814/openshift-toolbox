@@ -295,7 +295,7 @@ spec:
       regionEndpoint: http://172.30.255.113:9000
 ```
 
-Here's a few patches to speed things up for you
+Here's a few patches to speed things up for you (remember to change where applicable...like the svc ip address)
 
 ```
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed"}}'
