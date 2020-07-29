@@ -300,5 +300,5 @@ Here's a few patches to speed things up for you
 ```
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed"}}'
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"replicas":3}}'
-oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio-service.minio.svc.cluster.local:9000"}}}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://172.30.255.113:9000"}}}}'
 ```
