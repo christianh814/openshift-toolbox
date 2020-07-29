@@ -295,10 +295,11 @@ spec:
       regionEndpoint: http://172.30.255.113:9000
 ```
 
-Here's a few patches to speed things up for you (remember to change where applicable...like the svc ip address)
+Here's a few patches to speed things up for you (remember to change where applicable)
 
 ```
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed"}}'
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"replicas":3}}'
-oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://172.30.255.113:9000"}}}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio-service.minio.svc:9000"}}}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"disableRedirect":true}}'
 ```
