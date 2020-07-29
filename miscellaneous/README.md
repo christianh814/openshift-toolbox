@@ -803,3 +803,9 @@ Sort by role
 ```
 oc get nodes --sort-by={.metadata.labels."node-role\.kubernetes\.io\/worker"}
 ```
+
+Get the platform you're on (if it's "none" it means you did the "Agnostic UPI" install)
+
+```
+$ oc get infrastructure cluster -o jsonpath='{.spec.platformSpec.type}{"\n"}'
+```
