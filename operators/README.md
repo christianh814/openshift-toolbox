@@ -11,8 +11,6 @@ An [Operator Framework](https://coreos.com/blog/introducing-operator-framework) 
 
 ## Ansible Operators
 
-I'll break down this down into easily consumable sections
+THIS SECTION IS UNDER CONSTUCTION!
 
-* [Install SDK](docs/install.md)
-* [Namespaced Scoped Operator](docs/namespaced.md)
-* [Cluster Scoped Operator](docs/clusterd.md)
+Since the release of v1 of the OperatorSDK, I'll need to make updates. For now, look at [the official docs](https://sdk.operatorframework.io/docs/building-operators/ansible/tutorial/)...they're pretty good.
