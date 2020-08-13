@@ -296,7 +296,6 @@ kustomize build config/default > /tmp/welcome-operator.yaml
 Deploy the operator (it'll end up in `$OPERATOR_NAME-system` namespace)
 
 ```shell
-kustomize build config/default > /tmp/welcome-operator.yaml
 oc create -f /tmp/welcome-operator.yaml
 ```
 
