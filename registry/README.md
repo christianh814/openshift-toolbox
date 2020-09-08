@@ -218,41 +218,27 @@ These are highleve notes I did on 4.5...you've been warned...
 
 ## Deploy Minio Operator
 
-> Note current bug makes this a little hacky: [LINK TO BUG](https://github.com/minio/operator/issues/289)
-
 Deploy the operator
-
-```shell
-kubectl apply -k http://github.com/minio/operator
-```
-
-This will error out...update the SCC constraints
-
-```shell
-oc project minio-operator
-oc adm policy add-scc-to-user anyuid -z minio-operator -n minio-operator
-```
-
-Delete the deployment
-
-```shell
-oc delete deploy minio-operator -n minio-operator
-```
-
-Download sample tennant CR and 
-
-```shell
-wget https://raw.githubusercontent.com/minio/operator/master/examples/tenant.yaml
-sed -i 's/storage: 1Ti/storage: 10Gi/g' tenant.yaml
-```
-
-Now deploy it on OpenShift
 
 ```shell
 oc new-project minio
 oc project minio
-oc create -f tenant.yaml -n minio
-oc expose svc minio-console --name=minio -n minio
+oc create -n minio -f https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/registry/manifests/minio-operator.yaml
+```
+
+Deploy the CR
+
+```shell
+oc project minio
+oc create -n minio -f https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/registry/manifests/minioinstance.yaml
+```
+
+Expose it
+
+```shell
+oc expose svc minio-service --name=minio -n minio
+oc rollout status deploy minio-operator -n minio
+oc rollout status sts minio -n minio
 ```
 
 ## Create Bucket
