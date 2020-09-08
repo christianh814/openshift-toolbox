@@ -252,7 +252,7 @@ Now deploy it on OpenShift
 oc new-project minio
 oc project minio
 oc create -f tenant.yaml -n minio
-oc expose svc minio -n minio
+oc expose svc minio-console --name=minio -n minio
 ```
 
 ## Create Bucket
