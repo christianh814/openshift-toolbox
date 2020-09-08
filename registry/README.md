@@ -228,6 +228,8 @@ oc create -n minio -f https://raw.githubusercontent.com/christianh814/openshift-
 
 Deploy the CR
 
+> NOTE: This uses about 50G worth of storage
+
 ```shell
 oc project minio
 oc create -n minio -f https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/registry/manifests/minioinstance.yaml
