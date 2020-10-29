@@ -304,3 +304,5 @@ oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patc
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio.minio.svc:9000"}}}}'
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"disableRedirect":true}}'
 ```
+
+> Maybe this one liner will be better? `oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed","disableRedirect":true,"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio.minio.svc:9000"}}}}'`
