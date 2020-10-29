@@ -214,32 +214,33 @@ On the master...verify that it's in the registry
 
 # OpenShift 4 - Object Storage
 
-These are highleve notes I did on 4.5...you've been warned...
+These are highlevel notes I did on 4.6.1
 
 ## Deploy Minio Operator
 
-Deploy the operator
+Create the project and the SA
 
 ```shell
 oc new-project minio
 oc project minio
-oc create -n minio -f https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/registry/manifests/minio-operator.yaml
+oc create serviceaccount miniosa
+oc adm policy add-scc-to-user anyuid -z miniosa -n minio
 ```
 
-Deploy the CR
+Install via [Helm](https://helm.sh/docs/intro/install/). For more info on all the options available, visit [this github page](https://github.com/minio/charts#configuration)
 
-> NOTE: This uses about 50G worth of storage
+> NOTE: This uses about 50G worth of storage. You also may need to adjust the `resources.requests.memory` depending on your env. Like `2Gi` for example. You also need at least 4 workers unless you set `mode` to `standalone`
 
 ```shell
-oc project minio
-oc create -n minio -f https://raw.githubusercontent.com/christianh814/openshift-toolbox/master/registry/manifests/minioinstance.yaml
+helm install \
+--set accessKey=minio,secretKey=minio123,mode=distributed,persistence.size=10Gi,serviceAccount.name=miniosa,serviceAccount.create=false \
+--namespace minio minio minio/minio
 ```
 
 Expose it
 
 ```shell
-oc expose svc minio-service --name=minio -n minio
-oc rollout status deploy minio-operator -n minio
+oc expose svc minio --name=minio -n minio
 oc rollout status sts minio -n minio
 ```
 
@@ -286,12 +287,13 @@ Set `.spec.storage` to the following (ip is the svc address). BUCKET MUST EXIST!
 
 ```yaml
 spec:
+  disableRedirect: true
   storage:
     s3: 
       bucket: openshift
       encrypt: false
       region: us-east-1
-      regionEndpoint: http://172.30.255.113:9000
+      regionEndpoint: http://minio.minio.svc:9000
 ```
 
 Here's a few patches to speed things up for you (remember to change where applicable)
@@ -299,6 +301,6 @@ Here's a few patches to speed things up for you (remember to change where applic
 ```
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed"}}'
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"replicas":3}}'
-oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio-service.minio.svc:9000"}}}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio.minio.svc:9000"}}}}'
 oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"disableRedirect":true}}'
 ```
