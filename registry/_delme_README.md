@@ -296,8 +296,13 @@ spec:
       regionEndpoint: http://minio.minio.svc:9000
 ```
 
-Here's a patche to speed things up for you (remember to change where applicable)
+Here's a few patches to speed things up for you (remember to change where applicable)
 
-```shell
-oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed","disableRedirect":true,"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio.minio.svc:9000"}}}}'
 ```
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed"}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"replicas":3}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio.minio.svc:9000"}}}}'
+oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"disableRedirect":true}}'
+```
+
+> Maybe this one liner will be better? `oc patch configs.imageregistry.operator.openshift.io cluster --type merge --patch '{"spec":{"managementState":"Managed","disableRedirect":true,"storage":{"s3":{"bucket":"openshift","encrypt":false,"region":"us-east-1","regionEndpoint":"http://minio.minio.svc:9000"}}}}'`
