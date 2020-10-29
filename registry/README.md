@@ -248,6 +248,8 @@ oc rollout status sts minio -n minio
 
 Use [mc](https://docs.min.io/docs/minio-client-quickstart-guide) (or the webui) to create a bucket
 
+> NOTE: You can use `helm install` to create the bucket for you! See the [options page](https://github.com/minio/charts#configuration) for more info.
+
 ```shell
 wget https://dl.min.io/client/mc/release/linux-amd64/mc
 chmod +x ./mc
