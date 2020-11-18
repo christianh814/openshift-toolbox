@@ -811,3 +811,13 @@ Get the platform you're on (if it's "none" it means you did the "Agnostic UPI" i
 ```
 $ oc get infrastructure cluster -o jsonpath='{.spec.platformSpec.type}{"\n"}'
 ```
+
+# Podman
+
+Get container by specific name. For example if your container name is `mycontainer`
+
+```shell
+$ podman ps -a --filter name=^mycontainer$
+CONTAINER ID  IMAGE                          COMMAND  CREATED       STATUS           PORTS  NAMES
+6c685c2b7f42  quay.io/foo/bar:latest                  15 hours ago  Up 15 hours ago         mycontainer
+```
