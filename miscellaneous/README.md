@@ -821,3 +821,15 @@ $ podman ps -a --filter name=^mycontainer$
 CONTAINER ID  IMAGE                          COMMAND  CREATED       STATUS           PORTS  NAMES
 6c685c2b7f42  quay.io/foo/bar:latest                  15 hours ago  Up 15 hours ago         mycontainer
 ```
+
+Advanced filtering
+
+```shell
+$ podman ps -a --filter name=^helpernode --format  'table {{.Names}} {{.Status}} {{.Image}}'
+Names                     Status             Image
+helpernode-dhcp           Up 6 minutes ago   quay.io/helpernode/dhcp:latest
+helpernode-pxe            Up 15 hours ago    quay.io/helpernode/pxe:latest
+helpernode-loadbalancer   Up 15 hours ago    quay.io/helpernode/loadbalancer:latest
+helpernode-dns            Up 15 hours ago    quay.io/helpernode/dns:latest
+helpernode-http           Up 15 hours ago    quay.io/helpernode/http:latest
+```
