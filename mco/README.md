@@ -33,7 +33,7 @@ spec:
       security:
         tls: {}
       timeouts: {}
-      version: 2.2.0
+      version: 3.1.0
     networkd: {}
     passwd: {}
     storage:
