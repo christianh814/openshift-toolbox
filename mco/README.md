@@ -41,11 +41,13 @@ spec:
         - path: "/etc/foo/foo.conf"
           filesystem: root
           mode: 420
+          overwrite: true
           contents:
             source: data:;base64,UmVkIEhhdCBpcyBiZXR0ZXIgdGhhbiBWTXdhcmUhCg==
         - path: "/etc/foo/foo-other.conf"
           filesystem: root
           mode: 420
+          overwrite: true
           contents:
             source: data:;base64,T3BlblNoaWZ0IGlzIHRoZSBiZXN0Cg==
 ```
