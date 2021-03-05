@@ -897,5 +897,5 @@ helm install pricelist-db --namespace pricelist bitnami/mysql \
 The `root` account for the DB is stored in a secret
 
 ```shell
-oc get secret --namespace test pricelist-db-mysql -o jsonpath="{.data.mysql-root-password}" | base64 --decode ; echo
+oc get secret --namespace pricelist pricelist-db-mysql -o jsonpath="{.data.mysql-root-password}" | base64 --decode ; echo
 ```
