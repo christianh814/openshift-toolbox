@@ -890,5 +890,6 @@ oc adm policy add-scc-to-user anyuid -z pricelist-db -n pricelist
 Install specifying the namespace and SA (and to NOT cretae it since we already created it)
 
 ```shell
-helm install pricelist-db bitnami/mysql --set architecture=replication,serviceAccount.name=pricelist-db,serviceAccount.create=false,auth.database=pricelist,auth.username=pricelist,auth.password=pricelist,secondary.replicaCount=2
+helm install pricelist-db --namespace pricelist bitnami/mysql \
+--set architecture=replication,serviceAccount.name=pricelist-db,serviceAccount.create=false,auth.database=pricelist,auth.username=pricelist,auth.password=pricelist,secondary.replicaCount=2
 ```
