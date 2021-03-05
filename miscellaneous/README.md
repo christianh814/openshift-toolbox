@@ -859,3 +859,36 @@ Consider
 
 * Creating an alias for this
 * Just install sealed-secrets in the `kube-system` namespace (the default)
+
+# MySQL Replica Helm
+
+HA MySQL DB installed using the helm 3 bitnami repo
+
+```shell
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo  update
+```
+
+You first must create a namespace
+
+```shell
+oc new-project pricelist
+```
+
+Create a service account in that namespace
+
+```shell
+oc create serviceaccount pricelist-db -n pricelist
+```
+
+DB Deployment needs "anyuid"
+
+```shell
+oc adm policy add-scc-to-user anyuid -z pricelist-db -n pricelist
+```
+
+Install specifying the namespace and SA (and to NOT cretae it since we already created it)
+
+```shell
+helm install pricelist-db bitnami/mysql --set architecture=replication,serviceAccount.name=pricelist-db,serviceAccount.create=false,auth.database=pricelist,auth.username=pricelist,auth.password=pricelist,secondary.replicaCount=2
+```
