@@ -893,3 +893,9 @@ Install specifying the namespace and SA (and to NOT cretae it since we already c
 helm install pricelist-db --namespace pricelist bitnami/mysql \
 --set architecture=replication,serviceAccount.name=pricelist-db,serviceAccount.create=false,auth.database=pricelist,auth.username=pricelist,auth.password=pricelist,secondary.replicaCount=2
 ```
+
+The `root` account for the DB is stored in a secret
+
+```shell
+oc get secret --namespace test pricelist-db-mysql -o jsonpath="{.data.mysql-root-password}" | base64 --decode ; echo
+```
