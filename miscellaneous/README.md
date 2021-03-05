@@ -833,3 +833,18 @@ helpernode-loadbalancer   Up 15 hours ago    quay.io/helpernode/loadbalancer:lat
 helpernode-dns            Up 15 hours ago    quay.io/helpernode/dns:latest
 helpernode-http           Up 15 hours ago    quay.io/helpernode/http:latest
 ```
+
+# Sealed Secrets Install
+
+Using the helm 3 bitnami repo
+
+```shell
+helm repo add bitnami https://charts.bitnami.com/bitnami
+helm repo  update
+```
+
+Install in any namespace, removing the hardcoded SCC settings
+
+```
+helm install ss --namespace sealedsecrets --create-namespace stable/sealedsecrets --set securityContext.runAsUser='' --set securityContext.fsGroup=''
+```
