@@ -848,3 +848,14 @@ Install in any namespace, removing the hardcoded SCC settings
 ```
 helm install ss --namespace sealedsecrets --create-namespace stable/sealedsecrets --set securityContext.runAsUser='' --set securityContext.fsGroup=''
 ```
+
+Installing it this way, you must pass `--controller-namespace ` and `--controller-name` to the `kubeseal` command
+
+```shell
+kubeseal --controller-namespace sealedsecrets  --controller-name ss-sealed-secrets -o yaml < mysecret.yaml > mysealedsecret.yaml
+```
+
+Consider
+
+* Creating an alias for this
+* Just install sealed-secrets in the `kube-system` namespace (the default)
