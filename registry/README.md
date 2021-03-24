@@ -216,6 +216,8 @@ On the master...verify that it's in the registry
 
 These are highlevel notes I did on 4.6.1
 
+_NOTE_ Looks like the helm chart is being deprecated :( https://github.com/minio/operator/tree/master/helm/minio-operator
+
 ## Deploy Minio Operator
 
 Create the project and the SA
