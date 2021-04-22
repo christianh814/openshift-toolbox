@@ -134,3 +134,5 @@ spec:
 ```
 
 You may also need `kubernetes.io/ingress.class: "nginx"` (for example) until controllers are updated to support ingress classes. [MORE INFO](https://kubernetes.io/docs/concepts/services-networking/ingress/)
+
+To find out the name (after the controller has been installed) run: `oc get ingressclass`
