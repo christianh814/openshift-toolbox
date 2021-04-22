@@ -95,3 +95,41 @@ oc create -f nodeport-ssh.yaml
 ```
 
 In this case; you'll be able connect into port `31122` (on to ANY server in the cluster) and it will foward it to port `22` on the pod that matches the label.
+
+# Ingress
+
+Ingress specific notes
+
+## IngressClass
+
+QnD (more to come). When deploying another Ingress controller (say NGINX) on OpenShift.
+
+* Make sure it deploys on a non router node (port conflicts)
+* Create an Ingress Object
+* Ingress object must have `.spec.ingressClassName`
+
+
+Example:
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-static-ingress
+  namespace: testing
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: 127.0.0.1.nip.io
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: myservice
+            port:
+              number: 8080
+```
+
+You may also need `kubernetes.io/ingress.class: "nginx"` (for example) until controllers are updated to support ingress classes.
