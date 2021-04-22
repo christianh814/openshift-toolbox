@@ -6,6 +6,7 @@ The OpenShift router is the ingress point for all traffic destined for services 
 * [Health Checks](#health-checks)
 * [Router Settings](#router-settings)
 * [Node Port](#node-port)
+* [Ingress](#ingress)
 
 ## Deploy Router
 
@@ -132,4 +133,4 @@ spec:
               number: 8080
 ```
 
-You may also need `kubernetes.io/ingress.class: "nginx"` (for example) until controllers are updated to support ingress classes.
+You may also need `kubernetes.io/ingress.class: "nginx"` (for example) until controllers are updated to support ingress classes. [MORE INFO](https://kubernetes.io/docs/concepts/services-networking/ingress/)
