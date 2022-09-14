@@ -234,6 +234,7 @@ Install via [Helm](https://helm.sh/docs/intro/install/). For more info on all th
 > NOTE: This uses about 50G worth of storage. You also may need to adjust the `resources.requests.memory` depending on your env. Like `2Gi` for example. You also need at least 4 workers unless you set `mode` to `standalone`
 
 ```shell
+helm repo add minio https://helm.min.io/
 helm install \
 --set accessKey=minio,secretKey=minio123,mode=distributed,persistence.size=10Gi,serviceAccount.name=miniosa,serviceAccount.create=false \
 --namespace minio minio minio/minio
